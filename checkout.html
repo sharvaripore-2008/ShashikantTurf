@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout &amp; Payment (₹699) | Shashikant Turf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .checkout-grid { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 36px; padding: 40px 0 80px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: 30px; box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
+    .form-control {
+      width: 100%; background: var(--bg-surface); border: 1px solid var(--border-color);
+      padding: 12px 16px; border-radius: var(--radius-md); color: var(--text-main); font-size: 0.95rem; outline: none; transition: 0.2s;
+    }
+    .form-control:focus { border-color: var(--primary); }
+
+    .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 10px; }
+    .pay-card {
+      background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md);
+      padding: 14px; text-align: center; cursor: pointer; transition: 0.2s;
+    }
+    .pay-card.selected { border-color: var(--primary); background: rgba(16, 185, 129, 0.15); box-shadow: 0 0 12px var(--primary-glow); }
+
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; color: var(--text-muted); }
+    .total-row { display: flex; justify-content: space-between; border-top: 1px dashed var(--border-color); padding-top: 16px; margin-top: 16px; font-size: 1.35rem; font-weight: 800; }
+
+    @media (max-width: 900px) {
+      .checkout-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚽</div>
+        Shashikant <span>Turf</span>
+      </a>
+      <div style="color:var(--accent); font-weight:700; font-size:0.9rem; display:flex; align-items:center; gap:6px;">
+        <span>🔒 256-Bit SSL Encrypted Booking</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="checkout-grid">
+      
+      <!-- Left: Player Info & Payment Method -->
+      <div class="card">
+        <h3 style="margin-bottom: 20px;">👤 Matchday Player Information</h3>
+        <form onsubmit="confirmBooking(event)">
+          <div class="form-group">
+            <label>Captain / Booker Full Name *</label>
+            <input type="text" id="custName" class="form-control" required placeholder="e.g. Rahul Sharma" value="Rahul Sharma">
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+            <div class="form-group">
+              <label>Phone Number (WhatsApp Match Pass) *</label>
+              <input type="tel" id="custPhone" class="form-control" required placeholder="+91 98765 43210" value="+91 98765 43210">
+            </div>
+            <div class="form-group">
+              <label>Gmail Address (Ticket Dispatched Here) *</label>
+              <input type="email" id="custEmail" class="form-control" required placeholder="name@gmail.com" value="rahul.sharma@gmail.com">
+            </div>
+          </div>
+
+          <!-- 🤝 COMMUNITY MATCHMAKING TOGGLE ("Find Opponent / Need Players") -->
+          <div style="background:var(--bg-surface); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:16px; margin:22px 0;">
+            <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-weight:600; color:var(--text-main);">
+              <input type="checkbox" id="chkOpenMatch" onchange="toggleOpenMatch(this.checked)" style="width:18px; height:18px; accent-color:var(--primary); cursor:pointer;">
+              <span>🤝 Make this an Open Match (Find Opponents / Need Players)</span>
+            </label>
+            <p style="color:var(--text-muted); font-size:0.8rem; margin:6px 0 0 28px;">
+              Lists your match in the Mumbai Community Match Lobby so other teams can challenge you or individual players can join.
+            </p>
+
+            <div id="openMatchOptions" style="display:none; margin-top:14px; padding-top:14px; border-top:1px dashed var(--border-color);">
+              <div class="form-group" style="margin-bottom:12px;">
+                <label style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Matchmaking Goal *</label>
+                <select id="matchType" class="form-control" style="background:var(--bg-card); padding:9px 12px;">
+                  <option value="Need Opponent Team">Need Opponent Team (Friendly 5v5 / 7v7 Match)</option>
+                  <option value="Need 2-3 Players">Need 2-3 Individual Players (Short on team count)</option>
+                  <option value="Casual Practice Match">Casual Practice Match / Scrimmage</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Note for Other Players (Skill Level, Rules, Jerseys):</label>
+                <input type="text" id="matchNote" class="form-control" placeholder="e.g. Friendly match, bibs provided, all skill levels welcome!" value="Friendly match, bibs provided, all skill levels welcome!">
+              </div>
+            </div>
+          </div>
+
+          <h3 style="margin: 24px 0 12px;">💳 Select Payment Method (₹699 Flat)</h3>
+          <div class="payment-grid">
+            <div class="pay-card selected" onclick="selectPay(this, 'UPI (Google Pay / PhonePe)')">
+              <div style="font-size:1.8rem; margin-bottom:4px;">📱</div>
+              <strong>UPI / QR</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">GPay, PhonePe, Paytm</div>
+            </div>
+            <div class="pay-card" onclick="selectPay(this, 'Credit/Debit Card')">
+              <div style="font-size:1.8rem; margin-bottom:4px;">💳</div>
+              <strong>Card</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Debit / Credit / RuPay</div>
+            </div>
+            <div class="pay-card" onclick="selectPay(this, 'Pay at Venue')">
+              <div style="font-size:1.8rem; margin-bottom:4px;">💵</div>
+              <strong>Pay at Turf</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Counter Cash</div>
+            </div>
+          </div>
+
+          <button type="submit" id="payBtn" class="btn btn-primary" style="width:100%; margin-top:28px; font-size:1.1rem; padding:15px;">
+            Pay ₹699 &amp; Confirm Booking ➔
+          </button>
+        </form>
+      </div>
+
+      <!-- Right: Summary Card -->
+      <div class="card">
+        <h3 style="margin-bottom:18px;">📋 Reservation Summary</h3>
+        <div style="background:var(--bg-surface); padding:16px; border-radius:var(--radius-md); margin-bottom:20px;">
+          <h4 id="sumTurf" style="font-size:1.25rem;">Shashikant Football Grand Arena</h4>
+          <div id="sumTurfLoc" style="color:var(--text-muted); font-size:0.85rem; margin-top:4px;">📍 Andheri West, Mumbai</div>
+          <div id="sumRoofBadge" style="margin-top:8px; font-size:0.75rem; color:var(--accent); font-weight:600;">
+            🏟️ Open-Air Arena (All-Weather Drainage)
+          </div>
+        </div>
+
+        <div class="summary-row">
+          <span>Match Date:</span>
+          <strong id="sumDate">2026-10-30</strong>
+        </div>
+        <div class="summary-row">
+          <span>Time Slot:</span>
+          <strong id="sumSlot" style="color:var(--primary);">07:00 PM - 08:00 PM</strong>
+        </div>
+        <div class="summary-row">
+          <span>Turf Rate (1 Hour):</span>
+          <strong id="sumRate">₹699</strong>
+        </div>
+        <div class="summary-row">
+          <span>Floodlights &amp; Changing Access:</span>
+          <strong style="color:var(--accent);">Included (₹0)</strong>
+        </div>
+        <div class="summary-row">
+          <span>Instant Gmail Pass &amp; QR:</span>
+          <strong style="color:var(--accent);">Free</strong>
+        </div>
+
+        <div class="total-row">
+          <span>Total Amount:</span>
+          <span style="color:var(--primary);" id="sumTotal">₹699</span>
+        </div>
+
+        <div style="margin-top:20px; font-size:0.8rem; color:var(--text-muted); line-height:1.5;">
+          🛡️ <strong>Shashikant Turf Guarantee:</strong> Full 100% refund available upon slot cancellation before match kickoff.
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- CONFIRMATION & GMAIL NOTIFICATION MODAL -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-box" style="padding: 30px; text-align: center;">
+      <div style="font-size:3.5rem; margin-bottom:8px;">🎉</div>
+      <h2 style="font-size:1.75rem; margin-bottom:6px;">Booking Confirmed!</h2>
+      <p style="color:var(--text-muted); margin-bottom:18px;">
+        Your matchday slot is locked in the MySQL database at <strong style="color:var(--primary);">₹699</strong>.
+      </p>
+
+      <!-- Gmail Dispatch Alert Box -->
+      <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:var(--radius-md); padding:16px; margin-bottom:20px; text-align:left;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <span style="font-size:1.4rem;">📧</span>
+          <div>
+            <strong style="color:var(--text-main); font-size:0.95rem;">Confirmation Sent to Gmail!</strong>
+            <div id="modalEmailTarget" style="font-size:0.8rem; color:var(--accent);">rahul.sharma@gmail.com</div>
+          </div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          An official Matchday Ticket with your Gate Check-In QR Pass has been dispatched to your inbox.
+        </p>
+      </div>
+
+      <div style="background:var(--bg-surface); padding:14px; border-radius:var(--radius-md); text-align:left; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span style="color:var(--text-muted); font-size:0.85rem;">Booking ID:</span>
+          <strong id="modalId" style="color:var(--primary);">#BK-8921</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span style="color:var(--text-muted); font-size:0.85rem;">Status:</span>
+          <span style="color:var(--accent); font-weight:700; font-size:0.85rem;">PAID &amp; CONFIRMED</span>
+        </div>
+        <div id="modalMatchBadge" style="display:none; font-size:0.8rem; color:#60a5fa; background:rgba(59,130,246,0.15); padding:6px 10px; border-radius:6px; margin-top:8px;">
+          🤝 Listed in Community Open Match Lobby
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button onclick="previewSentGmailTicket()" class="btn btn-outline" style="border-color:var(--primary); color:var(--primary);">
+          📧 Preview Dispatched Gmail Ticket
+        </button>
+        <a href="my-bookings.html" class="btn btn-primary">
+          🎫 View My Gate Pass &amp; QR Code ➔
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- IN-APP GMAIL PREVIEW MODAL -->
+  <div class="modal-overlay" id="gmailPreviewModal">
+    <div class="modal-box" style="max-width: 640px; padding: 24px; text-align: left;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:12px; margin-bottom:16px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:1.4rem;">📧</span>
+          <div>
+            <strong style="font-size:1.05rem;">Gmail Inbox Preview</strong>
+            <div style="font-size:0.75rem; color:var(--text-muted);">From: Shashikant Turf &lt;bookings@turf.com&gt;</div>
+          </div>
+        </div>
+        <button onclick="closeGmailPreview()" class="btn btn-outline btn-sm" style="padding:4px 10px;">✕ Close</button>
+      </div>
+
+      <div id="gmailPreviewBody" style="background:#0a0f1d; border-radius:12px; overflow:hidden;">
+        <!-- Filled dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    let payMethod = 'UPI (Google Pay / PhonePe)';
+    let checkoutData = {
+      turfId: 'TRF-101',
+      turfName: 'Shashikant Football Grand Arena',
+      roofType: 'Open-Air Arena (All-Weather Drainage)',
+      date: new Date().toISOString().split('T')[0],
+      slot: '07:00 PM - 08:00 PM',
+      slotType: 'Standard',
+      basePrice: 699,
+      amount: 699
+    };
+    let lastCreatedBooking = null;
+
+    function selectPay(el, method) {
+      document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      payMethod = method;
+    }
+
+    function toggleOpenMatch(isChecked) {
+      const el = document.getElementById('openMatchOptions');
+      if (el) el.style.display = isChecked ? 'block' : 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Auto fill user from localStorage
+      const user = API.getCurrentUser();
+      if (user) {
+        if (user.name) document.getElementById('custName').value = user.name;
+        if (user.email) document.getElementById('custEmail').value = user.email;
+        if (user.phone) document.getElementById('custPhone').value = user.phone;
+      }
+
+      // 2. Read checkout params from sessionStorage
+      const raw = sessionStorage.getItem('current_checkout');
+      if (raw) {
+        try {
+          const data = JSON.parse(raw);
+          checkoutData = { ...checkoutData, ...data };
+          if (data.turfName) document.getElementById('sumTurf').innerText = data.turfName;
+          if (data.turfLocation) document.getElementById('sumTurfLoc').innerText = `📍 ${data.turfLocation}`;
+          if (data.roofType) document.getElementById('sumRoofBadge').innerText = data.roofType;
+          if (data.date) document.getElementById('sumDate').innerText = data.date;
+          if (data.slot) document.getElementById('sumSlot').innerText = data.slot;
+
+          // Fixed Rate = 699 flat
+          const base = 699;
+          document.getElementById('sumRate').innerText = `₹${base}`;
+          document.getElementById('sumTotal').innerText = `₹${base}`;
+          checkoutData.basePrice = base;
+          checkoutData.amount = base;
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    });
+
+    async function confirmBooking(e) {
+      e.preventDefault();
+      const payBtn = document.getElementById('payBtn');
+      payBtn.disabled = true;
+      payBtn.innerText = 'Locking Slot & Dispatching Gmail Pass...';
+
+      const name = document.getElementById('custName').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const date = document.getElementById('sumDate').innerText;
+      const slot = document.getElementById('sumSlot').innerText;
+
+      const isOpenMatch = document.getElementById('chkOpenMatch').checked;
+      const matchType = isOpenMatch ? document.getElementById('matchType').value : null;
+      const matchNote = isOpenMatch ? document.getElementById('matchNote').value.trim() : null;
+
+      const bookingPayload = {
+        turfId: checkoutData.turfId || 'TRF-101',
+        turfName: checkoutData.turfName || 'Shashikant Football Grand Arena',
+        userName: name,
+        userEmail: email,
+        userPhone: phone,
+        date: date,
+        slot: slot,
+        slotType: checkoutData.slotType || 'Standard',
+        customBasePrice: 699,
+        paymentMethod: payMethod,
+        isOpenMatch: isOpenMatch,
+        matchType: matchType,
+        matchNote: matchNote
+      };
+
+      try {
+        const res = await API.createBooking(bookingPayload);
+        const booked = res.booking || bookingPayload;
+        const bkgId = booked.id || ('BK-' + Math.floor(1000 + Math.random() * 9000));
+        booked.id = bkgId;
+        booked.amount = 699;
+        lastCreatedBooking = booked;
+
+        document.getElementById('modalId').innerText = '#' + bkgId;
+        document.getElementById('modalEmailTarget').innerText = email;
+        if (isOpenMatch) {
+          document.getElementById('modalMatchBadge').style.display = 'block';
+        }
+        document.getElementById('successModal').classList.add('active');
+      } catch (err) {
+        alert(err.message || 'Slot booking failed. It might already be taken!');
+        payBtn.disabled = false;
+        payBtn.innerText = 'Pay ₹699 & Confirm Booking ➔';
+      }
+    }
+
+    function previewSentGmailTicket() {
+      if (!lastCreatedBooking) return;
+      const b = lastCreatedBooking;
+      const qrData = encodeURIComponent(`SHASHIKANT-TURF-VALID#${b.id}#${b.date}#${b.slot}#${b.userEmail}`);
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrData}`;
+
+      const html = `
+        <div style="padding:20px; font-family:sans-serif; color:#f8fafc;">
+          <div style="background:linear-gradient(135deg, #10b981, #059669); padding:20px; border-radius:12px; text-align:center; color:#fff; margin-bottom:16px;">
+            <h2 style="margin:0; font-size:1.5rem;">SHASHIKANT TURF MATCH PASS</h2>
+            <div style="font-size:0.85rem; opacity:0.9;">Official Gmail Booking Confirmation</div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.05); padding:16px; border-radius:10px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="color:#94a3b8;">Booking Ref:</span>
+              <strong style="color:#10b981;">#${b.id}</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="color:#94a3b8;">Arena:</span>
+              <strong style="color:#fff;">${b.turfName}</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="color:#94a3b8;">Date &amp; Slot:</span>
+              <strong style="color:#fff;">${b.date} • ${b.slot}</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="color:#94a3b8;">Player:</span>
+              <strong style="color:#fff;">${b.userName} (${b.userEmail})</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <span style="color:#94a3b8;">Amount Paid:</span>
+              <strong style="color:#10b981; font-size:1.1rem;">₹699 (${b.paymentMethod || 'UPI'})</strong>
+            </div>
+          </div>
+
+          <div style="background:#fff; color:#0a0f1d; border-radius:10px; padding:16px; text-align:center;">
+            <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; margin-bottom:8px;">Gate Security QR Code</div>
+            <img src="${qrUrl}" alt="QR Code" style="width:130px; height:130px; display:inline-block; border-radius:6px;" />
+            <div style="font-size:0.75rem; color:#475569; margin-top:6px;">Scan at Shashikant Turf counter for entry.</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('gmailPreviewBody').innerHTML = html;
+      document.getElementById('gmailPreviewModal').classList.add('active');
+    }
+
+    function closeGmailPreview() {
+      document.getElementById('gmailPreviewModal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>

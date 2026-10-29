@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    margin: 0;
+    padding: 24px;
+    background: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", system-ui, "Ubuntu", "Droid Sans", sans-serif;
+  }
+  .vscode-window {
+    background: #181818;
+    color: #cccccc;
+    width: 440px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+    border: 1px solid #333333;
+    font-size: 13px;
+  }
+  .vscode-titlebar {
+    background: #1f1f1f;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #2b2b2b;
+    font-size: 11px;
+    color: #8c8c8c;
+    letter-spacing: 0.5px;
+  }
+  .window-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-red { background: #ff5f56; }
+  .dot-yellow { background: #ffbd2e; }
+  .dot-green { background: #27c93f; }
+  .explorer-header {
+    padding: 10px 14px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #bbbbbb;
+    text-transform: uppercase;
+  }
+  .tree-list {
+    padding: 4px 0 16px 0;
+  }
+  .tree-item {
+    display: flex;
+    align-items: center;
+    padding: 3px 14px;
+    cursor: default;
+    white-space: nowrap;
+    gap: 6px;
+  }
+  .tree-item:hover {
+    background: #2a2d2e;
+  }
+  .tree-item.active {
+    background: #37373d;
+    color: #ffffff;
+  }
+  .indent-1 { padding-left: 26px; }
+  .indent-2 { padding-left: 42px; }
+  .indent-3 { padding-left: 58px; }
+  .folder-icon { color: #dcb67a; font-size: 13px; }
+  .file-icon-html { color: #e44d26; font-size: 13px; }
+  .file-icon-css { color: #42a5f5; font-size: 13px; }
+  .file-icon-js { color: #f7df1e; font-size: 13px; }
+  .file-icon-pdf { color: #ef4444; font-size: 13px; }
+  .file-icon-md { color: #42a5f5; font-size: 13px; }
+  .chevron { font-size: 9px; color: #858585; margin-right: 2px; }
+</style>
+</head>
+<body>
+  <div class="vscode-window">
+    <div class="vscode-titlebar">
+      <div class="window-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <span>Visual Studio Code — ShashikantTurf</span>
+      <span>...</span>
+    </div>
+    <div class="explorer-header">Explorer: ShashikantTurf</div>
+    <div class="tree-list">
+      <div class="tree-item"><span class="chevron">▼</span> <span class="folder-icon">📁</span> <strong>SHASHIKANTTURF</strong></div>
+      <div class="tree-item indent-1"><span class="chevron">▼</span> <span class="folder-icon">📁</span> Admin</div>
+      <div class="tree-item indent-2"><span class="chevron">▼</span> <span class="folder-icon">📁</span> css</div>
+      <div class="tree-item indent-3"><span class="file-icon-css">#</span> admin.css</div>
+      <div class="tree-item indent-3"><span class="file-icon-css">#</span> auth.css</div>
+      <div class="tree-item indent-3"><span class="file-icon-css">#</span> booking.css</div>
+      <div class="tree-item indent-3"><span class="file-icon-css">#</span> style.css</div>
+      <div class="tree-item indent-2"><span class="chevron">▼</span> <span class="folder-icon">📁</span> js</div>
+      <div class="tree-item indent-3"><span class="file-icon-js">JS</span> admin.js</div>
+      <div class="tree-item indent-3"><span class="file-icon-js">JS</span> auth.js</div>
+      <div class="tree-item indent-3"><span class="file-icon-js">JS</span> booking.js</div>
+      <div class="tree-item indent-3"><span class="file-icon-js">JS</span> main.js</div>
+      <div class="tree-item indent-3"><span class="file-icon-js">JS</span> turfs.js</div>
+      <div class="tree-item indent-3"><span class="file-icon-js">JS</span> user.js</div>
+      <div class="tree-item indent-3"><span class="chevron">▼</span> <span class="folder-icon">📁</span> root project</div>
+      <div class="tree-item" style="padding-left: 74px;"><span class="file-icon-html">&lt;&gt;</span> checkout.html</div>
+      <div class="tree-item active" style="padding-left: 74px;"><span class="file-icon-html">&lt;&gt;</span> index.html</div>
+      <div class="tree-item" style="padding-left: 74px;"><span class="file-icon-html">&lt;&gt;</span> login.html</div>
+      <div class="tree-item" style="padding-left: 74px;"><span class="file-icon-html">&lt;&gt;</span> my-bookings.html</div>
+      <div class="tree-item" style="padding-left: 74px;"><span class="file-icon-html">&lt;&gt;</span> register.html</div>
+      <div class="tree-item" style="padding-left: 74px;"><span class="file-icon-html">&lt;&gt;</span> turf-details.html</div>
+      <div class="tree-item" style="padding-left: 74px;"><span class="file-icon-html">&lt;&gt;</span> turfs.html</div>
+      <div class="tree-item indent-2"><span class="file-icon-html">&lt;&gt;</span> calender.html</div>
+      <div class="tree-item indent-2"><span class="file-icon-html">&lt;&gt;</span> dashboard.html</div>
+      <div class="tree-item indent-2"><span class="file-icon-html">&lt;&gt;</span> manage-turfs.html</div>
+      <div class="tree-item indent-1"><span class="chevron">▶</span> <span class="folder-icon">📁</span> report</div>
+      <div class="tree-item indent-1"><span class="file-icon-md">M↓</span> readme.md</div>
+    </div>
+  </div>
+</body>
+</html>
+

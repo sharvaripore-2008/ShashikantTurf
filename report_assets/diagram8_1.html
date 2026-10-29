@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    margin: 0;
+    padding: 30px;
+    background: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .chart-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 36px 40px;
+    width: 820px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .hub-node {
+    display: inline-block;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(15,23,42,0.25);
+  }
+  .lines-down {
+    height: 36px;
+    position: relative;
+    margin: 8px 0;
+  }
+  .lines-down::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: #cbd5e1;
+  }
+  .lines-down::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 17%;
+    right: 17%;
+    height: 2px;
+    background: #cbd5e1;
+  }
+  .branches {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+  }
+  .branch-node {
+    flex: 1;
+    padding: 18px 16px;
+    border-radius: 10px;
+    color: white;
+    font-size: 13px;
+    position: relative;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  }
+  .branch-node::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    width: 2px;
+    height: 16px;
+    background: #cbd5e1;
+  }
+  .branch-node h4 {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .branch-node p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .node-blue { background: linear-gradient(135deg, #0284c7, #0369a1); }
+  .node-emerald { background: linear-gradient(135deg, #059669, #047857); }
+  .node-purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+
+  .lines-converge {
+    height: 36px;
+    position: relative;
+    margin: 8px 0;
+  }
+  .lines-converge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 17%;
+    right: 17%;
+    height: 2px;
+    background: #cbd5e1;
+  }
+  .lines-converge::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: #cbd5e1;
+  }
+  .bottom-layer {
+    background: #f1f5f9;
+    border: 2px dashed #94a3b8;
+    border-radius: 12px;
+    padding: 16px 24px;
+    color: #334155;
+  }
+  .bottom-layer h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: #0f172a;
+    font-weight: 700;
+  }
+  .bottom-layer p {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+  }
+</style>
+</head>
+<body>
+  <div class="chart-container">
+    <div class="hub-node">Shashikant Turf Platform Hub</div>
+    
+    <div class="lines-down"></div>
+    
+    <div class="branches">
+      <div class="branch-node node-blue">
+        <h4>Customer Discovery Portal</h4>
+        <p>Location Search • Sport Filtering • Turf Details & Pitch Specs</p>
+      </div>
+      <div class="branch-node node-emerald">
+        <h4>Slot Reservation Engine</h4>
+        <p>7-Day Date Ribbon • Real-Time Slots • 18% GST & Cost Breakdown</p>
+      </div>
+      <div class="branch-node node-purple">
+        <h4>Admin Operations Desk</h4>
+        <p>Revenue & Booking KPIs • Turf CRUD • Slot Block Calendar</p>
+      </div>
+    </div>
+    
+    <div class="lines-converge"></div>
+    
+    <div class="bottom-layer">
+      <h4>LocalStorage Persistent Data Engine</h4>
+      <p>SHASHIKANT_TURFS • SHASHIKANT_BOOKINGS • SHASHIKANT_USER • Cross-Tab Real-Time Session Sync</p>
+    </div>
+  </div>
+</body>
+</html>

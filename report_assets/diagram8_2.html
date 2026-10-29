@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    margin: 0;
+    padding: 30px;
+    background: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .chart-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 30px 40px;
+    width: 780px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .step-node {
+    display: inline-block;
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+  }
+  .node-start { background: linear-gradient(135deg, #0284c7, #0369a1); box-shadow: 0 4px 10px rgba(2,132,199,0.25); }
+  .node-finish { background: linear-gradient(135deg, #0f172a, #1e293b); box-shadow: 0 4px 10px rgba(15,23,42,0.3); }
+
+  .v-line {
+    width: 2px;
+    height: 24px;
+    background: #94a3b8;
+    margin: 0 auto;
+  }
+  .diamond-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 6px 0;
+  }
+  .diamond {
+    background: #fef3c7;
+    border: 2px solid #f59e0b;
+    color: #92400e;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 14px 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(245,158,11,0.2);
+    position: relative;
+    max-width: 320px;
+  }
+  .split-paths {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 14px;
+  }
+  .path-box {
+    flex: 1;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .path-no {
+    background: #fee2e2;
+    border: 1.5px solid #ef4444;
+    color: #991b1b;
+  }
+  .path-yes {
+    background: #dcfce7;
+    border: 1.5px solid #10b981;
+    color: #065f46;
+  }
+</style>
+</head>
+<body>
+  <div class="chart-container">
+    <div class="step-node node-start">Player Selects Turf Venue & Target Date from 7-Day Ribbon</div>
+    
+    <div class="v-line"></div>
+    
+    <div class="diamond-wrap">
+      <div class="diamond">Is Selected Hourly Slot Already Booked in Storage?</div>
+    </div>
+    
+    <div class="split-paths">
+      <div class="path-box path-no">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; font-weight:800; color:#dc2626;">[ YES - SLOT OCCUPIED ]</div>
+        Render Slot Chip in Red / Disabled<br>Prevent Double Booking Selection
+      </div>
+      <div class="path-box path-yes">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; font-weight:800; color:#059669;">[ NO - SLOT AVAILABLE ]</div>
+        Highlight Slot in Neon Green<br>Auto-Calculate: Base Price + 18% GST + Fee
+      </div>
+    </div>
+    
+    <div class="v-line" style="height:20px; margin-top:14px;"></div>
+    
+    <div class="step-node node-finish">Proceed to Checkout ➔ Select Payment Mode ➔ Generate Reservation ID & Save Booking</div>
+  </div>
+</body>
+</html>

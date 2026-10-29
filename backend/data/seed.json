@@ -1,0 +1,157 @@
+{
+  "users": [
+    {
+      "id": "ADM-01",
+      "name": "Admin Manager",
+      "email": "admin@turf.com",
+      "password": "admin",
+      "phone": "+91 98765 00000",
+      "role": "admin",
+      "createdAt": "2026-10-19T10:00:00.000Z"
+    },
+    {
+      "id": "USR-101",
+      "name": "Rohan Sharma",
+      "email": "rohan@gmail.com",
+      "password": "123",
+      "phone": "+91 98200 11223",
+      "role": "user",
+      "createdAt": "2026-10-19T11:00:00.000Z"
+    }
+  ],
+  "turfs": [
+    {
+      "id": "TRF-101",
+      "name": "Shashikant Football Grand Arena",
+      "sport": "Football",
+      "category": "football",
+      "size": "7v7 FIFA Standard Turf",
+      "location": "Andheri West, Mumbai",
+      "pricePerHour": 699,
+      "rating": 4.9,
+      "roofType": "Open-Air Arena (All-Weather Drainage)",
+      "image": "assets/images/shashikant-turf-day.jpg",
+      "description": "Official Shashikant Turf FIFA standard 7-a-side football ground equipped with ultra-bright floodlights, dugout player seating, clean shower changing rooms, and free parking.",
+      "amenities": [
+        "Stadium Floodlights",
+        "Changing Rooms",
+        "Free Parking",
+        "Chilled Water",
+        "Dugout Seating"
+      ]
+    },
+    {
+      "id": "TRF-102",
+      "name": "Shashikant Box Cricket Stadium",
+      "sport": "Cricket",
+      "category": "cricket",
+      "size": "6v6 Box Cricket Pitch",
+      "location": "Bandra West, Mumbai",
+      "pricePerHour": 699,
+      "rating": 4.9,
+      "roofType": "Covered Arena (100% Rain Protected)",
+      "image": "assets/images/shashikant-turf-night.jpg",
+      "description": "High-voltage box cricket arena with professional turf pitch, high-bounce safety netting, night match LED floodlights, sound system, and tournament score desk.",
+      "amenities": [
+        "Night Floodlights",
+        "Box Netting",
+        "Equipment Rental",
+        "Tournament Desk",
+        "Cafeteria"
+      ]
+    },
+    {
+      "id": "TRF-103",
+      "name": "Shashikant Multisport Arena",
+      "sport": "Multisport",
+      "category": "multisport",
+      "size": "6v6 Dual Football & Box Cricket",
+      "location": "Powai, Mumbai",
+      "pricePerHour": 699,
+      "rating": 4.8,
+      "roofType": "Covered Arena (100% Rain Protected)",
+      "image": "assets/images/shashikant-turf-day.jpg",
+      "description": "Versatile dual-purpose sports turf tailored for weekend matches, corporate leagues, football shootouts, and box cricket tournaments.",
+      "amenities": [
+        "Electronic Scoreboard",
+        "First Aid",
+        "Locker Room",
+        "Spectator Stand",
+        "CCTV Security"
+      ]
+    },
+    {
+      "id": "TRF-104",
+      "name": "Shashikant Night Floodlit Stadium",
+      "sport": "Football",
+      "category": "football",
+      "size": "8v8 Full Scale Arena",
+      "location": "Kandivali East, Mumbai",
+      "pricePerHour": 699,
+      "rating": 5,
+      "roofType": "Open-Air Arena (All-Weather Drainage)",
+      "image": "assets/images/shashikant-turf-night.jpg",
+      "description": "Full-scale night match arena with imported monofilament grass, high mast lighting towers, warm-up track, and spectator gallery.",
+      "amenities": [
+        "High Mast Lights",
+        "Warmup Track",
+        "Shower Rooms",
+        "VIP Lounge",
+        "Referee Room"
+      ]
+    }
+  ],
+  "bookings": [
+    {
+      "id": "BK-8291",
+      "turfId": "TRF-101",
+      "turfName": "KickOff Grand Arena",
+      "userName": "Rohan Sharma",
+      "userEmail": "rohan@gmail.com",
+      "userPhone": "+91 98200 11223",
+      "date": "2026-10-20",
+      "slot": "07:00 PM - 08:00 PM",
+      "basePrice": 1200,
+      "gst": 216,
+      "platformFee": 50,
+      "amount": 1466,
+      "paymentMethod": "UPI (Google Pay)",
+      "status": "Confirmed",
+      "createdAt": "2026-10-19T14:30:00.000Z"
+    },
+    {
+      "id": "BK-8292",
+      "turfId": "TRF-102",
+      "turfName": "Skyline Rooftop Turf",
+      "userName": "Aditya Patil",
+      "userEmail": "aditya@patil.com",
+      "userPhone": "+91 98190 44556",
+      "date": "2026-10-20",
+      "slot": "08:00 PM - 09:00 PM",
+      "basePrice": 1500,
+      "gst": 270,
+      "platformFee": 50,
+      "amount": 1820,
+      "paymentMethod": "Credit Card",
+      "status": "Confirmed",
+      "createdAt": "2026-10-19T15:10:00.000Z"
+    },
+    {
+      "id": "BK-8293",
+      "turfId": "TRF-103",
+      "turfName": "Striker's Hub Multisport",
+      "userName": "Siddhesh Kadam",
+      "userEmail": "siddhesh@kadam.com",
+      "userPhone": "+91 97680 99881",
+      "date": "2026-10-20",
+      "slot": "06:00 AM - 07:00 AM",
+      "basePrice": 1000,
+      "gst": 180,
+      "platformFee": 50,
+      "amount": 1230,
+      "paymentMethod": "Pay at Venue",
+      "status": "Confirmed",
+      "createdAt": "2026-10-19T16:00:00.000Z"
+    }
+  ]
+}

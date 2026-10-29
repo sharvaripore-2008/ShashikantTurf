@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Shashikant Turf Management</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <style>
+    .tab-btn-group { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+    .tab-btn {
+      background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-muted);
+      padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 0.9rem; transition: 0.2s;
+    }
+    .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .badge-log { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .badge-success { background: rgba(16,185,129,0.2); color: #10b981; }
+    .badge-danger { background: rgba(239,68,68,0.2); color: #f87171; }
+    .badge-info { background: rgba(59,130,246,0.2); color: #60a5fa; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="navbar" style="border-bottom: 1px solid var(--border-color);">
+    <div class="container nav-container" style="max-width: 100%; padding: 0 30px;">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon">⚽</div>
+        Shashikant<span>Turf</span> <span style="font-size:0.75rem; background:rgba(16,185,129,0.2); color:var(--accent); padding:2px 8px; border-radius:4px; margin-left:6px;">ADMIN</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <span id="backendStatusPill" style="font-size:0.8rem; background:rgba(16,185,129,0.15); color:var(--accent); padding:4px 12px; border-radius:20px; border:1px solid rgba(16,185,129,0.3);">
+          ⚡ MySQL Connected
+        </span>
+        <a href="../index.html" class="btn btn-outline btn-sm">🌐 View Live Website</a>
+        <button onclick="API.logout()" class="btn btn-danger btn-sm">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Admin Layout -->
+  <div class="admin-layout">
+    
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-menu">
+        <div class="sidebar-heading">Core Management</div>
+        <a href="dashboard.html" class="sidebar-link active">
+          <span class="icon">📊</span> Overview & Database
+        </a>
+        <a href="manage-turfs.html" class="sidebar-link">
+          <span class="icon">🏟️</span> Manage Turfs
+        </a>
+        <a href="calender.html" class="sidebar-link">
+          <span class="icon">📅</span> Slot Calendar
+        </a>
+
+        <div class="sidebar-heading">Quick Links</div>
+        <a href="../my-bookings.html" class="sidebar-link">
+          <span class="icon">🎟️</span> Player Bookings
+        </a>
+        <a href="../index.html" class="sidebar-link">
+          <span class="icon">🏠</span> Back to Home
+        </a>
+      </div>
+
+      <div style="background:var(--bg-surface); padding:14px; border-radius:var(--radius-md); font-size:0.8rem; color:var(--text-muted);">
+        Logged in as:<br>
+        <strong style="color:var(--text-main);">Admin Manager</strong>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-header">
+        <div>
+          <h1>Operations & Database Dashboard</h1>
+          <p>Real-time view of MySQL tables: Users, Login Logs, Turf Bookings, and Cancellations.</p>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="stat-card">
+          <div class="stat-info">
+            <span>Total Revenue</span>
+            <h3 id="statTotalRevenue">₹0</h3>
+          </div>
+          <div class="stat-icon">💰</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <span>Total Bookings</span>
+            <h3 id="statTotalBookings">0</h3>
+          </div>
+          <div class="stat-icon">📝</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <span>Today's Bookings</span>
+            <h3 id="statTodayBookings">0</h3>
+          </div>
+          <div class="stat-icon">⚡</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <span>Cancelled Bookings</span>
+            <h3 id="statCancelledBookings" style="color:#f87171;">0</h3>
+          </div>
+          <div class="stat-icon">❌</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <span>Active Turfs</span>
+            <h3 id="statActiveTurfs">0</h3>
+          </div>
+          <div class="stat-icon">🏟️</div>
+        </div>
+      </div>
+
+      <!-- 🎫 VENUE SECURITY & GATE CHECK-IN QR SCANNER -->
+      <div class="table-card" style="margin-bottom: 24px; padding: 22px; border: 1px solid rgba(16,185,129,0.3); background: radial-gradient(circle at 95% 10%, rgba(16,185,129,0.08) 0%, var(--bg-card) 60%);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div>
+            <h3 style="font-size:1.25rem; display:flex; align-items:center; gap:8px;">
+              <span>🎟️ Venue Gate Pass Scanner &amp; Check-In</span>
+              <span class="badge badge-success">Category 1: Feature 2</span>
+            </h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin:4px 0 0;">
+              Verify player digital match tickets, check QR validity, and confirm entry to Shashikant Turf in real-time.
+            </p>
+          </div>
+          <span style="font-size:0.8rem; background:rgba(16,185,129,0.15); color:var(--accent); padding:4px 12px; border-radius:6px; font-weight:700;">
+            ⚡ Scans MySQL 'bookings' table
+          </span>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <input type="text" id="scanTicketInput" 
+                 placeholder="Enter or scan Booking ID (e.g. BK-1024 or SHASHIKANT-TURF-VALID#...)" 
+                 class="form-control" 
+                 style="flex:1; min-width:260px; background:var(--bg-surface); border:1px solid var(--border-color); color:var(--text-main); padding:10px 16px; border-radius:8px; outline:none; font-family:inherit;">
+          <button onclick="handleVerifyPass()" class="btn btn-primary">🔍 Verify Pass</button>
+        </div>
+
+        <!-- Verification Result Banner -->
+        <div id="verifyResultBox" style="display:none; margin-top:16px; padding:16px; border-radius:8px; background:var(--bg-surface); border:1px solid var(--border-color);">
+          <!-- Populated dynamically via handleVerifyPass() -->
+        </div>
+      </div>
+
+      <!-- Tab Buttons for SQL Tables View -->
+      <div class="tab-btn-group">
+        <button class="tab-btn active" onclick="switchTableTab('bookingsTab', this)">
+          🎟️ Bookings Table (<span id="countBookings">0</span>)
+        </button>
+        <button class="tab-btn" onclick="switchTableTab('cancellationsTab', this)">
+          ❌ Cancellations Table (<span id="countCancellations">0</span>)
+        </button>
+        <button class="tab-btn" onclick="switchTableTab('loginsTab', this)">
+          🔐 Login Activity Log (<span id="countLogins">0</span>)
+        </button>
+        <button class="tab-btn" onclick="switchTableTab('usersTab', this)">
+          👤 Users / Signups (<span id="countUsers">0</span>)
+        </button>
+      </div>
+
+      <!-- TAB 1: BOOKINGS TABLE -->
+      <div id="bookingsTab" class="table-card">
+        <div class="table-header">
+          <h3 style="font-size: 1.25rem;">Live Turf Reservations (MySQL 'bookings' Table)</h3>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Kisne kisne booking ki hai</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Turf Name</th>
+                <th>Customer Name</th>
+                <th>Email / Phone</th>
+                <th>Date & Slot</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminBookingsTable">
+              <!-- Populated via js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: CANCELLATIONS TABLE -->
+      <div id="cancellationsTab" class="table-card" style="display:none;">
+        <div class="table-header">
+          <h3 style="font-size: 1.25rem;">Cancelled Reservations (MySQL 'cancellations' Table)</h3>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Kisne kisne cancel ki hai</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Log ID</th>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Email</th>
+                <th>Turf Name</th>
+                <th>Slot Details</th>
+                <th>Refund Amount</th>
+                <th>Cancelled At</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody id="adminCancellationsTable">
+              <!-- Populated via js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 3: LOGIN LOGS TABLE -->
+      <div id="loginsTab" class="table-card" style="display:none;">
+        <div class="table-header">
+          <h3 style="font-size: 1.25rem;">Authentication Activity (MySQL 'login_logs' Table)</h3>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Kisne kisne login kiya hai</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Log ID</th>
+                <th>User / Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>IP Address</th>
+                <th>Login Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="adminLoginLogsTable">
+              <!-- Populated via js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 4: USERS / SIGNUPS TABLE -->
+      <div id="usersTab" class="table-card" style="display:none;">
+        <div class="table-header">
+          <h3 style="font-size: 1.25rem;">Registered User Accounts (MySQL 'users' Table)</h3>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Kisne kisne sign up kiya hai</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email Address</th>
+                <th>Phone Number</th>
+                <th>Role</th>
+                <th>Created At</th>
+                <th>Last Login</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsersTable">
+              <!-- Populated via js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    function switchTableTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ['bookingsTab', 'cancellationsTab', 'loginsTab', 'usersTab'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = (id === tabId) ? 'block' : 'none';
+      });
+    }
+
+    let verifiedBookingId = null;
+
+    async function handleVerifyPass() {
+      let raw = document.getElementById('scanTicketInput').value.trim();
+      const resBox = document.getElementById('verifyResultBox');
+      if (!raw) {
+        alert('Please enter or scan a Booking ID');
+        return;
+      }
+
+      // If full QR payload scanned (e.g. SHASHIKANT-TURF-VALID#BK-1024#...)
+      if (raw.includes('#')) {
+        const parts = raw.split('#');
+        if (parts.length >= 2) raw = parts[1];
+      }
+      // Strip leading # if typed
+      raw = raw.replace(/^#/, '');
+
+      resBox.style.display = 'block';
+      resBox.innerHTML = `<div style="color:var(--text-muted);">Verifying pass #${raw} in database...</div>`;
+
+      try {
+        const res = await API.verifyTicket(raw);
+        if (!res || !res.success || !res.data) {
+          resBox.innerHTML = `
+            <div style="color:#f87171; display:flex; align-items:center; gap:8px;">
+              <span>❌</span>
+              <strong>Invalid Pass:</strong> Booking ID "#${raw}" was not found in the database.
+            </div>
+          `;
+          return;
+        }
+
+        const b = res.data;
+        verifiedBookingId = b.id;
+        const isCancelled = (b.status === 'Cancelled');
+        const isCheckedIn = (b.check_in_status === 'Checked-In' || b.checkInStatus === 'Checked-In');
+
+        resBox.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                <span class="badge ${isCancelled ? 'badge-danger' : 'badge-success'}">${b.status}</span>
+                <strong style="font-size:1.15rem; color:var(--text-main);">#${b.id}</strong>
+                <span style="color:var(--text-muted); font-size:0.85rem;">• ${b.turf_name || b.turfName}</span>
+              </div>
+              <div style="font-size:0.9rem; color:var(--text-muted); margin-bottom:4px;">
+                👤 <strong>${b.user_name || b.userName}</strong> (${b.user_email || b.userEmail} | ${b.user_phone || b.userPhone || '—'})
+              </div>
+              <div style="font-size:0.9rem; color:var(--text-muted);">
+                📅 <strong>${b.date}</strong> &nbsp;|&nbsp; ⏰ <strong>${b.slot}</strong> &nbsp;|&nbsp; 💰 <strong>₹${b.amount}</strong>
+              </div>
+              <div style="margin-top:8px; font-size:0.85rem;">
+                Check-In Status: 
+                <strong style="color:${isCheckedIn ? '#60a5fa' : 'var(--accent)'};">
+                  ${isCheckedIn ? '✓ Already Checked-In at Venue' : '⏳ Pending Gate Entry'}
+                </strong>
+              </div>
+            </div>
+
+            <div>
+              ${!isCancelled && !isCheckedIn ? `
+                <button onclick="handleCheckIn('${b.id}')" class="btn btn-primary" style="background:linear-gradient(135deg, #10b981, #059669);">
+                  ✓ Confirm &amp; Check-In Player
+                </button>
+              ` : (isCheckedIn ? `
+                <span style="color:#60a5fa; font-weight:700; font-size:0.9rem;">✓ Verified Entry Granted</span>
+              ` : `
+                <span style="color:#f87171; font-weight:700; font-size:0.9rem;">❌ Cancelled Reservation</span>
+              `)}
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        resBox.innerHTML = `<div style="color:#f87171;">Verification error: ${err.message}</div>`;
+      }
+    }
+
+    async function handleCheckIn(id) {
+      try {
+        const res = await API.checkInTicket(id);
+        alert(`Success! Player for reservation #${id} has been checked in.`);
+        handleVerifyPass();
+        initAdminDashboard();
+      } catch (e) {
+        alert(`Failed to check-in: ${e.message}`);
+      }
+    }
+  </script>
+</body>
+</html>

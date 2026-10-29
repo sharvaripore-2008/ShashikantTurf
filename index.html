@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shashikant Turf | Mumbai's Premier Football & Box Cricket Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Human-crafted micro-details */
+    .glow-tag {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--accent);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .price-pill {
+      background: linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(5,150,105,0.2) 100%);
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-book-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      margin: -40px auto 40px;
+      position: relative;
+      z-index: 20;
+      max-width: 1080px;
+    }
+    .community-match-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.25s ease;
+      gap: 16px;
+    }
+    .community-match-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .feature-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px 22px;
+      text-align: center;
+      transition: 0.25s;
+    }
+    .feature-box:hover {
+      transform: translateY(-5px);
+      border-color: rgba(16,185,129,0.4);
+    }
+    .feature-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(16,185,129,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 16px;
+      border: 1px solid rgba(16,185,129,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚽</div>
+        Shashikant <span>Turf</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="turfs.html" class="nav-link">Explore Turfs</a>
+        <a href="my-bookings.html" class="nav-link">My Bookings</a>
+        <a href="#communityLobby" class="nav-link">Community Lobby</a>
+      </div>
+
+      <div id="navAuthSlot" class="nav-actions">
+        <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      
+      <div class="float-badge glow-tag" style="margin-bottom: 18px;">
+        <span class="live-indicator"></span>
+        <span>SHASHIKANT TURF • CRICKET &amp; FOOTBALL ARENA</span>
+      </div>
+
+      <h1 class="hero-title">
+        Book Top-Rated <span>Cricket &amp; Football Turfs</span> In Seconds
+      </h1>
+
+      <p class="hero-desc">
+        FIFA standard artificial grass, match-ready LED stadium floodlights, and instant digital gate passes delivered directly to your Gmail.
+      </p>
+
+      <div style="display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:28px;">
+        <div class="price-pill">
+          ⚡ Flat Rate: ₹699 / Hour
+        </div>
+        <div style="font-size:0.9rem; color:var(--text-muted);">
+          🎟️ Instant Gmail Confirmation &amp; QR Gate Pass
+        </div>
+      </div>
+
+      <!-- Interactive Stadium Visual with Day / Night Floodlight Switcher -->
+      <div class="hero-stadium-card stadium-glow">
+        <img id="stadiumHeroImg" 
+             src="assets/images/shashikant-turf-day.jpg" 
+             alt="Shashikant Turf Arena - Daytime & Floodlight View" 
+             class="hero-stadium-img">
+
+        <!-- Day / Night Floodlight Toggle Pill -->
+        <div class="stadium-switch-pill">
+          <button id="btnDayMode" class="stadium-switch-btn active" onclick="switchStadiumMode('day')">
+            ☀️ Daytime View
+          </button>
+          <button id="btnNightMode" class="stadium-switch-btn" onclick="switchStadiumMode('night')">
+            🌙 Night Floodlights
+          </button>
+        </div>
+
+        <div class="stadium-overlay-caption">
+          <div>
+            <div style="font-size:0.8rem; text-transform:uppercase; color:var(--accent); font-weight:700; letter-spacing:1px; margin-bottom:4px;">
+              📍 Official Facility Venue • Mumbai
+            </div>
+            <h3 id="stadiumModeTitle" style="font-size:1.45rem; font-weight:800; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">
+              Shashikant Turf: Football | Box Cricket | Multisport Arena
+            </h3>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <a href="turf-details.html?id=TRF-101" class="btn btn-primary btn-sm">Book Football ⚽</a>
+            <a href="turf-details.html?id=TRF-102" class="btn btn-outline btn-sm" style="background:rgba(10,15,29,0.7);">Book Cricket 🏏</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Live Quick-Booking Bar -->
+  <div class="container">
+    <div class="quick-book-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.2rem;">⚡</span>
+          <strong style="font-size:1.05rem;">Quick Reservation &amp; Slot Search</strong>
+        </div>
+        <span style="font-size:0.85rem; color:var(--accent); font-weight:600;">
+          All Arenas Fixed at ₹699 / Hour
+        </span>
+      </div>
+
+      <form onsubmit="handleQuickBooking(event)" style="display:grid; grid-template-columns: 1.2fr 1fr 1fr auto; gap:14px; align-items:end;">
+        <div>
+          <label style="display:block; font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; margin-bottom:6px;">Select Arena / Sport</label>
+          <select id="quickTurfSelect" class="search-field" style="width:100%; height:46px; border:1px solid var(--border-color); background:var(--bg-surface);">
+            <option value="TRF-101">⚽ Shashikant Football Grand Arena (7v7)</option>
+            <option value="TRF-102">🏏 Shashikant Pro Box Cricket Arena (Pitch)</option>
+            <option value="TRF-103">⚡ Shashikant Multisport Arena (Dual Turf)</option>
+            <option value="TRF-104">🌙 Shashikant Night Floodlit Stadium (8v8)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; margin-bottom:6px;">Match Date</label>
+          <input type="date" id="quickDateInput" class="search-field" style="width:100%; height:46px; border:1px solid var(--border-color); background:var(--bg-surface);">
+        </div>
+
+        <div>
+          <label style="display:block; font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; margin-bottom:6px;">Preferred Time Window</label>
+          <select id="quickTimeWindow" class="search-field" style="width:100%; height:46px; border:1px solid var(--border-color); background:var(--bg-surface);">
+            <option value="07:00 PM - 08:00 PM">🌙 Prime Night (07:00 PM - 08:00 PM)</option>
+            <option value="08:00 PM - 09:00 PM">🌙 Prime Night (08:00 PM - 09:00 PM)</option>
+            <option value="09:00 PM - 10:00 PM">🌙 Late Night (09:00 PM - 10:00 PM)</option>
+            <option value="06:00 AM - 07:00 AM">☀️ Morning Glory (06:00 AM - 07:00 AM)</option>
+            <option value="05:00 PM - 06:00 PM">🌅 Sunset Slot (05:00 PM - 06:00 PM)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="height:46px; white-space:nowrap; padding:0 24px;">
+          Check &amp; Book at ₹699 ➔
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Featured Arenas Showcase -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Official Venues</div>
+        <h2 class="section-title">Explore Shashikant Sports Arenas</h2>
+        <p class="section-desc">
+          Professional imported artificial turf, high impact shock padding, high mast LED floodlights, and 100% rain drainage.
+        </p>
+      </div>
+
+      <div class="turf-grid">
+
+        <!-- 1. Shashikant Football Grand Arena -->
+        <div class="turf-card">
+          <div class="turf-img-wrapper">
+            <img src="assets/images/shashikant-turf-day.jpg" alt="Shashikant Football Grand Arena">
+            <span class="turf-badge-sport">⚽ Football 7v7</span>
+            <span class="turf-rating">★ 4.9 (180+ Reviews)</span>
+          </div>
+          <div class="turf-body">
+            <div class="turf-location">📍 Andheri West, Mumbai • FIFA Pro Turfgrass</div>
+            <h3 class="turf-title">Shashikant Football Grand Arena</h3>
+            <div class="turf-amenities">
+              <span class="amenity-chip">💡 High Mast Lights</span>
+              <span class="amenity-chip">🚿 Shower Rooms</span>
+              <span class="amenity-chip">🅿️ Free Parking</span>
+              <span class="amenity-chip">💧 Chilled RO Water</span>
+            </div>
+            <div class="turf-footer">
+              <div class="turf-price">
+                <strong>₹699</strong> <small style="color:var(--text-muted); font-size:0.85rem;">/ hour</small>
+              </div>
+              <a href="turf-details.html?id=TRF-101" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Shashikant Box Cricket Stadium -->
+        <div class="turf-card">
+          <div class="turf-img-wrapper">
+            <img src="assets/images/shashikant-turf-night.jpg" alt="Shashikant Box Cricket Stadium">
+            <span class="turf-badge-sport" style="color:#fbbf24;">🏏 Box Cricket</span>
+            <span class="turf-rating">★ 4.9 (210+ Reviews)</span>
+          </div>
+          <div class="turf-body">
+            <div class="turf-location">📍 Bandra West, Mumbai • Full Safety Netting</div>
+            <h3 class="turf-title">Shashikant Box Cricket Stadium</h3>
+            <div class="turf-amenities">
+              <span class="amenity-chip">🏏 Pitch Markings</span>
+              <span class="amenity-chip">🕸️ High Net Boundary</span>
+              <span class="amenity-chip">🔊 Match Sound System</span>
+              <span class="amenity-chip">☂️ Covered Roof</span>
+            </div>
+            <div class="turf-footer">
+              <div class="turf-price">
+                <strong>₹699</strong> <small style="color:var(--text-muted); font-size:0.85rem;">/ hour</small>
+              </div>
+              <a href="turf-details.html?id=TRF-102" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Shashikant Multisport Arena -->
+        <div class="turf-card">
+          <div class="turf-img-wrapper">
+            <img src="assets/images/shashikant-turf-day.jpg" alt="Shashikant Multisport Arena">
+            <span class="turf-badge-sport" style="color:#60a5fa;">⚡ Multisport 6v6</span>
+            <span class="turf-rating">★ 4.8 (95 Reviews)</span>
+          </div>
+          <div class="turf-body">
+            <div class="turf-location">📍 Powai, Mumbai • Dual Football &amp; Cricket</div>
+            <h3 class="turf-title">Shashikant Multisport Arena</h3>
+            <div class="turf-amenities">
+              <span class="amenity-chip">⏱️ Electronic Board</span>
+              <span class="amenity-chip">👥 Dugout Seating</span>
+              <span class="amenity-chip">☂️ Rain Protected</span>
+              <span class="amenity-chip">🏥 First Aid Desk</span>
+            </div>
+            <div class="turf-footer">
+              <div class="turf-price">
+                <strong>₹699</strong> <small style="color:var(--text-muted); font-size:0.85rem;">/ hour</small>
+              </div>
+              <a href="turf-details.html?id=TRF-103" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center; margin-top:36px;">
+        <a href="turfs.html" class="btn btn-outline">View All 4 Arenas &amp; Compare Amenities ➔</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Matchmaking Lobby ("Find Opponent / Need Players") -->
+  <section id="communityLobby" class="section" style="background: rgba(17, 24, 39, 0.4); border-top:1px solid var(--border-color); border-bottom:1px solid var(--border-color);">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div class="section-subtitle">🤝 Category 2: Community Feature</div>
+          <h2 style="font-size:2.2rem; margin-bottom:8px;">Matchday Open Challenges Lobby</h2>
+          <p style="color:var(--text-muted); max-width:600px;">
+            Short on players or looking for an opponent team to play against tonight? Join an open match or challenge another squad directly via WhatsApp.
+          </p>
+        </div>
+        <a href="turfs.html" class="btn btn-primary btn-sm">+ Post Your Open Challenge</a>
+      </div>
+
+      <div id="openMatchesContainer" style="display:flex; flex-direction:column; gap:14px;">
+        
+        <!-- Live Open Match 1 -->
+        <div class="community-match-card">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div style="font-size:2.2rem; background:rgba(16,185,129,0.15); border-radius:12px; width:52px; height:52px; display:flex; align-items:center; justify-content:center;">
+              ⚽
+            </div>
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                <span class="badge badge-success">Need 3 Players</span>
+                <span style="font-size:0.8rem; color:var(--text-muted);">Posted by <strong>Rohan (FC Andheri)</strong></span>
+              </div>
+              <h4 style="font-size:1.15rem; margin-bottom:4px;">7v7 Friendly Match • Shashikant Football Arena</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                📅 Today &nbsp;|&nbsp; ⏰ 08:00 PM - 09:00 PM &nbsp;|&nbsp; 💰 Split ₹699 Slot Fee
+              </p>
+            </div>
+          </div>
+          <a href="https://wa.me/919876543210?text=Hi%20Rohan%2C%20I%20saw%20your%20open%20football%20match%20on%20Shashikant%20Turf%20website%20and%20want%20to%20join%20tonight!" 
+             target="_blank" 
+             class="btn btn-outline btn-sm" style="border-color:#25d366; color:#25d366;">
+            💬 Join on WhatsApp
+          </a>
+        </div>
+
+        <!-- Live Open Match 2 -->
+        <div class="community-match-card">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div style="font-size:2.2rem; background:rgba(251,191,36,0.15); border-radius:12px; width:52px; height:52px; display:flex; align-items:center; justify-content:center;">
+              🏏
+            </div>
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                <span class="badge" style="background:rgba(251,191,36,0.2); color:#fbbf24;">Challenge An Opponent</span>
+                <span style="font-size:0.8rem; color:var(--text-muted);">Posted by <strong>Amit (Bandra Superstars)</strong></span>
+              </div>
+              <h4 style="font-size:1.15rem; margin-bottom:4px;">6v6 Box Cricket Tournament Match • Shashikant Stadium</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                📅 Tomorrow &nbsp;|&nbsp; ⏰ 07:00 PM - 08:00 PM &nbsp;|&nbsp; ⚡ Tennis Ball / Hard Tennis
+              </p>
+            </div>
+          </div>
+          <a href="https://wa.me/919876543210?text=Hi%20Amit%2C%20our%20team%20accepts%20your%20Box%20Cricket%20challenge%20at%20Shashikant%20Turf!" 
+             target="_blank" 
+             class="btn btn-outline btn-sm" style="border-color:#25d366; color:#25d366;">
+            ⚔️ Accept Challenge
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Shashikant Turf (Features & Amenities) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Matchday Excellence</div>
+        <h2 class="section-title">Built For Serious Players &amp; Weekend Warriors</h2>
+        <p class="section-desc">Everything you need for an unforgettable match under the Mumbai sky.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:24px;">
+        <div class="feature-box">
+          <div class="feature-icon-wrap">💡</div>
+          <h4 style="font-size:1.2rem; margin-bottom:8px;">High-Mast LED Lights</h4>
+          <p style="color:var(--text-muted); font-size:0.9rem;">
+            Shadowless stadium floodlights tuned for zero glare during high-speed football volleys and cricket catches.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">📧</div>
+          <h4 style="font-size:1.2rem; margin-bottom:8px;">Instant Gmail Pass</h4>
+          <p style="color:var(--text-muted); font-size:0.9rem;">
+            Automatic matchday digital ticket with high-res QR security pass delivered directly to your inbox upon booking.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">☂️</div>
+          <h4 style="font-size:1.2rem; margin-bottom:8px;">All-Weather &amp; Roof Options</h4>
+          <p style="color:var(--text-muted); font-size:0.9rem;">
+            Fast-draining porous turf base for open-air matches, plus 100% rain-proof covered arena options.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrap">💰</div>
+          <h4 style="font-size:1.2rem; margin-bottom:8px;">Flat ₹699 / Hour</h4>
+          <p style="color:var(--text-muted); font-size:0.9rem;">
+            100% transparent pricing across both Cricket and Football grounds. Zero hidden booking commissions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 Steps How It Works -->
+  <section class="section" style="background:var(--bg-surface); border-top:1px solid var(--border-color);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Simple &amp; Fast</div>
+        <h2 class="section-title">How To Book In 3 Easy Steps</h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h4 style="font-size:1.2rem; margin-bottom:8px;">Choose Sport &amp; Date</h4>
+          <p style="color:var(--text-muted); font-size:0.9rem;">
+            Pick Football or Box Cricket, select any date from our 21-day calendar, and pick an available 1-hour slot.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h4 style="font-size:1.2rem; margin-bottom:8px;">Confirm &amp; Pay ₹699</h4>
+          <p style="color:var(--text-muted); font-size:0.9rem;">
+            Pay instantly with UPI (Google Pay, PhonePe, Paytm), Net Banking, or QR scanner with zero payment hassle.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h4 style="font-size:1.2rem; margin-bottom:8px;">Show QR Pass &amp; Play!</h4>
+          <p style="color:var(--text-muted); font-size:0.9rem;">
+            Your match ticket arrives on your Gmail. Flash the QR code at the facility gate and hit the turf!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo" style="margin-bottom:14px;">
+            <div class="logo-icon">⚽</div>
+            Shashikant <span>Turf</span>
+          </div>
+          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:16px;">
+            Mumbai's favorite multi-sport destination for Football, Box Cricket, and Corporate Tournaments.
+          </p>
+          <div style="font-size:0.85rem; color:var(--text-muted);">
+            📞 WhatsApp Helpline: <strong style="color:var(--text-main);">+91 98765 00000</strong><br>
+            📍 Location: Near Metro Station, Link Road, Mumbai
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-size:1.05rem; margin-bottom:14px;">Turf Arenas</h4>
+          <ul style="list-style:none; font-size:0.9rem; color:var(--text-muted); display:flex; flex-direction:column; gap:8px;">
+            <li><a href="turf-details.html?id=TRF-101">Football Grand Arena</a></li>
+            <li><a href="turf-details.html?id=TRF-102">Box Cricket Stadium</a></li>
+            <li><a href="turf-details.html?id=TRF-103">Multisport 6v6 Arena</a></li>
+            <li><a href="turf-details.html?id=TRF-104">Night Floodlit Ground</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="font-size:1.05rem; margin-bottom:14px;">Quick Links</h4>
+          <ul style="list-style:none; font-size:0.9rem; color:var(--text-muted); display:flex; flex-direction:column; gap:8px;">
+            <li><a href="my-bookings.html">My Match Tickets</a></li>
+            <li><a href="checkout.html">Checkout &amp; Payment</a></li>
+            <li><a href="login.html">Player Login</a></li>
+            <li><a href="Admin/dashboard.html">Admin Gate Scanner</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="font-size:1.05rem; margin-bottom:14px;">System Health</h4>
+          <div style="background:var(--bg-surface); padding:14px; border-radius:var(--radius-md); border:1px solid var(--border-color); font-size:0.85rem;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span class="live-indicator"></span>
+              <span id="backendLiveStatus">MySQL Database Connected</span>
+            </div>
+            <div style="color:var(--text-muted); font-size:0.8rem;">
+              Auto-sync with browser LocalStorage active.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 Shashikant Turf Booking System. Flat ₹699/hr • Built with Passion for Mumbai Sports.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script>
+    // Stadium Switcher logic (Day view vs Night floodlights)
+    function switchStadiumMode(mode) {
+      const img = document.getElementById('stadiumHeroImg');
+      const btnDay = document.getElementById('btnDayMode');
+      const btnNight = document.getElementById('btnNightMode');
+      const caption = document.getElementById('stadiumModeTitle');
+
+      if (mode === 'night') {
+        img.src = 'assets/images/shashikant-turf-night.jpg';
+        btnNight.classList.add('active');
+        btnDay.classList.remove('active');
+        caption.innerText = 'Shashikant Turf: Ultra-Bright Night Floodlit Matches (Football & Box Cricket)';
+      } else {
+        img.src = 'assets/images/shashikant-turf-day.jpg';
+        btnDay.classList.add('active');
+        btnNight.classList.remove('active');
+        caption.innerText = 'Shashikant Turf: Daytime View with Official Billboard & All-Weather Turf';
+      }
+    }
+
+    // Set default date to today
+    document.addEventListener('DOMContentLoaded', async () => {
+      const today = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('quickDateInput');
+      if (dateInput) {
+        dateInput.value = today;
+        dateInput.min = today;
+      }
+
+      // Check current login state
+      const u = API.getCurrentUser();
+      if (u) {
+        const slot = document.getElementById('navAuthSlot');
+        if (slot) {
+          slot.innerHTML = `
+            <span style="font-size:0.85rem; color:var(--text-muted);">👤 ${u.name}</span>
+            ${u.role === 'admin' ? '<a href="Admin/dashboard.html" class="btn btn-primary btn-sm">⚙️ Admin</a>' : ''}
+            <button onclick="API.logout()" class="btn btn-outline btn-sm">Logout</button>
+          `;
+        }
+      }
+
+      // Check backend health
+      try {
+        const health = await API.isBackendLive();
+        const badge = document.getElementById('backendLiveStatus');
+        if (badge) {
+          badge.innerText = health.online ? `MySQL Live (${health.database})` : 'LocalStorage Standalone';
+        }
+      } catch (e) {}
+
+      // Load live community open matches if available
+      try {
+        const openMatches = await API.getOpenMatches();
+        if (openMatches && openMatches.length > 0) {
+          const container = document.getElementById('openMatchesContainer');
+          // prepend fresh community matches from DB
+          const dynamicHtml = openMatches.slice(0, 3).map(m => `
+            <div class="community-match-card">
+              <div style="display:flex; align-items:center; gap:16px;">
+                <div style="font-size:2.2rem; background:rgba(16,185,129,0.15); border-radius:12px; width:52px; height:52px; display:flex; align-items:center; justify-content:center;">
+                  ${m.turfName.includes('Cricket') ? '🏏' : '⚽'}
+                </div>
+                <div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <span class="badge badge-success">${m.matchType || 'Open Match'}</span>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Posted by <strong>${m.userName}</strong></span>
+                  </div>
+                  <h4 style="font-size:1.15rem; margin-bottom:4px;">${m.turfName} • ${m.matchNote || 'Looking for players / opponents'}</h4>
+                  <p style="font-size:0.85rem; color:var(--text-muted);">
+                    📅 ${m.date} &nbsp;|&nbsp; ⏰ ${m.slot} &nbsp;|&nbsp; 💰 ₹699 Slot
+                  </p>
+                </div>
+              </div>
+              <a href="https://wa.me/${(m.userPhone || '919876543210').replace(/[^0-9]/g, '')}?text=Hi%20${encodeURIComponent(m.userName)}%2C%20I%20want%20to%20join%20your%20match%20at%20Shashikant%20Turf%20for%20${encodeURIComponent(m.date)}%20(${encodeURIComponent(m.slot)})!" 
+                 target="_blank" 
+                 class="btn btn-outline btn-sm" style="border-color:#25d366; color:#25d366;">
+                💬 Connect WhatsApp
+              </a>
+            </div>
+          `).join('');
+          container.innerHTML = dynamicHtml + container.innerHTML;
+        }
+      } catch (e) {}
+    });
+
+    function handleQuickBooking(e) {
+      e.preventDefault();
+      const turfId = document.getElementById('quickTurfSelect').value;
+      const date = document.getElementById('quickDateInput').value;
+      const slot = document.getElementById('quickTimeWindow').value;
+
+      window.location.href = `turf-details.html?id=${turfId}&date=${encodeURIComponent(date)}&slot=${encodeURIComponent(slot)}`;
+    }
+  </script>
+</body>
+</html>
