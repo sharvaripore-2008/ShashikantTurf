@@ -32,7 +32,12 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -40,6 +45,8 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
+  max-width: 100vw;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -74,6 +81,34 @@ img { max-width: 100%; height: auto; display: block; }
 .nav-link { font-size: 0.95rem; font-weight: 500; color: var(--text-muted); padding: 4px 0; }
 .nav-link:hover, .nav-link.active { color: var(--text-main); }
 .nav-actions { display: flex; align-items: center; gap: 14px; }
+
+/* Mobile Hamburger Toggle Button */
+.mobile-nav-toggle {
+  display: none;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  font-size: 1.35rem;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+}
+.mobile-nav-toggle:hover, .mobile-nav-toggle:active {
+  background: var(--bg-card-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Mobile App Bottom Navigation Bar */
+.mobile-bottom-bar {
+  display: none;
+}
 
 /* Buttons & Badges */
 .btn {

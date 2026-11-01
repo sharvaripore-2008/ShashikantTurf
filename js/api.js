@@ -4,7 +4,11 @@
  * and maintains seamless synchronization with browser LocalStorage.
  */
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = (typeof window !== 'undefined')
+  ? (window.location.port === '5000' 
+      ? '/api' 
+      : `${window.location.protocol}//${window.location.hostname || 'localhost'}:5000/api`)
+  : 'http://localhost:5000/api';
 
 const API = {
   // Check if backend is alive

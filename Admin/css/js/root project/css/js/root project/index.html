@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shashikant Turf | Book Sports Turfs Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --bg-card: #111827;
+      --bg-surface: #182234;
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.35);
+      --accent: #00f076;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(10, 15, 29, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 0;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; }
+    .brand-logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .brand-logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-link { color: var(--text-muted); font-weight: 500; font-size: 0.95rem; }
+    .nav-link:hover, .nav-link.active { color: var(--text-main); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 10px 22px; border-radius: var(--radius-md); font-family: 'Outfit', sans-serif;
+      font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: 0.2s;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), #059669); color: white; box-shadow: 0 4px 15px var(--primary-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
+    .btn-outline { border-color: var(--border-color); background: transparent; color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-sm { padding: 6px 14px; font-size: 0.85rem; }
+    .btn-lg { padding: 14px 30px; font-size: 1.05rem; }
+
+    /* Hero */
+    .hero-section {
+      padding: 80px 0 60px;
+      text-align: center;
+      background: radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 60%);
+    }
+    .hero-tag {
+      display: inline-flex; padding: 6px 16px; border-radius: var(--radius-full);
+      background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--accent); font-size: 0.85rem; margin-bottom: 20px; font-weight: 600;
+    }
+    .hero-title { font-size: 3.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+    .hero-title span {
+      background: linear-gradient(135deg, #fff 40%, var(--primary) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-desc { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto 36px; }
+
+    /* Search Widget */
+    .search-widget {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      padding: 12px; border-radius: var(--radius-lg); box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+      display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; max-width: 900px; margin: 0 auto;
+    }
+    .search-field { background: var(--bg-surface); padding: 10px 16px; border-radius: var(--radius-md); text-align: left; }
+    .search-field label { display: block; font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
+    .search-field input, .search-field select {
+      width: 100%; background: transparent; border: none; outline: none;
+      color: var(--text-main); font-weight: 600; font-family: inherit; font-size: 0.95rem;
+    }
+    .search-field select option { background: var(--bg-card); color: white; }
+
+    /* Turf Grid */
+    .section { padding: 60px 0; }
+    .section-header { text-align: center; margin-bottom: 40px; }
+    .section-title { font-size: 2.2rem; margin-bottom: 8px; }
+    .section-desc { color: var(--text-muted); }
+    .turf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+    .turf-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg); overflow: hidden; transition: 0.25s;
+    }
+    .turf-card:hover { transform: translateY(-5px); border-color: rgba(16,185,129,0.5); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .turf-img { width: 100%; height: 200px; object-fit: cover; }
+    .turf-body { padding: 20px; }
+    .turf-location { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+    .turf-name { font-size: 1.3rem; margin-bottom: 12px; }
+    .turf-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 14px; }
+    .turf-price { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+    .turf-price small { font-size: 0.8rem; color: var(--text-muted); font-weight: normal; }
+
+    @media (max-width: 850px) {
+      .hero-title { font-size: 2.2rem; }
+      .search-widget { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚽</div>
+        Shashikant <span>Turf</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="turfs.html" class="nav-link">Explore Turfs</a>
+        <a href="my-bookings.html" class="nav-link">My Bookings</a>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-tag">⚡ Welcome to Shashikant Turf Booking</div>
+      <h1 class="hero-title">Book Top-Rated <span>Sports Turfs</span> In Seconds</h1>
+      <p class="hero-desc">Play Football, Box Cricket, or Badminton. Check real-time slot availability, split bills, and enjoy night floodlit games.</p>
+
+      <!-- Search Widget -->
+      <form action="turfs.html" class="search-widget">
+        <div class="search-field">
+          <label>Location</label>
+          <input type="text" placeholder="e.g. Andheri, Bandra..." value="Mumbai">
+        </div>
+        <div class="search-field">
+          <label>Sport</label>
+          <select>
+            <option>⚽ Football</option>
+            <option>🏏 Box Cricket</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Date</label>
+          <input type="date" value="2026-10-19">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Find Turfs ➔</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Turfs Showcase -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Popular Turfs Available Today</h2>
+        <p class="section-desc">Floodlit arenas with FIFA approved turfgrass & clean locker rooms.</p>
+      </div>
+      <div class="turf-grid">
+        
+        <!-- 1. KickOff Grand Arena -->
+        <div class="turf-card">
+          <img class="turf-img" 
+               src="https://images.pexels.com/photos/114296/pexels-photo-114296.jpeg?auto=compress&cs=tinysrgb&w=800" 
+               referrerpolicy="no-referrer"
+               alt="KickOff Grand Arena">
+          <div class="turf-body">
+            <div class="turf-location">📍 Andheri West, Mumbai • 7v7 Ground</div>
+            <h3 class="turf-name">KickOff Grand Arena</h3>
+            <div class="turf-footer">
+              <div class="turf-price">₹1,200 <small>/ hr</small></div>
+              <a href="turf-details.html?id=TRF-101" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Skyline Rooftop Turf -->
+        <div class="turf-card">
+          <img class="turf-img" 
+               src="https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=800" 
+               referrerpolicy="no-referrer"
+               alt="Skyline Rooftop Turf">
+          <div class="turf-body">
+            <div class="turf-location">📍 Bandra West, Mumbai • 5v5</div>
+            <h3 class="turf-name">Skyline Rooftop Turf</h3>
+            <div class="turf-footer">
+              <div class="turf-price">₹1,500 <small>/ hr</small></div>
+              <a href="turf-details.html?id=TRF-102" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Striker's Hub Multisport -->
+        <div class="turf-card">
+          <img class="turf-img" 
+               src="https://images.pexels.com/photos/3621104/pexels-photo-3621104.jpeg?auto=compress&cs=tinysrgb&w=800" 
+               referrerpolicy="no-referrer"
+               alt="Striker's Hub Multisport">
+          <div class="turf-body">
+            <div class="turf-location">📍 Powai, Mumbai • 6v6</div>
+            <h3 class="turf-name">Striker's Hub Multisport</h3>
+            <div class="turf-footer">
+              <div class="turf-price">₹1,000 <small>/ hr</small></div>
+              <a href="turf-details.html?id=TRF-103" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Apex International Arena -->
+        <div class="turf-card">
+          <img class="turf-img" 
+               src="https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=800" 
+               referrerpolicy="no-referrer"
+               alt="Apex International Arena">
+          <div class="turf-body">
+            <div class="turf-location">📍 Kandivali East, Mumbai • 8v8 FIFA Ground</div>
+            <h3 class="turf-name">Apex International Arena</h3>
+            <div class="turf-footer">
+              <div class="turf-price">₹1,800 <small>/ hr</small></div>
+              <a href="turf-details.html?id=TRF-104" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+        <!-- Turf 1 -->
+        <div class="turf-card">
+          <img class="turf-img" src="https://images.unsplash.com/photo-1529900241929-5ed53a0f33dd?auto=format&fit=crop&w=800&q=80" alt="Turf">
+          <div class="turf-body">
+            <div class="turf-location">📍 Andheri West, Mumbai • 7v7</div>
+            <h3 class="turf-name">KickOff Grand Arena</h3>
+            <div class="turf-footer">
+              <div class="turf-price">₹1,200 <small>/ hr</small></div>
+              <a href="turf-details.html?id=TRF-101" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Turf 2 -->
+        <div class="turf-card">
+          <img class="turf-img" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" alt="Turf">
+          <div class="turf-body">
+            <div class="turf-location">📍 Bandra West, Mumbai • 5v5</div>
+            <h3 class="turf-name">Skyline Rooftop Turf</h3>
+            <div class="turf-footer">
+              <div class="turf-price">₹1,500 <small>/ hr</small></div>
+              <a href="turf-details.html?id=TRF-102" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Turf 3 -->
+        <div class="turf-card">
+          <img class="turf-img" src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=800&q=80" alt="Turf">
+          <div class="turf-body">
+            <div class="turf-location">📍 Powai, Mumbai • 6v6</div>
+            <h3 class="turf-name">Striker's Hub Multisport</h3>
+            <div class="turf-footer">
+              <div class="turf-price">₹1,000 <small>/ hr</small></div>
+              <a href="turf-details.html?id=TRF-103" class="btn btn-primary btn-sm">Book Slot ➔</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
+
+

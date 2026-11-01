@@ -143,3 +143,4 @@ module.exports = {
   sendBookingConfirmationEmail,
   generateTicketEmailHtml
 };
+

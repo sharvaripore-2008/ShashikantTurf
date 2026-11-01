@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings | Shahshikant Turf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --bg-card: #111827;
+      --bg-surface: #182234;
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.35);
+      --accent: #00f076;
+      --danger: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    .navbar {
+      background: rgba(10, 15, 29, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 0;
+    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; }
+    .brand-logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .brand-logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-link { color: var(--text-muted); font-weight: 500; font-size: 0.95rem; }
+    .nav-link:hover, .nav-link.active { color: var(--text-main); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 8px 18px; border-radius: var(--radius-md); font-family: 'Outfit', sans-serif;
+      font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: 0.2s;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), #059669); color: white; box-shadow: 0 4px 15px var(--primary-glow); }
+    .btn-outline { border-color: var(--border-color); background: transparent; color: var(--text-main); }
+    .btn-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
+    .btn-danger:hover { background: var(--danger); color: white; }
+
+    .page-header { background: var(--bg-surface); padding: 40px 0; border-bottom: 1px solid var(--border-color); }
+    .booking-card {
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+      padding: 24px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+      transition: 0.25s;
+    }
+    .booking-card:hover { border-color: rgba(16,185,129,0.4); }
+
+    .badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
+    .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--accent); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    .footer { margin-top: auto; background: #070b14; border-top: 1px solid var(--border-color); padding: 25px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚽</div>
+        Shashikant<span>Turf</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="turfs.html" class="nav-link">Explore Turfs</a>
+        <a href="my-bookings.html" class="nav-link active">My Bookings</a>
+      </div>
+      <div>
+        <a href="turfs.html" class="btn btn-primary">+ Book Turf</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="container">
+      <h1 style="font-size:2.2rem; margin-bottom:6px;">My Turf Reservations</h1>
+      <p style="color:var(--text-muted);">Manage your upcoming matches, print booking receipts, or cancel slots.</p>
+    </div>
+  </div>
+
+  <main class="container" style="padding: 40px 20px 80px;">
+    <div id="bookingsList"></div>
+  </main>
+
+  <footer class="footer">
+    © 2026 Shashikant Turf Booking System. All rights reserved.
+  </footer>
+
+  <script>
+    const INITIAL = [
+      {
+        id: "BKG-9081",
+        turfName: "KickOff Grand Arena",
+        date: "2026-10-19",
+        slot: "07:00 PM - 08:00 PM",
+        amount: 1466,
+        status: "Confirmed"
+      },
+      {
+        id: "BKG-8422",
+        turfName: "Skyline Rooftop Turf",
+        date: "2026-10-21",
+        slot: "08:00 PM - 09:00 PM",
+        amount: 1820,
+        status: "Confirmed"
+      }
+    ];
+
+    function render() {
+      let bookings = JSON.parse(localStorage.getItem('booking_data') || 'null');
+      if (!bookings || bookings.length === 0) {
+        bookings = INITIAL;
+        localStorage.setItem('booking_data', JSON.stringify(bookings));
+      }
+
+      const container = document.getElementById('bookingsList');
+      container.innerHTML = bookings.map(b => {
+        const isCancelled = b.status === 'Cancelled';
+        return `
+          <div class="booking-card">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                <span class="badge ${isCancelled ? 'badge-danger' : 'badge-success'}">${b.status}</span>
+                <span style="font-size:0.85rem; color:var(--text-muted);">ID: <strong>#${b.id}</strong></span>
+              </div>
+              <h3 style="font-size:1.4rem; margin-bottom:6px;">${b.turfName}</h3>
+              <p style="color:var(--text-muted); font-size:0.95rem;">
+                📅 <strong>${b.date}</strong> &nbsp;|&nbsp; ⏰ <strong>${b.slot}</strong>
+              </p>
+              <div style="color:var(--primary); font-weight:700; margin-top:6px;">
+                Paid: ₹${b.amount}
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; align-items:center;">
+              <button onclick="window.print()" class="btn btn-outline">🖨️ Receipt</button>
+              ${!isCancelled ? `
+                <button onclick="cancelBooking('${b.id}')" class="btn btn-danger">Cancel Slot</button>
+              ` : `
+                <span style="color:#f87171; font-size:0.85rem;">Cancelled & Refunded</span>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function cancelBooking(id) {
+      if (confirm(`Cancel reservation #${id}? Full refund will be credited back.`)) {
+        let bookings = JSON.parse(localStorage.getItem('booking_data') || '[]');
+        const idx = bookings.findIndex(x => x.id === id);
+        if (idx !== -1) {
+          bookings[idx].status = 'Cancelled';
+          localStorage.setItem('booking_data', JSON.stringify(bookings));
+          alert(`Booking #${id} successfully cancelled!`);
+          render();
+        }
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>
+

@@ -499,7 +499,7 @@
             <li><a href="my-bookings.html">My Match Tickets</a></li>
             <li><a href="checkout.html">Checkout &amp; Payment</a></li>
             <li><a href="login.html">Player Login</a></li>
-            <li><a href="Admin/dashboard.html">Admin Gate Scanner</a></li>
+            <li><a href="/Admin/dashboard.html">Admin Gate Scanner</a></li>
           </ul>
         </div>
 
@@ -562,7 +562,7 @@
         if (slot) {
           slot.innerHTML = `
             <span style="font-size:0.85rem; color:var(--text-muted);">👤 ${u.name}</span>
-            ${u.role === 'admin' ? '<a href="Admin/dashboard.html" class="btn btn-primary btn-sm">⚙️ Admin</a>' : ''}
+            ${u.role === 'admin' ? '<a href="/Admin/dashboard.html" class="btn btn-primary btn-sm">⚙️ Admin</a>' : ''}
             <button onclick="API.logout()" class="btn btn-outline btn-sm">Logout</button>
           `;
         }

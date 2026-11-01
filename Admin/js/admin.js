@@ -180,16 +180,32 @@ async function initManageTurfs() {
     turfs = DB.getTurfs();
   }
 
-  t.innerHTML = turfs.map(x => `
+  t.innerHTML = turfs.map(x => {
+    let imgPath = x.image || '';
+    if (!imgPath) {
+      imgPath = (x.category === 'cricket' || (x.name && x.name.toLowerCase().includes('cricket')))
+        ? '../assets/images/shashikant-turf-night.jpg'
+        : '../assets/images/shashikant-turf-day.jpg';
+    } else if (!imgPath.startsWith('http') && !imgPath.startsWith('/') && !imgPath.startsWith('../')) {
+      imgPath = '../' + imgPath;
+    }
+
+    return `
     <tr>
-      <td><img src="${x.image}" style="width:60px; height:40px; object-fit:cover; border-radius:6px;"></td>
+      <td>
+        <img src="${imgPath}" 
+             alt="${x.name}" 
+             onerror="this.onerror=null; this.src='../assets/images/shashikant-turf-day.jpg';" 
+             style="width:60px; height:40px; object-fit:cover; border-radius:6px; display:block; border:1px solid rgba(255,255,255,0.15);">
+      </td>
       <td><strong>${x.name}</strong><br><small style="color:var(--text-muted);">${x.size}</small></td>
       <td>${x.location}</td>
       <td><strong>${formatCurrency(x.pricePerHour)}/hr</strong></td>
       <td>★ ${x.rating}</td>
       <td><button onclick="deleteTurf('${x.id}')" class="btn btn-danger btn-sm">Delete</button></td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 }
 
 async function handleAddTurf(e) {

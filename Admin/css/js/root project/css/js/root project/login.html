@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Shashikant Turf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --bg-card: #111827;
+      --bg-surface: #182234;
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.35);
+      --accent: #00f076;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --radius-md: 12px;
+      --radius-xl: 24px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    .navbar {
+      background: rgba(10, 15, 29, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 0;
+    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; }
+    .brand-logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .brand-logo span { color: var(--primary); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 10px 20px; border-radius: var(--radius-md); font-family: 'Outfit', sans-serif;
+      font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: 0.2s;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), #059669); color: white; box-shadow: 0 4px 15px var(--primary-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
+    .btn-outline { border-color: var(--border-color); background: transparent; color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-sm { padding: 6px 14px; font-size: 0.85rem; }
+
+    .auth-wrapper {
+      flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; position: relative;
+    }
+    .auth-bg-blob {
+      position: absolute; width: 420px; height: 420px; background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%); border-radius: 50%; pointer-events: none;
+    }
+    .auth-card {
+      width: 100%; max-width: 440px; background: rgba(17, 24, 39, 0.9); backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: 36px 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); position: relative; z-index: 1;
+    }
+    .auth-header { text-align: center; margin-bottom: 24px; }
+    .auth-header h2 { font-size: 1.8rem; margin-bottom: 6px; }
+    .auth-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .role-tabs {
+      display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-surface); padding: 4px; border-radius: var(--radius-md); margin-bottom: 24px;
+    }
+    .role-tab-btn {
+      background: transparent; border: none; color: var(--text-muted); padding: 9px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; font-family: inherit;
+    }
+    .role-tab-btn.active { background: var(--bg-card); color: var(--text-main); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+
+    .form-group { margin-bottom: 18px; text-align: left; }
+    .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+    .form-control {
+      width: 100%; background: var(--bg-surface); border: 1px solid var(--border-color);
+      padding: 12px 16px; border-radius: var(--radius-md); color: var(--text-main); font-size: 0.95rem; outline: none; transition: 0.2s;
+    }
+    .form-control:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+    .auth-footer { text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--text-muted); }
+    .auth-footer a { color: var(--primary); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚽</div>
+        Shashikant<span>Turf</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size:0.85rem; color:var(--text-muted);">New here?</span>
+        <a href="register.html" class="btn btn-outline btn-sm">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="auth-wrapper">
+    <div class="auth-bg-blob"></div>
+
+    <div class="auth-card">
+      <div class="auth-header">
+        <div style="font-size: 2.5rem; margin-bottom: 8px;">⚽</div>
+        <h2>Welcome Back</h2>
+        <p>Login to view bookings and reserve turf slots</p>
+      </div>
+
+      <div class="role-tabs">
+        <button type="button" class="role-tab-btn active" id="tabUser" onclick="setRole('user')">
+          👤 Player / User
+        </button>
+        <button type="button" class="role-tab-btn" id="tabAdmin" onclick="setRole('admin')">
+          ⚙️ Turf Admin
+        </button>
+      </div>
+
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" class="form-control" placeholder="name@example.com" value="rahul@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" value="password123" required>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; color:var(--text-muted); margin-bottom:20px;">
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <input type="checkbox" checked> Remember me
+          </label>
+          <a href="#" style="color:var(--primary);">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:13px; font-size:1rem;">
+          Sign In to TurfArena ➔
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="register.html">Create one now</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let activeRole = 'user';
+    function setRole(role) {
+      activeRole = role;
+      document.getElementById('tabUser').classList.toggle('active', role === 'user');
+      document.getElementById('tabAdmin').classList.toggle('active', role === 'admin');
+    }
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const userData = {
+        name: activeRole === 'admin' ? 'Admin Manager' : email.split('@')[0],
+        email: email,
+        role: activeRole
+      };
+      localStorage.setItem('current_user', JSON.stringify(userData));
+      alert(`Welcome, ${userData.name}! Logging in...`);
+      window.location.href = activeRole === 'admin' ? 'admin/dashboard.html' : 'index.html';
+    }
+  </script>
+</body>
+</html>

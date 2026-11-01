@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Turf Slot | TurfArena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --bg-card: #111827;
+      --bg-surface: #182234;
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.35);
+      --accent: #00f076;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    .navbar {
+      background: rgba(10, 15, 29, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 0;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; }
+    .brand-logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .brand-logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-link { color: var(--text-muted); font-weight: 500; font-size: 0.95rem; }
+    .nav-link:hover, .nav-link.active { color: var(--text-main); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 10px 20px; border-radius: var(--radius-md); font-family: 'Outfit', sans-serif;
+      font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: 0.2s;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), #059669); color: white; box-shadow: 0 4px 15px var(--primary-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
+    .btn-outline { border-color: var(--border-color); background: transparent; color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-sm { padding: 6px 14px; font-size: 0.85rem; }
+
+    .detail-grid { display: grid; grid-template-columns: 2fr 1.2fr; gap: 36px; padding: 40px 0 80px; }
+    .main-img { width: 100%; height: 380px; border-radius: var(--radius-lg); object-fit: cover; border: 1px solid var(--border-color); margin-bottom: 24px; }
+    .turf-title { font-size: 2.2rem; margin-bottom: 6px; }
+    .turf-loc { color: var(--text-muted); font-size: 1rem; margin-bottom: 16px; }
+
+    .amenities-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .chip { background: var(--bg-surface); padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; color: var(--text-muted); }
+
+    .date-ribbon { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 12px; margin-top: 12px; }
+    .date-btn {
+      background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main);
+      padding: 10px 16px; border-radius: var(--radius-md); cursor: pointer; text-align: center; min-width: 80px; transition: 0.2s;
+    }
+    .date-btn .d-name { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
+    .date-btn .d-num { font-size: 1.3rem; font-weight: 800; margin: 2px 0; }
+    .date-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 0 16px var(--primary-glow); }
+    .date-btn.active .d-name { color: white; }
+
+    .slot-section { margin-top: 24px; }
+    .slot-heading { font-size: 0.95rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
+    .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+    .slot-chip {
+      background: var(--bg-card); border: 1px solid var(--border-color); padding: 10px;
+      border-radius: var(--radius-md); text-align: center; cursor: pointer; transition: 0.2s;
+    }
+    .slot-chip:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .slot-chip.selected { background: linear-gradient(135deg, var(--primary), #059669); border-color: var(--accent); color: white; box-shadow: 0 0 14px var(--primary-glow); }
+
+    .summary-card {
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-xl);
+      padding: 26px; position: sticky; top: 90px; height: fit-content; box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; color: var(--text-muted); }
+    .summary-row strong { color: var(--text-main); }
+    .total-row { display: flex; justify-content: space-between; border-top: 1px dashed var(--border-color); padding-top: 16px; margin-top: 16px; font-size: 1.25rem; font-weight: 800; }
+    .total-price { color: var(--primary); font-family: 'Outfit', sans-serif; }
+
+    @media (max-width: 900px) {
+      .detail-grid { grid-template-columns: 1fr; }
+      .summary-card { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚽</div>
+        Shashikant<span>Turf</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="turfs.html" class="nav-link active">Explore Turfs</a>
+        <a href="my-bookings.html" class="nav-link">My Bookings</a>
+      </div>
+      <div>
+        <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="detail-grid">
+      
+      <div>
+        <img id="turfImg" class="main-img" src="https://images.unsplash.com/photo-1529900241929-5ed53a0f33dd?auto=format&fit=crop&w=800&q=80" alt="Turf Cover">
+        <div class="turf-loc" id="turfLoc">📍 Andheri West, Mumbai • 7v7 Ground</div>
+        <h1 class="turf-title" id="turfTitle">KickOff Grand Arena</h1>
+        <p style="color:var(--text-muted); margin-bottom:16px;">
+          Premium FIFA standard 50mm monofilament turf with floodlights, player dugout, clean locker rooms, and spectator seating.
+        </p>
+
+        <div class="amenities-wrap">
+          <span class="chip">✓ Floodlights</span>
+          <span class="chip">✓ Locker Room</span>
+          <span class="chip">✓ Free Parking</span>
+          <span class="chip">✓ Drinking Water</span>
+          <span class="chip">✓ First Aid</span>
+        </div>
+
+        <hr style="border:none; border-top:1px solid var(--border-color); margin:24px 0;">
+
+        <div>
+          <h3>Select Playing Date</h3>
+          <div class="date-ribbon" id="dateRibbon"></div>
+        </div>
+
+        <div class="slot-section">
+          <div class="slot-heading">🌅 Morning Slots</div>
+          <div class="slots-grid" id="morningSlots"></div>
+        </div>
+
+        <div class="slot-section">
+          <div class="slot-heading">🌇 Evening Slots</div>
+          <div class="slots-grid" id="eveningSlots"></div>
+        </div>
+
+        <div class="slot-section">
+          <div class="slot-heading">🌙 Floodlit Night Slots</div>
+          <div class="slots-grid" id="nightSlots"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="summary-card">
+          <h3 style="margin-bottom:18px; border-bottom:1px solid var(--border-color); padding-bottom:12px;">Reservation Summary</h3>
+
+          <div class="summary-row">
+            <span>Date:</span>
+            <strong id="sumDate">Today</strong>
+          </div>
+          <div class="summary-row">
+            <span>Selected Slot:</span>
+            <strong id="sumSlot" style="color:var(--primary);">Choose a slot</strong>
+          </div>
+          <div class="summary-row">
+            <span>Base Slot Price:</span>
+            <strong id="sumBase">₹1,200</strong>
+          </div>
+          <div class="summary-row">
+            <span>GST (18%):</span>
+            <strong id="sumGst">₹216</strong>
+          </div>
+          <div class="summary-row">
+            <span>Platform Fee:</span>
+            <strong>₹50</strong>
+          </div>
+
+          <div class="total-row">
+            <span>Total Payable:</span>
+            <span class="total-price" id="sumTotal">₹0</span>
+          </div>
+
+          <button id="btnProceed" onclick="proceedToCheckout()" class="btn btn-outline" style="width:100%; padding:14px; margin-top:20px;" disabled>
+            Select Slot to Continue
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    let selectedDate = new Date().toISOString().split('T')[0];
+    let selectedSlot = null;
+    const basePrice = 1200;
+
+    const MORNING = ["06:00 AM - 07:00 AM", "07:00 AM - 08:00 AM", "08:00 AM - 09:00 AM", "09:00 AM - 10:00 AM"];
+    const EVENING = ["05:00 PM - 06:00 PM", "06:00 PM - 07:00 PM", "07:00 PM - 08:00 PM"];
+    const NIGHT = ["08:00 PM - 09:00 PM", "09:00 PM - 10:00 PM", "10:00 PM - 11:00 PM"];
+
+    function initDates() {
+      const ribbon = document.getElementById('dateRibbon');
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      let html = '';
+
+      for (let i = 0; i < 7; i++) {
+        const d = new Date();
+        d.setDate(d.getDate() + i);
+        const dStr = d.toISOString().split('T')[0];
+        html += `
+          <div class="date-btn ${dStr === selectedDate ? 'active' : ''}" onclick="pickDate('${dStr}')">
+            <div class="d-name">${i === 0 ? 'Today' : days[d.getDay()]}</div>
+            <div class="d-num">${d.getDate()}</div>
+          </div>
+        `;
+      }
+      ribbon.innerHTML = html;
+    }
+
+    function pickDate(dStr) {
+      selectedDate = dStr;
+      selectedSlot = null;
+      initDates();
+      renderSlots();
+      updateSidebar();
+    }
+
+    function renderSlots() {
+      const render = (arr) => arr.map(s => `
+        <div class="slot-chip ${selectedSlot === s ? 'selected' : ''}" onclick="pickSlot('${s}')">
+          <div style="font-weight:600; font-size:0.85rem;">${s}</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">₹${basePrice}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('morningSlots').innerHTML = render(MORNING);
+      document.getElementById('eveningSlots').innerHTML = render(EVENING);
+      document.getElementById('nightSlots').innerHTML = render(NIGHT);
+    }
+
+    function pickSlot(slot) {
+      selectedSlot = slot;
+      renderSlots();
+      updateSidebar();
+    }
+
+    function updateSidebar() {
+      document.getElementById('sumDate').innerText = selectedDate;
+      const btn = document.getElementById('btnProceed');
+
+      if (selectedSlot) {
+        document.getElementById('sumSlot').innerText = selectedSlot;
+        const gst = Math.round(basePrice * 0.18);
+        const total = basePrice + gst + 50;
+        document.getElementById('sumTotal').innerText = `₹${total}`;
+        btn.disabled = false;
+        btn.classList.remove('btn-outline');
+        btn.classList.add('btn-primary');
+        btn.innerText = "Proceed to Checkout ➔";
+      } else {
+        document.getElementById('sumSlot').innerText = "Choose a slot";
+        document.getElementById('sumTotal').innerText = "₹0";
+        btn.disabled = true;
+        btn.classList.add('btn-outline');
+        btn.classList.remove('btn-primary');
+        btn.innerText = "Select Slot to Continue";
+      }
+    }
+
+    function proceedToCheckout() {
+      if (!selectedSlot) return alert('Please pick a slot');
+      const gst = Math.round(basePrice * 0.18);
+      const bookingInfo = {
+        turfName: "KickOff Grand Arena",
+        location: "Andheri West, Mumbai",
+        date: selectedDate,
+        slot: selectedSlot,
+        amount: basePrice + gst + 50
+      };
+      sessionStorage.setItem('current_checkout', JSON.stringify(bookingInfo));
+      window.location.href = 'checkout.html';
+    }
+
+    initDates();
+    renderSlots();
+  </script>
+</body>
+</html>
