@@ -222,14 +222,25 @@ const API = {
       localStorage.setItem('booking_data', JSON.stringify(existing));
       localStorage.setItem('SHASHIKANT_BOOKINGS', JSON.stringify(existing));
 
+      // Sync to Firebase Cloud Firestore if active
+      if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady()) {
+        FirebaseService.saveBooking(saved).catch(console.warn);
+      }
+
       return data;
     } catch (err) {
-      console.warn('Backend booking failed, syncing to local storage:', err.message);
+      console.warn('Backend booking failed, syncing to local storage & Firebase:', err.message);
       // Fallback save to localStorage
       let existing = JSON.parse(localStorage.getItem('booking_data') || '[]');
       existing.unshift(bookingData);
       localStorage.setItem('booking_data', JSON.stringify(existing));
       localStorage.setItem('SHASHIKANT_BOOKINGS', JSON.stringify(existing));
+
+      // Sync to Firebase Cloud Firestore
+      if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady()) {
+        FirebaseService.saveBooking(bookingData).catch(console.warn);
+      }
+
       return { success: true, booking: bookingData, isLocalFallback: true };
     }
   },
@@ -247,7 +258,21 @@ const API = {
       }
       throw new Error(data.message);
     } catch (err) {
-      console.warn('Using LocalStorage bookings fallback:', err.message);
+      console.warn('Backend unavailable, checking Firebase or LocalStorage:', err.message);
+      // Try Cloud Firestore first
+      if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady()) {
+        try {
+          const cloudBookings = await FirebaseService.getBookings();
+          if (cloudBookings && cloudBookings.length > 0) {
+            return userEmail
+              ? cloudBookings.filter(b => (b.userEmail || '').toLowerCase() === userEmail.toLowerCase())
+              : cloudBookings;
+          }
+        } catch (fbErr) {
+          console.warn('Firebase getBookings fallback:', fbErr.message);
+        }
+      }
+
       let local = JSON.parse(localStorage.getItem('booking_data') || localStorage.getItem('SHASHIKANT_BOOKINGS') || '[]');
       if (userEmail) {
         local = local.filter(b => (b.userEmail || '').toLowerCase() === userEmail.toLowerCase());
@@ -274,16 +299,26 @@ const API = {
         localStorage.setItem('SHASHIKANT_BOOKINGS', JSON.stringify(list));
       }
 
+      // Sync status to Firebase Cloud Firestore
+      if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady()) {
+        FirebaseService.cancelBooking(id).catch(console.warn);
+      }
+
       return data;
     } catch (err) {
-      console.warn('Backend cancel failed, updating locally:', err.message);
+      console.warn('Backend cancel failed, updating locally & Firebase:', err.message);
       let list = JSON.parse(localStorage.getItem('booking_data') || '[]');
       const item = list.find(b => b.id === id);
       if (item) {
         item.status = 'Cancelled';
         localStorage.setItem('booking_data', JSON.stringify(list));
         localStorage.setItem('SHASHIKANT_BOOKINGS', JSON.stringify(list));
-        return { success: true, message: 'Cancelled in local storage' };
+
+        if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady()) {
+          FirebaseService.cancelBooking(id).catch(console.warn);
+        }
+
+        return { success: true, message: 'Cancelled in local storage & Firebase' };
       }
       return { success: false, message: 'Booking ID not found' };
     }
