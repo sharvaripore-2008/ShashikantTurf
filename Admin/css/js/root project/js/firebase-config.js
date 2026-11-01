@@ -8,12 +8,13 @@
 // Replace these values with your Firebase Project Configuration from Firebase Console:
 // https://console.firebase.google.com/ -> Project Settings -> General -> Your apps -> Web app (</>)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "shashikant-turf.firebaseapp.com",
-  projectId: "shashikant-turf",
-  storageBucket: "shashikant-turf.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdef123456"
+  apiKey: "AIzaSyAINwNym-3-GvXTu4UnG4SNCMCV9D0QH8A",
+  authDomain: "shashikant-turf-37359.firebaseapp.com",
+  projectId: "shashikant-turf-37359",
+  storageBucket: "shashikant-turf-37359.firebasestorage.app",
+  messagingSenderId: "99417945861",
+  appId: "1:99417945861:web:59586bf6a0c8e9d267296c",
+  measurementId: "G-JS1VM84F8J"
 };
 
 // Check if user has replaced placeholder credentials
@@ -182,3 +183,4 @@ if (typeof window !== 'undefined') {
   window.FirebaseService = FirebaseService;
   window.firebaseConfig = firebaseConfig;
 }
+
