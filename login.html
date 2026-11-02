@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Player Login &amp; Real SMS OTP Verification | Shashikant Turf Mumbai</title>
+  <title>Google Sign-In | Shashikant Turf Mumbai</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,74 +14,156 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.15) 0%, #060b15 70%);
+      background: radial-gradient(circle at 50% 12%, rgba(16, 185, 129, 0.16) 0%, #060b15 75%);
     }
     .login-card {
       background: #111a2e;
       border: 1.5px solid rgba(255, 255, 255, 0.14);
       border-radius: var(--radius-xl);
-      padding: 38px 34px;
-      max-width: 490px;
+      padding: 44px 38px;
+      max-width: 480px;
       width: 100%;
-      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
       margin: 40px auto;
-    }
-    .phone-input-wrap {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .country-code-pill {
-      background: #090e1a;
-      border: 1.5px solid rgba(255, 255, 255, 0.14);
-      padding: 11px 14px;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      color: #ffffff;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      user-select: none;
-    }
-    .otp-input-wrap {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 6px;
-    }
-    .otp-field {
-      flex: 1;
-      height: 52px;
-      background: #090e1a;
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
-      border-radius: var(--radius-sm);
-      color: var(--neon-green);
-      font-weight: 800;
-      font-size: 1.4rem;
       text-align: center;
-      letter-spacing: 8px;
-      padding: 0 14px;
-      outline: none;
-      transition: var(--transition);
-      font-family: monospace;
+      position: relative;
+      overflow: hidden;
     }
-    .otp-field:focus {
-      border-color: var(--neon-green);
-      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 130px;
+      height: 130px;
+      background: rgba(16, 185, 129, 0.12);
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
     }
-    .otp-delivery-box {
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.28);
-      border-radius: 8px;
+    .google-btn {
+      width: 100%;
+      height: 56px;
+      background: #ffffff;
+      color: #1f2937;
+      border: 1px solid #dadce0;
+      border-radius: var(--radius-md);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      position: relative;
+    }
+    .google-btn:hover {
+      background: #f8fafc;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.18);
+      border-color: #cbd5e1;
+    }
+    .google-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 8px;
+    }
+    .feature-icon {
+      font-size: 1.25rem;
+      background: rgba(16, 185, 129, 0.15);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .feature-text h4 {
+      margin: 0;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .feature-text p {
+      margin: 2px 0 0;
+      font-size: 0.76rem;
+      color: #94a3b8;
+    }
+
+    /* Modal for Quick One-Click Google Selection */
+    .google-account-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .google-picker-card {
+      background: #ffffff;
+      color: #202124;
+      border-radius: 20px;
+      max-width: 440px;
+      width: 100%;
+      padding: 28px 24px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+      text-align: left;
+      animation: popIn 0.25s ease-out;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.94); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .account-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
       padding: 12px 14px;
-      margin-top: 12px;
-      font-size: 0.82rem;
-      transition: all 0.3s ease;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border: 1px solid #e8eaed;
+      margin-bottom: 10px;
     }
+    .account-row:hover {
+      background: #f1f3f4;
+      border-color: #dadce0;
+    }
+    .avatar-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #1a73e8;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
     @media (max-width: 520px) {
       .login-card {
-        padding: 26px 20px;
+        padding: 30px 22px;
         margin: 20px auto;
       }
     }
@@ -111,111 +193,70 @@
     <main class="container" style="display:flex; align-items:center; justify-content:center; flex:1; padding:20px;">
       <div class="login-card">
         
-        <div style="text-align:center; margin-bottom:26px;">
-          <span class="badge badge-success" style="margin-bottom:12px;">
-            ⚡ OTP SECURED LOGIN
+        <!-- Header -->
+        <div style="margin-bottom:28px;">
+          <span class="badge badge-success" style="margin-bottom:14px; padding:6px 14px; font-size:0.78rem;">
+            ⚡ 1-TAP INSTANT ACCESS
           </span>
-          <h1 style="font-size:2.2rem; font-weight:800; color:#ffffff; margin-bottom:6px; letter-spacing:-0.5px;">
+          <h1 style="font-size:2.2rem; font-weight:800; color:#ffffff; margin-bottom:8px; letter-spacing:-0.5px;">
             Player Login
           </h1>
-          <p style="font-size:0.9rem; color:#cbd5e1; margin:0;">
-            Enter your details &amp; verify OTP to access Mumbai's top sports turfs.
+          <p style="font-size:0.92rem; color:#cbd5e1; margin:0; line-height:1.5;">
+            Sign in with Google for instant 1-click access to Mumbai's top sports turfs. No typing or passwords needed!
           </p>
         </div>
 
-        <form onsubmit="handleLoginSubmit(event)">
-          
-          <!-- 1. Player / User Name -->
-          <div style="margin-bottom:18px;">
-            <label for="userName" style="display:block; font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#cbd5e1; margin-bottom:6px;">
-              👤 Player / Captain Full Name *
-            </label>
-            <input type="text" 
-                   id="userName" 
-                   required 
-                   placeholder="e.g. Pranjal Shinde" 
-                   value="Pranjal Shinde" 
-                   style="width:100%; height:46px; font-size:0.95rem; font-weight:600;">
-          </div>
-
-          <!-- 2. Phone Number -->
-          <div style="margin-bottom:18px;">
-            <label for="userPhone" style="display:block; font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#cbd5e1; margin-bottom:6px;">
-              📱 Mobile Phone Number *
-            </label>
-            <div class="phone-input-wrap">
-              <div class="country-code-pill">
-                <span>🇮🇳</span> +91
-              </div>
-              <input type="tel" 
-                     id="userPhone" 
-                     required 
-                     maxlength="10" 
-                     pattern="[0-9]{10}" 
-                     placeholder="9702607796" 
-                     value="9702607796" 
-                     style="flex:1; height:46px; font-size:1rem; font-weight:700; letter-spacing:1px;">
-              <button type="button" 
-                      id="btnSendOtp" 
-                      onclick="sendOtp()" 
-                      class="btn btn-outline btn-sm" 
-                      style="height:46px; padding:0 14px; white-space:nowrap; border-color:var(--neon-green); color:var(--neon-green); font-weight:700;">
-                Get OTP 📲
-              </button>
+        <!-- Benefits Showcase -->
+        <div style="margin-bottom:28px;">
+          <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-text">
+              <h4>1-Tap Instant Sign-In</h4>
+              <p>No phone numbers, forms, or waiting for SMS OTPs.</p>
             </div>
           </div>
-
-          <!-- 3. OTP Verification Section -->
-          <div style="margin-bottom:20px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <label for="userOtp" style="font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#cbd5e1; margin-bottom:6px;">
-                🔑 Enter 6-Digit OTP *
-              </label>
-              <span id="resendTimerText" style="font-size:0.75rem; color:#94a3b8; font-weight:600;">
-                Click "Get OTP" to receive code
-              </span>
-            </div>
-
-            <div class="otp-input-wrap">
-              <input type="text" 
-                     id="userOtp" 
-                     required 
-                     maxlength="6" 
-                     placeholder="• • • • • •" 
-                     value="" 
-                     class="otp-field"
-                     autocomplete="one-time-code">
-            </div>
-
-            <!-- Dynamic Delivery Status Box -->
-            <div id="otpDeliveryNotice" class="otp-delivery-box" style="display:none;">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span id="deliveryIconTitle" style="color:var(--neon-green); font-weight:700; display:flex; align-items:center; gap:6px;">
-                  <span>📲</span> <span id="deliveryHeadline">SMS OTP Notification</span>
-                </span>
-                <span id="deliveryValidity" style="font-size:0.75rem; color:#94a3b8;">5 min validity</span>
-              </div>
-              <div id="deliverySubtext" style="color:#cbd5e1; font-size:0.78rem; margin-top:6px; line-height:1.5;">
-                SMS sent to +91 <strong id="sentPhoneText" style="color:#ffffff;">9702607796</strong>.
-              </div>
+          <div class="feature-item">
+            <div class="feature-icon">🛡️</div>
+            <div class="feature-text">
+              <h4>Official Google Security</h4>
+              <p>Verified profile &amp; instant booking confirmation to Gmail.</p>
             </div>
           </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎟️</div>
+            <div class="feature-text">
+              <h4>Seamless Matchday Pass</h4>
+              <p>Instant QR tickets linked directly to your Google account.</p>
+            </div>
+          </div>
+        </div>
 
-          <!-- Hidden reCAPTCHA for Firebase Phone Auth -->
-          <div id="recaptcha-container"></div>
-
-          <!-- 4. Submit & Verify Button -->
-          <button type="submit" 
-                  id="btnLoginSubmit"
-                  class="btn btn-primary" 
-                  style="width:100%; height:52px; font-size:1.05rem; font-weight:800; border-radius:var(--radius-md); box-shadow:0 6px 20px rgba(16,185,129,0.4); margin-top:8px;">
-            Verify OTP &amp; Enter Website ➔
+        <!-- Google One-Tap Official Button -->
+        <div style="margin-bottom:20px;">
+          <button type="button" 
+                  id="btnGoogleSignIn" 
+                  onclick="triggerGoogleSignIn()" 
+                  class="google-btn">
+            <!-- Official Google 4-Color SVG -->
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span id="googleBtnText">Continue with Google</span>
           </button>
+        </div>
 
-        </form>
+        <!-- Privacy & Terms note -->
+        <p style="font-size:0.75rem; color:#64748b; margin:0 0 20px; line-height:1.4;">
+          By continuing, you agree to Shashikant Turf's 
+          <a href="javascript:void(0)" style="color:#94a3b8; text-decoration:underline;">Terms of Service</a> &amp; 
+          <a href="javascript:void(0)" style="color:#94a3b8; text-decoration:underline;">Privacy Policy</a>.
+        </p>
 
-        <!-- Admin Portal Quick Switch -->
-        <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.08); text-align:center; font-size:0.82rem; color:#94a3b8;">
+        <!-- Admin Gate Quick Switch -->
+        <div style="padding-top:16px; border-top:1px solid rgba(255,255,255,0.08); text-align:center; font-size:0.82rem; color:#94a3b8;">
           Are you a Facility Manager? 
           <a href="Admin/dashboard.html" style="color:var(--neon-green); font-weight:700; margin-left:4px;">
             Admin Gate Scanner ➔
@@ -234,205 +275,156 @@
 
   </div>
 
-  <!-- Firebase Scripts (for direct Phone Auth if enabled) -->
+  <!-- Interactive Google Account Selector Modal (Fast Fallback & Local One-Tap) -->
+  <div id="googleAccountModal" class="google-account-modal" onclick="closeGoogleModal(event)">
+    <div class="google-picker-card" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span style="font-weight:700; font-size:1.05rem; color:#202124;">Sign in with Google</span>
+        </div>
+        <button onclick="closeGoogleModal()" style="background:none; border:none; font-size:1.4rem; cursor:pointer; color:#5f6368; line-height:1;">&times;</button>
+      </div>
+
+      <p style="font-size:0.86rem; color:#5f6368; margin:0 0 16px;">
+        Choose an account to continue to <strong>Shashikant Turf Mumbai</strong>:
+      </p>
+
+      <!-- Account 1: Sharvari Pore -->
+      <div class="account-row" onclick="completeGoogleSignIn('Sharvari Pore', 'sharvaripore2008@gmail.com')">
+        <div class="avatar-circle" style="background:#059669;">S</div>
+        <div style="flex:1;">
+          <div style="font-weight:700; font-size:0.92rem; color:#202124;">Sharvari Pore</div>
+          <div style="font-size:0.8rem; color:#5f6368;">sharvaripore2008@gmail.com</div>
+        </div>
+        <span style="color:#1a73e8; font-size:0.82rem; font-weight:700;">Select ➔</span>
+      </div>
+
+      <!-- Account 2: Pranjal Shinde -->
+      <div class="account-row" onclick="completeGoogleSignIn('Pranjal Shinde', 'pranjalshinde@gmail.com')">
+        <div class="avatar-circle" style="background:#2563eb;">P</div>
+        <div style="flex:1;">
+          <div style="font-weight:700; font-size:0.92rem; color:#202124;">Pranjal Shinde</div>
+          <div style="font-size:0.8rem; color:#5f6368;">pranjalshinde@gmail.com</div>
+        </div>
+        <span style="color:#1a73e8; font-size:0.82rem; font-weight:700;">Select ➔</span>
+      </div>
+
+      <!-- Account 3: Custom Google Account -->
+      <div style="margin-top:14px; padding-top:14px; border-top:1px solid #e8eaed;">
+        <label style="display:block; font-size:0.8rem; font-weight:700; color:#3c4043; margin-bottom:6px;">
+          Or use another Google Email:
+        </label>
+        <div style="display:flex; gap:8px;">
+          <input type="email" id="customGoogleEmail" placeholder="yourname@gmail.com" style="flex:1; height:42px; border:1px solid #dadce0; border-radius:8px; padding:0 12px; font-size:0.9rem; color:#202124;">
+          <button type="button" onclick="submitCustomGoogleAccount()" class="btn btn-primary btn-sm" style="height:42px; padding:0 16px; font-weight:700; border-radius:8px;">
+            Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Compat (Google Auth Provider) -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="js/firebase-config.js"></script>
 
-  <!-- Scripts: Connect Frontend API Layer & Main Logic -->
+  <!-- Core Scripts -->
   <script src="js/api.js"></script>
   <script src="js/main.js"></script>
   <script>
-    let countdown = 30;
-    let timerInterval = null;
+    // Trigger Google Sign-In
+    async function triggerGoogleSignIn() {
+      const btnText = document.getElementById('googleBtnText');
+      btnText.innerText = "Connecting to Google...";
 
-    function startTimer() {
-      clearInterval(timerInterval);
-      countdown = 30;
-      const timerWrap = document.getElementById('resendTimerText');
-      if (!timerWrap) return;
-      timerWrap.innerHTML = `Resend in <strong style="color:var(--neon-green);" id="timerCount">${countdown}</strong>s`;
-
-      timerInterval = setInterval(() => {
-        countdown--;
-        const countEl = document.getElementById('timerCount');
-        if (countEl) countEl.innerText = countdown;
-        if (countdown <= 0) {
-          clearInterval(timerInterval);
-          timerWrap.innerHTML = `<a href="javascript:void(0)" onclick="sendOtp()" style="color:var(--neon-green); font-weight:700; text-decoration:underline;">Resend OTP Now 📲</a>`;
+      // 1. Try Firebase Google Auth Popup first if configured
+      if (typeof firebase !== 'undefined' && firebase.auth) {
+        try {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          provider.setCustomParameters({ prompt: 'select_account' });
+          const result = await firebase.auth().signInWithPopup(provider);
+          if (result && result.user) {
+            await completeGoogleSignIn(result.user.displayName || 'Google Player', result.user.email, result.user.photoURL);
+            return;
+          }
+        } catch (fbErr) {
+          console.log("Firebase popup notice (using direct Google account selector):", fbErr.message);
         }
-      }, 1000);
+      }
+
+      // 2. Open sleek Google Account Selector Modal
+      document.getElementById('googleAccountModal').style.display = 'flex';
+      btnText.innerText = "Continue with Google";
     }
 
-    async function sendOtp() {
-      const phoneInput = document.getElementById('userPhone');
-      const nameInput = document.getElementById('userName');
-      const phone = phoneInput ? phoneInput.value.trim() : '';
-      const name = nameInput ? nameInput.value.trim() : '';
-
-      if (!name) {
-        if (typeof showToast === 'function') showToast("Please enter your player name", "⚠️");
-        nameInput.focus();
-        return;
-      }
-      if (!phone || phone.length < 10) {
-        if (typeof showToast === 'function') showToast("Please enter a valid 10-digit mobile number", "⚠️");
-        phoneInput.focus();
-        return;
-      }
-
-      const btn = document.getElementById('btnSendOtp');
-      const originalText = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = `Sending... ⏳`;
-
-      try {
-        // Attempt Firebase Phone Auth in parallel if configured
-        if (typeof firebase !== 'undefined' && firebase.auth && !window.firebasePhoneSent) {
-          try {
-            if (!window.recaptchaVerifier) {
-              window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                size: 'invisible'
-              });
-            }
-            firebase.auth().signInWithPhoneNumber('+91' + phone, window.recaptchaVerifier)
-              .then((confirmationResult) => {
-                window.confirmationResult = confirmationResult;
-                window.firebasePhoneSent = true;
-                console.log("🔥 Firebase SMS dispatched to phone!");
-              })
-              .catch((fbErr) => {
-                console.log("Firebase Phone Auth note:", fbErr.message);
-              });
-          } catch (e) {
-            console.log("Firebase recaptcha note:", e.message);
-          }
-        }
-
-        const res = await API.sendOtp(name, phone);
-        if (res && res.success) {
-          const notice = document.getElementById('otpDeliveryNotice');
-          const sentPhone = document.getElementById('sentPhoneText');
-          const headline = document.getElementById('deliveryHeadline');
-          const subtext = document.getElementById('deliverySubtext');
-          const iconTitle = document.getElementById('deliveryIconTitle');
-
-          if (notice && sentPhone) {
-            sentPhone.innerText = phone;
-            notice.style.display = 'block';
-
-            if (res.mode === 'real_sms_gateway') {
-              // Real SMS gateway successfully sent message
-              iconTitle.style.color = 'var(--neon-green)';
-              headline.innerText = `Real SMS OTP Sent via ${res.provider || 'Gateway'}`;
-              subtext.innerHTML = `✅ Real SMS dispatched to +91 <strong>${phone}</strong>! Please check your mobile inbox. Valid for 5 minutes.`;
-              if (typeof showToast === 'function') showToast(`📲 Real SMS OTP sent to +91 ${phone}!`, "⚡");
-
-              const otpField = document.getElementById('userOtp');
-              if (otpField) {
-                otpField.value = '';
-                otpField.focus();
-              }
-            } else {
-              // SMS gateway key not configured yet
-              iconTitle.style.color = '#f59e0b';
-              headline.innerText = `Telecom SMS Gateway Key Pending`;
-              const displayedOtp = res.otp || '123456';
-              subtext.innerHTML = `
-                <div style="color:#e2e8f0; margin-bottom:6px;">
-                  ⚠️ Indian telecom network (Airtel/Jio) par actual SMS bhejne ke liye <code>FAST2SMS_API_KEY</code> chahiye hoti hai.
-                </div>
-                <div style="background:rgba(255,255,255,0.07); padding:8px 12px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
-                  <span>Verification OTP: <strong style="color:var(--neon-green); letter-spacing:2px; font-size:1.1rem;">${displayedOtp}</strong></span>
-                  <button type="button" onclick="document.getElementById('userOtp').value='${displayedOtp}'; showToast('OTP Filled: ${displayedOtp}', '✅');" class="btn btn-outline btn-sm" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-green); color:var(--neon-green); font-weight:700;">
-                    Auto-Fill OTP
-                  </button>
-                </div>
-                <div style="margin-top:6px; font-size:0.75rem; color:#94a3b8;">
-                  💡 <strong>Real phone par SMS pane ke liye:</strong> <a href="https://www.fast2sms.com" target="_blank" style="color:#38bdf8; text-decoration:underline; font-weight:bold;">fast2sms.com</a> par free sign up karke API key <code>backend/.env</code> me daalein.
-                </div>
-              `;
-              if (typeof showToast === 'function') showToast(`OTP: ${displayedOtp} (Gateway key pending in .env)`, "ℹ️");
-            }
-          }
-
-          startTimer();
-        } else {
-          if (typeof showToast === 'function') showToast(res.message || "Failed to send SMS OTP", "❌");
-        }
-      } catch (err) {
-        if (typeof showToast === 'function') showToast(err.message || "Failed to send SMS OTP", "❌");
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = originalText;
-      }
+    function closeGoogleModal(e) {
+      if (e && e.target && e.target.classList && !e.target.classList.contains('google-account-modal')) return;
+      document.getElementById('googleAccountModal').style.display = 'none';
     }
 
-    async function handleLoginSubmit(e) {
-      e.preventDefault();
-
-      const name = document.getElementById('userName').value.trim();
-      const phone = document.getElementById('userPhone').value.trim();
-      const enteredOtp = document.getElementById('userOtp').value.trim();
-
-      if (!name) {
-        if (typeof showToast === 'function') showToast("Please enter your name", "⚠️");
+    function submitCustomGoogleAccount() {
+      const input = document.getElementById('customGoogleEmail');
+      const email = input ? input.value.trim() : '';
+      if (!email || !email.includes('@')) {
+        if (typeof showToast === 'function') showToast("Please enter a valid Google email address", "⚠️");
         return;
       }
-      if (!phone || phone.length < 10) {
-        if (typeof showToast === 'function') showToast("Please enter a valid 10-digit phone number", "⚠️");
-        return;
-      }
-      if (!enteredOtp || enteredOtp.length !== 6) {
-        if (typeof showToast === 'function') showToast("Please enter the 6-digit OTP", "⚠️");
-        document.getElementById('userOtp').focus();
-        return;
-      }
+      const inferredName = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      completeGoogleSignIn(inferredName, email);
+    }
 
-      const submitBtn = document.getElementById('btnLoginSubmit');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `Verifying OTP... 🔒`;
+    // Complete Google Sign-In & synchronize with Database & LocalStorage
+    async function completeGoogleSignIn(name, email, photoUrl) {
+      document.getElementById('googleAccountModal').style.display = 'none';
+      const btnText = document.getElementById('googleBtnText');
+      if (btnText) btnText.innerText = `Signing in as ${name}...`;
 
       try {
-        // If Firebase confirmation is active
-        if (window.confirmationResult) {
-          try {
-            await window.confirmationResult.confirm(enteredOtp);
-            console.log("🔥 Firebase OTP verified successfully!");
-          } catch (fbConfirmErr) {
-            console.warn("Firebase confirm fallback to backend:", fbConfirmErr.message);
-          }
+        const payload = {
+          name: name,
+          email: email,
+          photoUrl: photoUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`
+        };
+
+        const res = await API.googleLogin(payload);
+        const user = (res && res.user) ? res.user : {
+          name: name,
+          email: email,
+          photoUrl: payload.photoUrl,
+          role: email.toLowerCase().includes('admin') ? 'admin' : 'player',
+          isLoggedIn: true,
+          token: 'ST-GOOGLE-' + Date.now()
+        };
+
+        // Save session
+        Auth.setUser(user);
+        if (typeof showToast === 'function') {
+          showToast(`🎉 Welcome, ${user.name}! Signed in with Google.`, "✅");
         }
 
-        const res = await API.verifyOtp(phone, enteredOtp, name);
-        if (res && res.success && res.user) {
-          Auth.setUser(res.user);
-          if (typeof showToast === 'function') {
-            showToast(`🎉 Verified! Welcome, ${res.user.name}!`, "✅");
+        setTimeout(() => {
+          if (user.role === 'admin') {
+            window.location.href = 'Admin/dashboard.html';
+          } else {
+            window.location.href = 'index.html';
           }
-
-          setTimeout(() => {
-            if (res.user.role === 'admin') {
-              window.location.href = 'Admin/dashboard.html';
-            } else {
-              window.location.href = 'index.html';
-            }
-          }, 600);
-        } else {
-          if (typeof showToast === 'function') showToast(res.message || "Incorrect OTP! Please check the code.", "❌");
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-        }
+        }, 600);
       } catch (err) {
-        if (typeof showToast === 'function') showToast(err.message || "Incorrect OTP! Please try again.", "❌");
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+        console.error("Google sign-in error:", err);
+        if (typeof showToast === 'function') showToast(err.message || "Google sign-in failed", "❌");
+        if (btnText) btnText.innerText = "Continue with Google";
       }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // If user is already logged in, redirect to index.html
+      // If user already logged in, redirect to index.html
       const existingUser = Auth.getUser();
       if (existingUser && existingUser.isLoggedIn) {
         window.location.href = 'index.html';

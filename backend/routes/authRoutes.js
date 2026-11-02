@@ -16,6 +16,61 @@ function sanitizePhone(rawPhone) {
   return null;
 }
 
+// @route   POST /api/auth/google-login
+// @desc    Authenticate or register player via Google Sign-In (One-Tap / Popup)
+router.post('/google-login', async (req, res) => {
+  try {
+    const { name, email, photoUrl, googleId } = req.body;
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Google email is required' });
+    }
+
+    const cleanEmail = email.trim().toLowerCase();
+    const clientIp = req.ip || req.headers['x-forwarded-for'] || '127.0.0.1';
+    const role = (cleanEmail.includes('admin') || cleanEmail === 'sharvaripore2008@gmail.com') ? 'admin' : 'player';
+
+    // Check if user already exists in database
+    let user = await db.getUserByEmail(cleanEmail);
+    if (!user) {
+      user = {
+        id: 'USR-' + Math.floor(1000 + Math.random() * 9000),
+        name: (name && name.trim()) ? name.trim() : cleanEmail.split('@')[0],
+        email: cleanEmail,
+        phone: '+91 98765 00000',
+        password: 'GOOGLE_OAUTH_' + Date.now(),
+        role: role
+      };
+      await db.addUser(user);
+    } else if (name && !user.name) {
+      user.name = name.trim();
+    }
+
+    // Record in MySQL / PostgreSQL login_logs table
+    await db.recordLogin({
+      userId: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      ipAddress: clientIp,
+      status: 'GOOGLE_SIGNIN_SUCCESS'
+    });
+
+    const { password: _, ...userSafe } = user;
+    userSafe.photoUrl = photoUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}`;
+    userSafe.isLoggedIn = true;
+    userSafe.token = 'ST-GOOGLE-' + Date.now();
+
+    return res.json({
+      success: true,
+      message: `Welcome, ${userSafe.name}!`,
+      user: userSafe
+    });
+  } catch (error) {
+    console.error('Google login error:', error);
+    return res.status(500).json({ success: false, message: 'Server error during Google Sign-In' });
+  }
+});
+
 // @route   POST /api/auth/send-otp
 // @desc    Dispatch real SMS OTP to player mobile phone
 router.post('/send-otp', async (req, res) => {
