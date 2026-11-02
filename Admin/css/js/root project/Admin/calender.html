@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turf Availability Calendar | Shashikant Turf Admin</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="navbar" style="border-bottom: 1px solid var(--border-color);">
+    <div class="container nav-container" style="max-width: 100%; padding: 0 30px;">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon">⚽</div>
+        Shashikant<span>Turf</span> <span style="font-size:0.75rem; background:rgba(16,185,129,0.2); color:var(--accent); padding:2px 8px; border-radius:4px; margin-left:6px;">ADMIN</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <a href="../index.html" class="btn btn-outline btn-sm">🌐 Live Site</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="admin-layout">
+    
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-menu">
+        <div class="sidebar-heading">Core Management</div>
+        <a href="dashboard.html" class="sidebar-link">
+          <span class="icon">📊</span> Overview & Stats
+        </a>
+        <a href="manage-turfs.html" class="sidebar-link">
+          <span class="icon">🏟️</span> Manage Turfs
+        </a>
+        <a href="calendar.html" class="sidebar-link active">
+          <span class="icon">📅</span> Slot Calendar
+        </a>
+        <a href="../index.html" class="sidebar-link">
+          <span class="icon">🏠</span> Back to Home
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-header">
+        <div>
+          <h1>Turf Availability Calendar</h1>
+          <p>Inspect real-time slot bookings and manually block slots for phone bookings or maintenance.</p>
+        </div>
+      </div>
+
+      <!-- Controls: Turf & Date Selection -->
+      <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:20px; border-radius:var(--radius-lg); margin-bottom:28px; display:flex; flex-wrap:wrap; gap:20px; align-items:center;">
+        <div style="flex:1; min-width:240px;">
+          <label style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:600; margin-bottom:6px;">Select Turf Venue:</label>
+          <select id="calTurfSelect" class="form-control"></select>
+        </div>
+
+        <div style="min-width:200px;">
+          <label style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:600; margin-bottom:6px;">Select Date:</label>
+          <input type="date" id="calDateInput" class="form-control">
+        </div>
+      </div>
+
+      <!-- Slots Grid List -->
+      <div id="calSlotsGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
+        <!-- Populated via initAdminCalendar in js/admin.js -->
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../js/main.js"></script>
+    <!-- Firebase SDK & Cloud Integration -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

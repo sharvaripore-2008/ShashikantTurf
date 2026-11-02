@@ -70,8 +70,8 @@
       e.preventDefault();
       const name = document.getElementById('regName').value;
       const email = document.getElementById('regEmail').value;
-      const user = { name, email, role: 'user' };
-      localStorage.setItem('current_user', JSON.stringify(user));
+      const user = { name, email, phone: '9082798970', role: 'player', isLoggedIn: true, loginTime: new Date().toISOString() };
+      Auth.setUser(user);
       showToast("Account created successfully! Welcome to Shashikant Turf.", "🎉");
       setTimeout(() => {
         window.location.href = 'index.html';

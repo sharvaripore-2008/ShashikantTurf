@@ -257,6 +257,14 @@
       const qrTitle = document.getElementById('qrScanTitle');
       if (qrTitle) qrTitle.innerText = `Scan Dynamic UPI QR Code (₹${bookingAmount})`;
 
+      // Auto-fill logged in player details
+      const loggedUser = Auth.getUser();
+      if (loggedUser) {
+        if (loggedUser.name) document.getElementById('bookerName').value = loggedUser.name;
+        if (loggedUser.phone) document.getElementById('bookerPhone').value = loggedUser.phone;
+        if (loggedUser.email) document.getElementById('bookerEmail').value = loggedUser.email;
+      }
+
       const img = document.getElementById('summaryImg');
       img.src = currentTurf.image;
       img.onerror = () => { img.src = currentTurf.fallbackImage; };

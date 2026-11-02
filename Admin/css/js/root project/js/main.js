@@ -964,8 +964,84 @@ function closeTicketModal() {
   if (modal) modal.classList.remove('active');
 }
 
-// SETUP QUICK BOOKING FORM DEFAULT DATE
+// ==========================================================================
+// USER AUTHENTICATION & SESSION MANAGEMENT
+// ==========================================================================
+const Auth = {
+  getUser() {
+    try {
+      const u = localStorage.getItem('SHASHIKANT_USER');
+      return u ? JSON.parse(u) : null;
+    } catch (e) {
+      return null;
+    }
+  },
+
+  setUser(user) {
+    localStorage.setItem('SHASHIKANT_USER', JSON.stringify(user));
+    localStorage.setItem('current_user', JSON.stringify(user));
+  },
+
+  logout() {
+    localStorage.removeItem('SHASHIKANT_USER');
+    localStorage.removeItem('current_user');
+    showToast("Logged out successfully", "👋");
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 400);
+  },
+
+  checkAuthGuard() {
+    const path = window.location.pathname.toLowerCase();
+    // Do not guard login, register, or admin pages
+    if (path.includes('login.html') || path.includes('register.html') || path.includes('dashboard.html') || path.includes('manage-turfs.html') || path.includes('calender.html')) {
+      return;
+    }
+    const user = this.getUser();
+    if (!user || !user.isLoggedIn) {
+      window.location.href = 'login.html';
+    }
+  },
+
+  updateNavbarUser() {
+    const user = this.getUser();
+    const navActions = document.querySelector('.nav-actions');
+    if (!navActions) return;
+
+    let userWrap = document.getElementById('navUserAuthBadge');
+    if (!userWrap) {
+      userWrap = document.createElement('div');
+      userWrap.id = 'navUserAuthBadge';
+      userWrap.style.display = 'flex';
+      userWrap.style.alignItems = 'center';
+      userWrap.style.gap = '8px';
+      navActions.insertBefore(userWrap, navActions.firstChild);
+    }
+
+    if (user && user.isLoggedIn) {
+      userWrap.innerHTML = `
+        <span style="font-size:0.85rem; color:#fff; font-weight:700; background:rgba(255,255,255,0.08); padding:6px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.18); display:flex; align-items:center; gap:6px;">
+          <span style="font-size:0.95rem;">👤</span> ${user.name}
+        </span>
+        <button onclick="Auth.logout()" class="btn btn-outline btn-sm" style="padding:4px 10px; font-size:0.8rem; border-color:rgba(255,255,255,0.25);" title="Sign out">
+          Logout
+        </button>
+      `;
+    } else {
+      userWrap.innerHTML = `
+        <a href="login.html" class="btn btn-outline btn-sm" style="border-color:var(--neon-green); color:var(--neon-green);">
+          Login ➔
+        </a>
+      `;
+    }
+  }
+};
+
+// AUTO-RUN ON DOM LOAD
 document.addEventListener('DOMContentLoaded', () => {
+  Auth.checkAuthGuard();
+  Auth.updateNavbarUser();
+
   const dateInput = document.getElementById('quickDateInput');
   if (dateInput) {
     const today = new Date().toISOString().split('T')[0];

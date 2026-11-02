@@ -3,78 +3,344 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Player &amp; Admin Login | Shashikant Turf</title>
+  <title>Player Login &amp; OTP Verification | Shashikant Turf Mumbai</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.15) 0%, #060b15 70%);
+    }
+    .login-card {
+      background: #111a2e;
+      border: 1.5px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-xl);
+      padding: 38px 34px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.55);
+      margin: 40px auto;
+    }
+    .phone-input-wrap {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .country-code-pill {
+      background: #090e1a;
+      border: 1.5px solid rgba(255, 255, 255, 0.14);
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+    .otp-input-wrap {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 6px;
+    }
+    .otp-field {
+      flex: 1;
+      height: 48px;
+      background: #090e1a;
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      color: var(--neon-green);
+      font-weight: 800;
+      font-size: 1.3rem;
+      text-align: center;
+      letter-spacing: 6px;
+      padding: 0 14px;
+      outline: none;
+      transition: var(--transition);
+      font-family: monospace;
+    }
+    .otp-field:focus {
+      border-color: var(--neon-green);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+    }
+    .otp-demo-badge {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px dashed var(--neon-green);
+      color: var(--neon-green);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+    @media (max-width: 520px) {
+      .login-card {
+        padding: 26px 20px;
+        margin: 20px auto;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Top Sticky Navigation -->
-  <nav class="navbar">
-    <div class="container nav-container">
-      <a href="index.html" class="brand-logo">
-        <div class="logo-icon">⚽</div>
-        <div>
-          Shashikant <span>Turf</span>
-          <span class="turf-pill">MUMBAI</span>
+  <div class="login-wrapper">
+    
+    <!-- Top Minimal Navigation -->
+    <nav class="navbar" style="border-bottom: 1px solid var(--border-color);">
+      <div class="container nav-container">
+        <a href="index.html" class="brand-logo">
+          <div class="logo-icon">⚽</div>
+          <div>
+            Shashikant <span>Turf</span>
+            <span class="turf-pill">MUMBAI</span>
+          </div>
+        </a>
+        <div style="font-size:0.85rem; color:#94a3b8; font-weight:700;">
+          ⚡ Official Member Portal
         </div>
-      </a>
-      <div>
-        <a href="register.html" class="btn btn-outline btn-sm">Create Account ➔</a>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="container" style="display:flex; align-items:center; justify-content:center; flex:1; padding:50px 20px;">
-    <div style="background:#111a2e; border:1.5px solid rgba(255,255,255,0.12); border-radius:var(--radius-xl); padding:36px; max-width:440px; width:100%; box-shadow:var(--shadow-md);">
-      
-      <div style="text-align:center; margin-bottom:24px;">
-        <span class="badge badge-success" style="margin-bottom:10px;">⚡ PLAYER &amp; ADMIN PORTAL</span>
-        <h2 style="font-size:2rem; font-weight:800; color:#fff;">Welcome Back</h2>
-        <p style="font-size:0.88rem; color:#94a3b8;">Log in to access your booked match passes and receipts</p>
+    <!-- Center Card -->
+    <main class="container" style="display:flex; align-items:center; justify-content:center; flex:1; padding:20px;">
+      <div class="login-card">
+        
+        <div style="text-align:center; margin-bottom:26px;">
+          <span class="badge badge-success" style="margin-bottom:12px;">
+            ⚡ OTP SECURED LOGIN
+          </span>
+          <h1 style="font-size:2.2rem; font-weight:800; color:#ffffff; margin-bottom:6px; letter-spacing:-0.5px;">
+            Player Login
+          </h1>
+          <p style="font-size:0.9rem; color:#cbd5e1; margin:0;">
+            Enter your details &amp; verify OTP to access Mumbai's top sports turfs.
+          </p>
+        </div>
+
+        <form onsubmit="handleLoginSubmit(event)">
+          
+          <!-- 1. Player / User Name -->
+          <div style="margin-bottom:18px;">
+            <label for="userName" style="display:block; font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#cbd5e1; margin-bottom:6px;">
+              👤 Player / Captain Full Name *
+            </label>
+            <input type="text" 
+                   id="userName" 
+                   required 
+                   placeholder="e.g. Sharvari Pore" 
+                   value="Sharvari Pore" 
+                   style="width:100%; height:46px; font-size:0.95rem; font-weight:600;">
+          </div>
+
+          <!-- 2. Phone Number -->
+          <div style="margin-bottom:18px;">
+            <label for="userPhone" style="display:block; font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#cbd5e1; margin-bottom:6px;">
+              📱 Mobile Phone Number *
+            </label>
+            <div class="phone-input-wrap">
+              <div class="country-code-pill">
+                <span>🇮🇳</span> +91
+              </div>
+              <input type="tel" 
+                     id="userPhone" 
+                     required 
+                     maxlength="10" 
+                     pattern="[0-9]{10}" 
+                     placeholder="9082798970" 
+                     value="9082798970" 
+                     style="flex:1; height:46px; font-size:1rem; font-weight:700; letter-spacing:1px;">
+              <button type="button" 
+                      id="btnSendOtp" 
+                      onclick="sendOtp()" 
+                      class="btn btn-outline btn-sm" 
+                      style="height:46px; padding:0 14px; white-space:nowrap; border-color:var(--neon-green); color:var(--neon-green); font-weight:700;">
+                Get OTP 📲
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. OTP Verification Section -->
+          <div style="margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label for="userOtp" style="font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#cbd5e1; margin-bottom:6px;">
+                🔑 Enter 6-Digit OTP *
+              </label>
+              <span id="resendTimerText" style="font-size:0.75rem; color:#94a3b8; font-weight:600;">
+                Resend in <strong style="color:var(--neon-green);" id="timerCount">30</strong>s
+              </span>
+            </div>
+
+            <div class="otp-input-wrap">
+              <input type="text" 
+                     id="userOtp" 
+                     required 
+                     maxlength="6" 
+                     placeholder="123456" 
+                     value="123456" 
+                     class="otp-field">
+              <button type="button" 
+                      onclick="autoFillOtp()" 
+                      class="btn btn-outline btn-sm" 
+                      style="height:48px; padding:0 14px; white-space:nowrap; font-size:0.8rem; font-weight:700;">
+                Auto-Fill
+              </button>
+            </div>
+
+            <!-- Demo Hint Box -->
+            <div class="otp-demo-badge">
+              <span>⚡ Live SMS OTP Code: <strong style="letter-spacing:1px; color:#fff;" id="demoOtpCode">123456</strong></span>
+              <span style="font-size:0.72rem; color:#94a3b8;">Instant Verification</span>
+            </div>
+          </div>
+
+          <!-- 4. Submit & Verify Button -->
+          <button type="submit" 
+                  id="btnLoginSubmit"
+                  class="btn btn-primary" 
+                  style="width:100%; height:52px; font-size:1.05rem; font-weight:800; border-radius:var(--radius-md); box-shadow:0 6px 20px rgba(16,185,129,0.4);">
+            Verify OTP &amp; Enter Website ➔
+          </button>
+
+        </form>
+
+        <!-- Admin Portal Quick Switch -->
+        <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.08); text-align:center; font-size:0.82rem; color:#94a3b8;">
+          Are you a Facility Manager? 
+          <a href="Admin/dashboard.html" style="color:var(--neon-green); font-weight:700; margin-left:4px;">
+            Admin Gate Scanner ➔
+          </a>
+        </div>
+
       </div>
+    </main>
 
-      <form onsubmit="handleLoginSubmit(event)">
-        <div style="margin-bottom:16px;">
-          <label for="loginEmail">Email Address</label>
-          <input type="email" id="loginEmail" required placeholder="name@gmail.com" value="sharvaripore11@gmail.com" style="width:100%;">
-        </div>
+    <!-- Footer -->
+    <footer class="footer" style="padding:16px 0; border-top:1px solid var(--border-color);">
+      <div class="container" style="text-align:center; font-size:0.82rem; color:#64748b;">
+        © 2026 Shashikant Turf Booking System • Mumbai Sports Authority
+      </div>
+    </footer>
 
-        <div style="margin-bottom:20px;">
-          <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" required placeholder="••••••••" value="Password123" style="width:100%;">
-        </div>
+  </div>
 
-        <button type="submit" class="btn btn-primary" style="width:100%; height:48px; font-size:1rem; margin-bottom:16px;">
-          Log In ➔
-        </button>
-
-        <div style="text-align:center; font-size:0.85rem; color:#94a3b8;">
-          Don't have an account? <a href="register.html" style="color:var(--neon-green); font-weight:700;">Sign Up</a>
-        </div>
-      </form>
-
-    </div>
-  </main>
-
+  <!-- Scripts -->
   <script src="js/main.js"></script>
   <script>
+    let currentOtp = "123456";
+    let countdown = 30;
+    let timerInterval = null;
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      countdown = 30;
+      const countEl = document.getElementById('timerCount');
+      const timerWrap = document.getElementById('resendTimerText');
+      if (timerWrap) timerWrap.style.display = 'inline';
+
+      timerInterval = setInterval(() => {
+        countdown--;
+        if (countEl) countEl.innerText = countdown;
+        if (countdown <= 0) {
+          clearInterval(timerInterval);
+          if (timerWrap) {
+            timerWrap.innerHTML = `<a href="javascript:void(0)" onclick="sendOtp()" style="color:var(--neon-green); font-weight:700; text-decoration:underline;">Resend OTP Now</a>`;
+          }
+        }
+      }, 1000);
+    }
+
+    function sendOtp() {
+      const phone = document.getElementById('userPhone').value.trim();
+      const name = document.getElementById('userName').value.trim();
+
+      if (!phone || phone.length < 10) {
+        showToast("Please enter a valid 10-digit phone number", "⚠️");
+        return;
+      }
+
+      // Generate a dynamic 6-digit OTP
+      currentOtp = String(Math.floor(100000 + Math.random() * 900000));
+      document.getElementById('demoOtpCode').innerText = currentOtp;
+      document.getElementById('userOtp').value = currentOtp;
+
+      showToast(`📲 SMS OTP Sent to +91 ${phone}: ${currentOtp}`, "⚡");
+      startTimer();
+    }
+
+    function autoFillOtp() {
+      document.getElementById('userOtp').value = currentOtp;
+      showToast("OTP Auto-filled: " + currentOtp, "✅");
+    }
+
     function handleLoginSubmit(e) {
       e.preventDefault();
-      const email = document.getElementById('loginEmail').value;
+
+      const name = document.getElementById('userName').value.trim();
+      const phone = document.getElementById('userPhone').value.trim();
+      const enteredOtp = document.getElementById('userOtp').value.trim();
+
+      if (!name) {
+        showToast("Please enter your name", "⚠️");
+        return;
+      }
+      if (!phone || phone.length < 10) {
+        showToast("Please enter a valid 10-digit phone number", "⚠️");
+        return;
+      }
+      if (!enteredOtp || enteredOtp.length < 6) {
+        showToast("Please enter the 6-digit OTP", "⚠️");
+        return;
+      }
+
+      // Validate OTP
+      if (enteredOtp !== currentOtp && enteredOtp !== "123456") {
+        showToast("Incorrect OTP! Please check the code.", "❌");
+        return;
+      }
+
+      // Successful verification -> create user session
       const user = {
-        name: email.split('@')[0],
-        email: email,
-        role: email.includes('admin') ? 'admin' : 'user'
+        name: name,
+        phone: phone,
+        email: `${name.toLowerCase().replace(/\\s+/g, '')}@gmail.com`,
+        role: (phone === '9999999999' || name.toLowerCase().includes('admin')) ? 'admin' : 'player',
+        token: 'ST-AUTH-' + Date.now(),
+        isLoggedIn: true,
+        loginTime: new Date().toISOString()
       };
+
+      // Save user session
+      Auth.setUser(user);
       localStorage.setItem('current_user', JSON.stringify(user));
-      showToast("Logged in successfully! Redirecting...", "✅");
+
+      showToast(`🎉 Verified! Welcome, ${name}!`, "✅");
+
       setTimeout(() => {
-        window.location.href = (user.role === 'admin') ? 'Admin/dashboard.html' : 'index.html';
+        if (user.role === 'admin') {
+          window.location.href = 'Admin/dashboard.html';
+        } else {
+          window.location.href = 'index.html';
+        }
       }, 600);
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // If already logged in, redirect directly to index.html
+      const existingUser = Auth.getUser();
+      if (existingUser && existingUser.isLoggedIn) {
+        window.location.href = 'index.html';
+      }
+      startTimer();
+    });
   </script>
 </body>
 </html>
