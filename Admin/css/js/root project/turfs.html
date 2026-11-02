@@ -115,6 +115,15 @@
   <script src="js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sportParam = urlParams.get('sport');
+      if (sportParam) {
+        const btn = Array.from(document.querySelectorAll('.filter-pill')).find(p => p.innerText.toLowerCase().includes(sportParam.toLowerCase()));
+        if (btn) {
+          filterTurfs(sportParam, btn);
+          return;
+        }
+      }
       renderTurfsGrid('turfsListPageGrid', 'all');
     });
 

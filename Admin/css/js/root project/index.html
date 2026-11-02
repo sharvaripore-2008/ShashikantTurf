@@ -197,32 +197,6 @@
     </div>
   </div>
 
-  <!-- Featured Turfs Showcase -->
-  <section class="section" id="turfsSection">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-subtitle">Official Facilities</div>
-        <h2 class="section-title">Explore Shashikant Sports Arenas</h2>
-        <p class="section-desc">
-          High-definition synthetic grass, championship floodlighting, and matchday amenities across key Mumbai locations.
-        </p>
-      </div>
-
-      <!-- Filter Tabs -->
-      <div class="filter-tabs-wrapper">
-        <button class="filter-pill active" onclick="filterTurfs('all', this)">🏆 All Turfs</button>
-        <button class="filter-pill" onclick="filterTurfs('football', this)">⚽ Football</button>
-        <button class="filter-pill" onclick="filterTurfs('cricket', this)">🏏 Box Cricket</button>
-        <button class="filter-pill" onclick="filterTurfs('multisport', this)">⚡ Multisport</button>
-      </div>
-
-      <!-- Turfs Dynamic Grid -->
-      <div class="turfs-grid" id="turfsShowcaseGrid">
-        <!-- Injected via main.js -->
-      </div>
-    </div>
-  </section>
-
   <!-- 21-Day Slot Ribbon Interactive Preview -->
   <section class="section" style="background: #090e1a; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
     <div class="container">
@@ -534,9 +508,7 @@
   <!-- Scripts -->
   <script src="js/main.js"></script>
   <script>
-    // Initial Render of All Turfs on Showcase
     document.addEventListener('DOMContentLoaded', () => {
-      renderTurfsGrid('turfsShowcaseGrid', 'all');
       generateDateRibbon('homeDateRibbon', (dateStr) => {
         const heading = document.getElementById('selectedDateHeading');
         if (heading) {
