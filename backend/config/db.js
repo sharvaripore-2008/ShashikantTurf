@@ -206,6 +206,20 @@ module.exports = {
     return (readJsonData().users || []).find(u => (u.email || '').toLowerCase() === clean) || null;
   },
 
+  async getUserByPhone(phone) {
+    if (!phone) return null;
+    const clean = phone.replace(/[^0-9]/g, '').slice(-10);
+    if (activeDB === 'postgres') {
+      const res = await pgPool.query('SELECT * FROM users WHERE phone LIKE $1', [`%${clean}`]);
+      return res.rows[0] || null;
+    }
+    if (activeDB === 'mysql') {
+      const [rows] = await mysqlPool.query('SELECT * FROM users WHERE phone LIKE ?', [`%${clean}`]);
+      return rows[0] || null;
+    }
+    return (readJsonData().users || []).find(u => (u.phone || '').replace(/[^0-9]/g, '').slice(-10) === clean) || null;
+  },
+
   async addUser(user) {
     if (activeDB === 'postgres') {
       await pgPool.query(

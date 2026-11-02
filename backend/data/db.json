@@ -25,6 +25,14 @@
       "phone": "+91 98765 11223",
       "password": "password123",
       "role": "user"
+    },
+    {
+      "id": "USR-8988",
+      "name": "Pranjal Shinde",
+      "email": "9702607796@shashikantturf.com",
+      "phone": "+91 9702607796",
+      "password": "SMS_OTP_AUTHENTICATED",
+      "role": "player"
     }
   ],
   "turfs": [
@@ -110,6 +118,17 @@
     }
   ],
   "bookings": [],
-  "login_logs": [],
+  "login_logs": [
+    {
+      "id": 1793660102869,
+      "userId": "USR-8988",
+      "name": "Pranjal Shinde",
+      "email": "9702607796@shashikantturf.com",
+      "role": "player",
+      "ipAddress": "127.0.0.1",
+      "status": "SMS_OTP_SUCCESS",
+      "login_time": "2026-11-02T22:55:02.869Z"
+    }
+  ],
   "cancellations": []
 }
