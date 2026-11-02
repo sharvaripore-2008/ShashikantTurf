@@ -9,39 +9,157 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .details-layout {
-      display: grid;
-      grid-template-columns: 1.8fr 1.2fr;
-      gap: 36px;
-      padding: 40px 0 80px;
+    /* Half-Page Cover Hero Banner */
+    .turf-hero-banner {
+      position: relative;
+      width: 100%;
+      height: 48vh;
+      min-height: 380px;
+      max-height: 480px;
+      overflow: hidden;
+      background: #090e1a;
+      border-bottom: 1.5px solid var(--border-color);
     }
-    .detail-card {
+    .turf-hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.6s ease;
+    }
+    .turf-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 11, 21, 0.45) 0%, rgba(6, 11, 21, 0.8) 55%, #060b15 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 0 35px;
+    }
+    .hero-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hero-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .turf-hero-title {
+      font-size: 2.7rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .turf-hero-loc {
+      font-size: 1.05rem;
+      color: var(--neon-green);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Information Card Layout */
+    .details-info-section {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 35px 20px 20px;
+    }
+    .info-card {
       background: #111a2e;
       border: 1.5px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--radius-xl);
-      padding: 30px;
-      box-shadow: var(--shadow-sm);
+      padding: 32px 36px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      margin-bottom: 30px;
     }
-    .main-turf-photo {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      border-radius: var(--radius-lg);
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
-      margin-bottom: 24px;
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin: 22px 0 28px;
     }
     .spec-item {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-sm);
-      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+    }
+
+    /* Reserved Slot Section (Medium / Compact Size) */
+    .slot-section-wrap {
+      max-width: 860px;
+      margin: 0 auto 70px;
+      padding: 0 20px;
+    }
+    .slot-card-compact {
+      background: #111a2e;
+      border: 1.5px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-xl);
+      padding: 30px 32px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+    }
+    .compact-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+      margin-bottom: 22px;
     }
     @media (max-width: 900px) {
-      .details-layout {
-        grid-template-columns: 1fr;
+      .compact-slots-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
-      .main-turf-photo {
-        height: 280px;
+    }
+    @media (max-width: 768px) {
+      .turf-hero-title {
+        font-size: 1.95rem;
+      }
+      .turf-hero-banner {
+        height: 42vh;
+        min-height: 330px;
+      }
+      .info-card, .slot-card-compact {
+        padding: 24px 20px;
+      }
+    }
+
+    /* Medium Payment Summary Box */
+    .payment-summary-medium {
+      background: #090e1a;
+      border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .pay-btn-medium {
+      height: 46px;
+      padding: 0 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      white-space: nowrap;
+    }
+    @media (max-width: 650px) {
+      .payment-summary-medium {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .pay-btn-medium {
+        width: 100%;
       }
     }
   </style>
@@ -72,125 +190,152 @@
     </div>
   </nav>
 
-  <!-- Main Container -->
-  <main class="container">
-    <div class="details-layout">
-      
-      <!-- Left Column: Turf Media, Overview & Specs -->
-      <div>
-        <img id="detailImg" src="" alt="Turf Photo" class="main-turf-photo" />
+  <!-- 1. HALF-PAGE COVER HERO BANNER -->
+  <div class="turf-hero-banner">
+    <img id="detailImg" class="turf-hero-bg" src="" alt="Turf Cover" />
+    <div class="turf-hero-overlay">
+      <div class="container hero-top-bar">
+        <a href="turfs.html" class="btn btn-outline btn-sm" style="background: rgba(9, 14, 26, 0.65); backdrop-filter: blur(8px);">
+          ← Back to All Turfs
+        </a>
+        <span class="badge badge-success" style="backdrop-filter: blur(8px);">
+          ⚡ Instant QR Gate Pass Delivery
+        </span>
+      </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
-          <div style="display:flex; gap:8px;">
-            <span class="badge badge-success" id="detailSport">⚽ Football</span>
-            <span class="badge badge-gold" id="detailRating">★ 4.9 Rating</span>
-          </div>
-          <div class="price-pill">
-            ⚡ ₹699 / Hour Fixed
-          </div>
+      <div class="container">
+        <div class="hero-badges-row">
+          <span class="badge badge-success" id="detailSport">⚽ Football</span>
+          <span class="badge badge-gold" id="detailRating">★ 4.9 Rating</span>
+          <div class="price-pill" style="margin: 0;">⚡ ₹699 / Hour Fixed Rate</div>
         </div>
-
-        <h1 id="detailName" style="font-size:2.4rem; font-weight:800; margin-bottom:8px; color:#fff;">
-          Shashikant Football Grand Arena
+        <h1 class="turf-hero-title" id="detailName">
+          Loading Arena...
         </h1>
-        <div style="color:var(--neon-green); font-weight:700; font-size:0.95rem; margin-bottom:18px;" id="detailLocation">
-          📍 Andheri West, Mumbai
-        </div>
-
-        <p id="detailDesc" style="font-size:1.02rem; color:#cbd5e1; line-height:1.7; margin-bottom:30px;">
-          Loading venue description...
-        </p>
-
-        <!-- Technical Venue Specifications -->
-        <h3 style="font-size:1.3rem; margin-bottom:16px; color:#fff;">🏟️ Arena Specifications</h3>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin-bottom:30px;">
-          <div class="spec-item">
-            <span style="font-size:0.75rem; text-transform:uppercase; color:#94a3b8; font-weight:700; display:block;">Turf Pitch Dimensions</span>
-            <strong style="color:#fff;" id="detailSize">7v7 FIFA Artificial Turf</strong>
-          </div>
-          <div class="spec-item">
-            <span style="font-size:0.75rem; text-transform:uppercase; color:#94a3b8; font-weight:700; display:block;">Weather &amp; Roof Structure</span>
-            <strong style="color:#fff;" id="detailRoof">Open-Air (100% Drainage)</strong>
-          </div>
-          <div class="spec-item">
-            <span style="font-size:0.75rem; text-transform:uppercase; color:#94a3b8; font-weight:700; display:block;">Lighting Rig</span>
-            <strong style="color:#fff;">High Mast Stadium LEDs</strong>
-          </div>
-          <div class="spec-item">
-            <span style="font-size:0.75rem; text-transform:uppercase; color:#94a3b8; font-weight:700; display:block;">Gate Entry System</span>
-            <strong style="color:var(--neon-green);">Scannable QR Ticket</strong>
-          </div>
-        </div>
-
-        <!-- Amenities -->
-        <h3 style="font-size:1.3rem; margin-bottom:16px; color:#fff;">✨ Included Matchday Amenities</h3>
-        <div class="arena-chips" id="detailAmenities" style="margin-bottom:30px;">
-          <!-- Chips injected via JS -->
-        </div>
-
-        <!-- Venue Rules & Guidelines -->
-        <div style="background:#090e1a; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:20px;">
-          <h4 style="font-size:1.05rem; color:#fff; margin-bottom:10px;">📋 Pitch Rules &amp; Match Etiquette</h4>
-          <ul style="padding-left:18px; font-size:0.88rem; color:#94a3b8; display:flex; flex-direction:column; gap:6px;">
-            <li>Football studs (hard molded) or turf flats are permitted. Metal studs strictly prohibited.</li>
-            <li>Arrive at least 10 minutes prior to slot start time for gate QR verification.</li>
-            <li>Filtered cold drinking water provided on-site. Outside alcohol/smoking strictly forbidden.</li>
-            <li>Cancellation permitted up to 2 hours before kickoff via My Bookings portal.</li>
-          </ul>
+        <div class="turf-hero-loc" id="detailLocation">
+          📍 Mumbai
         </div>
       </div>
-
-      <!-- Right Column: Interactive 21-Day Slot Reservation Card -->
-      <div>
-        <div class="detail-card" style="position:sticky; top:90px;">
-          <h3 style="font-size:1.4rem; color:#fff; margin-bottom:6px;">⚡ Reserve Matchday Slot</h3>
-          <p style="font-size:0.85rem; color:#94a3b8; margin-bottom:18px;">Select a date and click any available 1-hour time window</p>
-
-          <!-- 21-Day Date Ribbon -->
-          <label>1. Select Matchday Date (21-Day Window)</label>
-          <div class="date-ribbon-container" id="detailsDateRibbon" style="margin-bottom:20px;">
-            <!-- Dates injected via JS -->
-          </div>
-
-          <!-- Slots Picker -->
-          <label>2. Choose 1-Hour Time Slot</label>
-          <div class="slots-grid" id="slotsPickerGrid" style="grid-template-columns:1fr 1fr; margin-top:8px; margin-bottom:24px;">
-            <!-- Slots injected via JS -->
-          </div>
-
-          <!-- Pricing Breakdown Summary -->
-          <div style="background:#090e1a; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:16px; margin-bottom:20px;">
-            <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#94a3b8; margin-bottom:6px;">
-              <span>Base Hourly Rate</span>
-              <span style="color:#fff; font-weight:700;">₹699.00</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#94a3b8; margin-bottom:6px;">
-              <span>GST &amp; Facility Taxes</span>
-              <span style="color:var(--neon-green); font-weight:700;">₹0.00 (Zero Hidden)</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#94a3b8; margin-bottom:12px;">
-              <span>Digital Gate Pass Fee</span>
-              <span style="color:var(--neon-green); font-weight:700;">FREE</span>
-            </div>
-            <div style="border-top:1px dashed var(--border-color); padding-top:10px; display:flex; justify-content:space-between; font-size:1.25rem; font-weight:800; color:#fff;">
-              <span>Total Payable</span>
-              <span style="color:var(--neon-green);">₹699.00</span>
-            </div>
-          </div>
-
-          <!-- Checkout Action Button -->
-          <button onclick="proceedToCheckout()" class="btn btn-primary" style="width:100%; height:50px; font-size:1.05rem;">
-            Proceed to Payment (₹699) ➔
-          </button>
-          
-          <div style="text-align:center; margin-top:12px; font-size:0.78rem; color:#94a3b8;">
-            🔒 256-Bit SSL Encrypted • Instant Gmail Pass Delivery
-          </div>
-        </div>
-      </div>
-
     </div>
-  </main>
+  </div>
+
+  <!-- 2. TURF INFORMATION SECTION (DIRECTLY UNDER HERO) -->
+  <section class="details-info-section">
+    <div class="info-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+        <h2 style="font-size:1.45rem; color:#fff; font-weight:800; margin:0;">
+          🏟️ Arena Overview &amp; Specifications
+        </h2>
+        <span style="font-size:0.82rem; color:var(--neon-green); font-weight:700;">
+          ✓ Verified Match Venue
+        </span>
+      </div>
+
+      <p id="detailDesc" style="font-size:1.02rem; color:#cbd5e1; line-height:1.75; margin-bottom:24px;">
+        Loading arena description...
+      </p>
+
+      <!-- Technical Venue Specifications -->
+      <h3 style="font-size:1.15rem; margin-bottom:14px; color:#fff; font-weight:700;">
+        ⚙️ Pitch Architecture &amp; Facilities
+      </h3>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span style="font-size:0.75rem; text-transform:uppercase; color:#94a3b8; font-weight:700; display:block; margin-bottom:4px;">Pitch Dimensions</span>
+          <strong style="color:#fff;" id="detailSize">7v7 FIFA Artificial Turf</strong>
+        </div>
+        <div class="spec-item">
+          <span style="font-size:0.75rem; text-transform:uppercase; color:#94a3b8; font-weight:700; display:block; margin-bottom:4px;">Roof &amp; Drainage</span>
+          <strong style="color:#fff;" id="detailRoof">Open-Air (100% French Drainage)</strong>
+        </div>
+        <div class="spec-item">
+          <span style="font-size:0.75rem; text-transform:uppercase; color:#94a3b8; font-weight:700; display:block; margin-bottom:4px;">Lighting Rig</span>
+          <strong style="color:#fff;">Championship Stadium LEDs (1000 Lux)</strong>
+        </div>
+        <div class="spec-item">
+          <span style="font-size:0.75rem; text-transform:uppercase; color:#94a3b8; font-weight:700; display:block; margin-bottom:4px;">Gate Entry System</span>
+          <strong style="color:var(--neon-green);">Scannable Matchday QR Ticket</strong>
+        </div>
+      </div>
+
+      <!-- Amenities -->
+      <h3 style="font-size:1.15rem; margin-bottom:14px; color:#fff; font-weight:700;">
+        ✨ Included Matchday Amenities
+      </h3>
+      <div class="arena-chips" id="detailAmenities" style="margin-bottom:28px;">
+        <!-- Chips injected via JS -->
+      </div>
+
+      <!-- Venue Rules & Guidelines -->
+      <div style="background:#090e1a; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:20px;">
+        <h4 style="font-size:1rem; color:#fff; margin-bottom:10px; font-weight:700;">
+          📋 Pitch Rules &amp; Match Etiquette
+        </h4>
+        <ul style="padding-left:18px; font-size:0.88rem; color:#94a3b8; display:flex; flex-direction:column; gap:6px;">
+          <li>Football studs (hard molded) or turf flats are permitted. Metal studs strictly prohibited.</li>
+          <li>Arrive at least 10 minutes prior to slot start time for gate QR verification.</li>
+          <li>Filtered cold drinking water provided on-site. Outside alcohol/smoking strictly forbidden.</li>
+          <li>Cancellation permitted up to 2 hours before kickoff via My Bookings portal.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. RESERVED MATCHDAY SLOT SECTION (MEDIUM / COMPACT SIZED) -->
+  <section class="slot-section-wrap">
+    <div class="slot-card-compact">
+      <div style="margin-bottom:18px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.4rem;">⚡</span>
+          <h2 style="font-size:1.45rem; color:#fff; font-weight:800; margin:0;">
+            Reserve Matchday Slot
+          </h2>
+        </div>
+        <p style="font-size:0.86rem; color:#94a3b8; margin:4px 0 0;">
+          Pick your match date and choose an available 1-hour time window below.
+        </p>
+      </div>
+
+      <!-- 21-Day Date Ribbon -->
+      <label style="font-size:0.8rem; color:#cbd5e1; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
+        1. Select Matchday Date (21-Day Window)
+      </label>
+      <div class="date-ribbon-container" id="detailsDateRibbon" style="margin-bottom:18px;">
+        <!-- Dates injected via JS -->
+      </div>
+
+      <!-- Slots Picker -->
+      <label style="font-size:0.8rem; color:#cbd5e1; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
+        2. Choose 1-Hour Time Slot
+      </label>
+      <div class="compact-slots-grid" id="slotsPickerGrid">
+        <!-- Slots injected via JS -->
+      </div>
+
+      <!-- Medium & Compact Payment Summary Box -->
+      <div class="payment-summary-medium">
+        <div>
+          <div style="font-size:0.82rem; color:#94a3b8; text-transform:uppercase; font-weight:700; letter-spacing:0.5px; margin-bottom:4px;">
+            Booking Summary
+          </div>
+          <div style="font-size:0.95rem; color:#fff; margin-bottom:4px;">
+            📅 <strong id="summarySelectedDate">Today</strong> &nbsp;•&nbsp; ⏰ <strong id="summarySelectedSlot" style="color:var(--neon-green);">07:00 PM - 08:00 PM</strong>
+          </div>
+          <div style="font-size:0.85rem; color:#cbd5e1;">
+            Rate: <strong style="color:#fff; font-size:1.1rem;">₹699</strong> / hour &nbsp;•&nbsp; <span style="color:var(--neon-green); font-weight:700;">Zero Hidden Taxes</span>
+          </div>
+        </div>
+
+        <button onclick="proceedToCheckout()" class="btn btn-primary pay-btn-medium">
+          Proceed to Payment (₹699) ➔
+        </button>
+      </div>
+
+      <div style="text-align:center; margin-top:14px; font-size:0.78rem; color:#94a3b8;">
+        🔒 256-Bit SSL Encrypted • Instant Matchday QR Pass Dispatched to Gmail
+      </div>
+    </div>
+  </section>
 
   <!-- Master Footer -->
   <footer class="footer">
@@ -241,8 +386,10 @@
       // Generate 21-day ribbon
       generateDateRibbon('detailsDateRibbon', (dStr) => {
         selectedDate = dStr;
+        const sumDate = document.getElementById('summarySelectedDate');
+        if (sumDate) sumDate.innerText = dStr;
         renderSlots();
-        showToast(`Selected ${dStr}`, "📅");
+        showToast(`Selected date: ${dStr}`, "📅");
       });
 
       renderSlots();
@@ -250,15 +397,18 @@
 
     function renderSlots() {
       const container = document.getElementById('slotsPickerGrid');
-      container.innerHTML = ALL_SLOTS.map((s, idx) => {
+      container.innerHTML = ALL_SLOTS.map((s) => {
         const isSelected = (s.time === selectedSlot);
         return `
-          <div class="slot-btn ${isSelected ? 'selected' : ''}" onclick="selectSlot('${s.time}')">
-            <div class="slot-time">${s.time}</div>
-            <div class="slot-status">✓ ${s.tag}</div>
+          <div class="slot-btn ${isSelected ? 'selected' : ''}" onclick="selectSlot('${s.time}')" style="padding: 10px 12px;">
+            <div class="slot-time" style="font-size:0.85rem; font-weight:700;">${s.time}</div>
+            <div class="slot-status" style="font-size:0.75rem;">✓ ${s.tag}</div>
           </div>
         `;
       }).join('');
+
+      const sumSlot = document.getElementById('summarySelectedSlot');
+      if (sumSlot) sumSlot.innerText = selectedSlot;
     }
 
     function selectSlot(timeStr) {
