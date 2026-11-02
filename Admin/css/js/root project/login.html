@@ -21,7 +21,7 @@
       border: 1.5px solid rgba(255, 255, 255, 0.14);
       border-radius: var(--radius-xl);
       padding: 38px 34px;
-      max-width: 480px;
+      max-width: 490px;
       width: 100%;
       box-shadow: 0 16px 45px rgba(0, 0, 0, 0.55);
       margin: 40px auto;
@@ -75,7 +75,7 @@
       border: 1px solid rgba(16, 185, 129, 0.28);
       border-radius: 8px;
       padding: 12px 14px;
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 0.82rem;
       transition: all 0.3s ease;
     }
@@ -187,25 +187,28 @@
                      autocomplete="one-time-code">
             </div>
 
-            <!-- Professional Delivery Status Box -->
+            <!-- Dynamic Delivery Status Box -->
             <div id="otpDeliveryNotice" class="otp-delivery-box" style="display:none;">
               <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="color:var(--neon-green); font-weight:700; display:flex; align-items:center; gap:6px;">
-                  <span>📲</span> <span id="deliveryHeadline">Real SMS OTP Dispatched</span>
+                <span id="deliveryIconTitle" style="color:var(--neon-green); font-weight:700; display:flex; align-items:center; gap:6px;">
+                  <span>📲</span> <span id="deliveryHeadline">SMS OTP Notification</span>
                 </span>
-                <span style="font-size:0.75rem; color:#94a3b8;">5 min validity</span>
+                <span id="deliveryValidity" style="font-size:0.75rem; color:#94a3b8;">5 min validity</span>
               </div>
-              <div id="deliverySubtext" style="color:#cbd5e1; font-size:0.78rem; margin-top:4px;">
-                SMS sent to +91 <strong id="sentPhoneText" style="color:#ffffff;">9702607796</strong>. Please check your mobile messages.
+              <div id="deliverySubtext" style="color:#cbd5e1; font-size:0.78rem; margin-top:6px; line-height:1.5;">
+                SMS sent to +91 <strong id="sentPhoneText" style="color:#ffffff;">9702607796</strong>.
               </div>
             </div>
           </div>
+
+          <!-- Hidden reCAPTCHA for Firebase Phone Auth -->
+          <div id="recaptcha-container"></div>
 
           <!-- 4. Submit & Verify Button -->
           <button type="submit" 
                   id="btnLoginSubmit"
                   class="btn btn-primary" 
-                  style="width:100%; height:52px; font-size:1.05rem; font-weight:800; border-radius:var(--radius-md); box-shadow:0 6px 20px rgba(16,185,129,0.4);">
+                  style="width:100%; height:52px; font-size:1.05rem; font-weight:800; border-radius:var(--radius-md); box-shadow:0 6px 20px rgba(16,185,129,0.4); margin-top:8px;">
             Verify OTP &amp; Enter Website ➔
           </button>
 
@@ -230,6 +233,11 @@
     </footer>
 
   </div>
+
+  <!-- Firebase Scripts (for direct Phone Auth if enabled) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
 
   <!-- Scripts: Connect Frontend API Layer & Main Logic -->
   <script src="js/api.js"></script>
@@ -276,35 +284,76 @@
       const btn = document.getElementById('btnSendOtp');
       const originalText = btn.innerHTML;
       btn.disabled = true;
-      btn.innerHTML = `Sending SMS... ⏳`;
+      btn.innerHTML = `Sending... ⏳`;
 
       try {
+        // Attempt Firebase Phone Auth in parallel if configured
+        if (typeof firebase !== 'undefined' && firebase.auth && !window.firebasePhoneSent) {
+          try {
+            if (!window.recaptchaVerifier) {
+              window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                size: 'invisible'
+              });
+            }
+            firebase.auth().signInWithPhoneNumber('+91' + phone, window.recaptchaVerifier)
+              .then((confirmationResult) => {
+                window.confirmationResult = confirmationResult;
+                window.firebasePhoneSent = true;
+                console.log("🔥 Firebase SMS dispatched to phone!");
+              })
+              .catch((fbErr) => {
+                console.log("Firebase Phone Auth note:", fbErr.message);
+              });
+          } catch (e) {
+            console.log("Firebase recaptcha note:", e.message);
+          }
+        }
+
         const res = await API.sendOtp(name, phone);
         if (res && res.success) {
-          if (typeof showToast === 'function') {
-            showToast(`📲 Real SMS OTP dispatched to +91 ${phone}!`, "⚡");
-          }
           const notice = document.getElementById('otpDeliveryNotice');
           const sentPhone = document.getElementById('sentPhoneText');
           const headline = document.getElementById('deliveryHeadline');
           const subtext = document.getElementById('deliverySubtext');
+          const iconTitle = document.getElementById('deliveryIconTitle');
 
           if (notice && sentPhone) {
             sentPhone.innerText = phone;
             notice.style.display = 'block';
-            if (res.mode === 'real_sms_gateway') {
-              headline.innerText = `Real SMS OTP Sent via ${res.provider || 'Gateway'}`;
-              subtext.innerHTML = `SMS dispatched to +91 <strong>${phone}</strong>. Please check your mobile inbox. Valid for 5 minutes.`;
-            } else {
-              headline.innerText = `Real SMS Dispatch Active (+91 ${phone})`;
-              subtext.innerHTML = `OTP dispatched to +91 <strong>${phone}</strong>. Please check your phone messages.`;
-            }
-          }
 
-          const otpField = document.getElementById('userOtp');
-          if (otpField) {
-            otpField.value = '';
-            otpField.focus();
+            if (res.mode === 'real_sms_gateway') {
+              // Real SMS gateway successfully sent message
+              iconTitle.style.color = 'var(--neon-green)';
+              headline.innerText = `Real SMS OTP Sent via ${res.provider || 'Gateway'}`;
+              subtext.innerHTML = `✅ Real SMS dispatched to +91 <strong>${phone}</strong>! Please check your mobile inbox. Valid for 5 minutes.`;
+              if (typeof showToast === 'function') showToast(`📲 Real SMS OTP sent to +91 ${phone}!`, "⚡");
+
+              const otpField = document.getElementById('userOtp');
+              if (otpField) {
+                otpField.value = '';
+                otpField.focus();
+              }
+            } else {
+              // SMS gateway key not configured yet
+              iconTitle.style.color = '#f59e0b';
+              headline.innerText = `Telecom SMS Gateway Key Pending`;
+              const displayedOtp = res.otp || '123456';
+              subtext.innerHTML = `
+                <div style="color:#e2e8f0; margin-bottom:6px;">
+                  ⚠️ Indian telecom network (Airtel/Jio) par actual SMS bhejne ke liye <code>FAST2SMS_API_KEY</code> chahiye hoti hai.
+                </div>
+                <div style="background:rgba(255,255,255,0.07); padding:8px 12px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span>Verification OTP: <strong style="color:var(--neon-green); letter-spacing:2px; font-size:1.1rem;">${displayedOtp}</strong></span>
+                  <button type="button" onclick="document.getElementById('userOtp').value='${displayedOtp}'; showToast('OTP Filled: ${displayedOtp}', '✅');" class="btn btn-outline btn-sm" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-green); color:var(--neon-green); font-weight:700;">
+                    Auto-Fill OTP
+                  </button>
+                </div>
+                <div style="margin-top:6px; font-size:0.75rem; color:#94a3b8;">
+                  💡 <strong>Real phone par SMS pane ke liye:</strong> <a href="https://www.fast2sms.com" target="_blank" style="color:#38bdf8; text-decoration:underline; font-weight:bold;">fast2sms.com</a> par free sign up karke API key <code>backend/.env</code> me daalein.
+                </div>
+              `;
+              if (typeof showToast === 'function') showToast(`OTP: ${displayedOtp} (Gateway key pending in .env)`, "ℹ️");
+            }
           }
 
           startTimer();
@@ -335,7 +384,7 @@
         return;
       }
       if (!enteredOtp || enteredOtp.length !== 6) {
-        if (typeof showToast === 'function') showToast("Please enter the 6-digit OTP received on your mobile", "⚠️");
+        if (typeof showToast === 'function') showToast("Please enter the 6-digit OTP", "⚠️");
         document.getElementById('userOtp').focus();
         return;
       }
@@ -346,6 +395,16 @@
       submitBtn.innerHTML = `Verifying OTP... 🔒`;
 
       try {
+        // If Firebase confirmation is active
+        if (window.confirmationResult) {
+          try {
+            await window.confirmationResult.confirm(enteredOtp);
+            console.log("🔥 Firebase OTP verified successfully!");
+          } catch (fbConfirmErr) {
+            console.warn("Firebase confirm fallback to backend:", fbConfirmErr.message);
+          }
+        }
+
         const res = await API.verifyOtp(phone, enteredOtp, name);
         if (res && res.success && res.user) {
           Auth.setUser(res.user);
@@ -361,12 +420,12 @@
             }
           }, 600);
         } else {
-          if (typeof showToast === 'function') showToast(res.message || "Incorrect OTP! Please check your mobile SMS.", "❌");
+          if (typeof showToast === 'function') showToast(res.message || "Incorrect OTP! Please check the code.", "❌");
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
         }
       } catch (err) {
-        if (typeof showToast === 'function') showToast(err.message || "Incorrect OTP! Please check your mobile SMS.", "❌");
+        if (typeof showToast === 'function') showToast(err.message || "Incorrect OTP! Please try again.", "❌");
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
       }

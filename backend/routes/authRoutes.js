@@ -50,10 +50,13 @@ router.post('/send-otp', async (req, res) => {
 
     return res.json({
       success: true,
-      message: `Real SMS OTP dispatched to +91 ${cleanPhone}!`,
+      message: smsResult.mode === 'real_sms_gateway' 
+        ? `Real SMS OTP dispatched to +91 ${cleanPhone}!` 
+        : `OTP generated for +91 ${cleanPhone} (Add FAST2SMS_API_KEY in .env for real mobile delivery)`,
       phone: cleanPhone,
       expiresInSeconds: 300,
       mode: smsResult.mode,
+      otp: smsResult.mode === 'live_dispatch_active' ? otp : undefined,
       provider: smsResult.provider || 'Shashikant SMS Dispatcher'
     });
   } catch (error) {
