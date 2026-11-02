@@ -172,16 +172,33 @@
 
           <!-- 3. Preferred Time Window -->
           <div class="form-field-wrap">
-            <label for="quickTimeWindow">Time Window</label>
+            <label for="quickTimeWindow">Time Window (1-Hour Slots)</label>
             <select id="quickTimeWindow">
-              <option value="07:00 PM - 08:00 PM">🌙 Prime Night (07:00 PM - 08:00 PM)</option>
+              <!-- Evening Prime & Night Floodlight Slots (Most Popular) -->
+              <option value="07:00 PM - 08:00 PM" selected>🌙 Prime Night (07:00 PM - 08:00 PM)</option>
               <option value="08:00 PM - 09:00 PM">🌙 Prime Night (08:00 PM - 09:00 PM)</option>
               <option value="09:00 PM - 10:00 PM">🌙 Late Night (09:00 PM - 10:00 PM)</option>
+              <option value="10:00 PM - 11:00 PM">⭐ Midnight Match (10:00 PM - 11:00 PM)</option>
+              <option value="11:00 PM - 12:00 AM">⭐ Midnight Cup (11:00 PM - 12:00 AM)</option>
+              <option value="12:00 AM - 01:00 AM">🌙 After Midnight League (12:00 AM - 01:00 AM)</option>
+              <option value="01:00 AM - 02:00 AM">🌙 Night Owl Match (01:00 AM - 02:00 AM)</option>
+              <option value="02:00 AM - 03:00 AM">🌙 Midnight Insomnia Cup (02:00 AM - 03:00 AM)</option>
+              <option value="03:00 AM - 04:00 AM">🌙 Late Dawn Champions (03:00 AM - 04:00 AM)</option>
+              <option value="04:00 AM - 05:00 AM">🌙 Early Dawn Warmup (04:00 AM - 05:00 AM)</option>
+              <option value="05:00 AM - 06:00 AM">☀️ Sunrise Session (05:00 AM - 06:00 AM)</option>
               <option value="06:00 AM - 07:00 AM">☀️ Morning Glory (06:00 AM - 07:00 AM)</option>
               <option value="07:00 AM - 08:00 AM">☀️ Morning Match (07:00 AM - 08:00 AM)</option>
+              <option value="08:00 AM - 09:00 AM">☀️ Breakfast Cup (08:00 AM - 09:00 AM)</option>
+              <option value="09:00 AM - 10:00 AM">☀️ Corporate Morning (09:00 AM - 10:00 AM)</option>
+              <option value="10:00 AM - 11:00 AM">☀️ Day League (10:00 AM - 11:00 AM)</option>
+              <option value="11:00 AM - 12:00 PM">☀️ Midday Practice (11:00 AM - 12:00 PM)</option>
+              <option value="12:00 PM - 01:00 PM">☀️ Afternoon Match (12:00 PM - 01:00 PM)</option>
+              <option value="01:00 PM - 02:00 PM">☀️ Afternoon Practice (01:00 PM - 02:00 PM)</option>
+              <option value="02:00 PM - 03:00 PM">☀️ Afternoon League (02:00 PM - 03:00 PM)</option>
+              <option value="03:00 PM - 04:00 PM">☀️ Pre-Evening Warmup (03:00 PM - 04:00 PM)</option>
+              <option value="04:00 PM - 05:00 PM">☀️ Twilight Match (04:00 PM - 05:00 PM)</option>
               <option value="05:00 PM - 06:00 PM">🌅 Sunset Slot (05:00 PM - 06:00 PM)</option>
-              <option value="06:00 PM - 07:00 PM">🌅 Evening Slot (06:00 PM - 07:00 PM)</option>
-              <option value="10:00 PM - 11:00 PM">⭐ Midnight Match (10:00 PM - 11:00 PM)</option>
+              <option value="06:00 PM - 07:00 PM">🌅 Dusk Floodlights (06:00 PM - 07:00 PM)</option>
             </select>
           </div>
 
@@ -247,6 +264,14 @@
           <div class="slot-btn" onclick="window.location.href='checkout.html?turfId=TRF-101&slot=09:00 PM - 10:00 PM'">
             <div class="slot-time">09:00 PM - 10:00 PM</div>
             <div class="slot-status">✓ Available • ₹699</div>
+          </div>
+          <div class="slot-btn" onclick="window.location.href='checkout.html?turfId=TRF-101&slot=10:00 PM - 11:00 PM'">
+            <div class="slot-time">10:00 PM - 11:00 PM</div>
+            <div class="slot-status">⭐ Midnight Cup • ₹699</div>
+          </div>
+          <div class="slot-btn" onclick="window.location.href='checkout.html?turfId=TRF-101&slot=11:00 PM - 12:00 AM'">
+            <div class="slot-time">11:00 PM - 12:00 AM</div>
+            <div class="slot-status">⭐ Midnight League • ₹699</div>
           </div>
         </div>
       </div>

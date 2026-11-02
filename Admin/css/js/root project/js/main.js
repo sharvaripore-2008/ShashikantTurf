@@ -870,7 +870,7 @@ function handleQuickBooking(e) {
   const matchDate = (dateInput && dateInput.value) ? dateInput.value : new Date().toISOString().split('T')[0];
   const slot = timeSelect ? timeSelect.value : '07:00 PM - 08:00 PM';
 
-  window.location.href = `checkout.html?turfId=${turfId}&date=${matchDate}&slot=${encodeURIComponent(slot)}`;
+  window.location.href = `checkout.html?turfId=${turfId}&date=${matchDate}&slot=${encodeURIComponent(slot)}&hours=1&amount=699`;
 }
 
 // TICKET GENERATOR WITH QR GATE PASS & MODAL
