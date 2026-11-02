@@ -97,9 +97,9 @@
               100% all-weather synthetic grass with high shock padding and zero waterlogging.
             </p>
           </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a href="checkout.html?turfId=TRF-101" class="btn btn-primary btn-sm">Book Football ⚽</a>
-            <a href="checkout.html?turfId=TRF-102" class="btn btn-outline btn-sm">Book Box Cricket 🏏</a>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+            <a href="checkout.html?turfId=TRF-101" class="btn btn-primary hero-cta-btn">Book Football ⚽</a>
+            <a href="checkout.html?turfId=TRF-102" class="btn btn-outline hero-cta-btn" style="background: rgba(10, 15, 29, 0.75);">Book Box Cricket 🏏</a>
           </div>
         </div>
       </div>
@@ -124,48 +124,55 @@
       </div>
 
       <form onsubmit="handleQuickBooking(event)" class="quick-book-form">
-        <!-- 1. Select Arena -->
-        <div class="form-field-wrap">
-          <label for="quickTurfSelect">Select Sports Arena (10 Turfs)</label>
-          <select id="quickTurfSelect">
-            <option value="TRF-101">⚽ Shashikant Football Grand Arena (Andheri)</option>
-            <option value="TRF-102">🏏 Shashikant Pro Box Cricket Arena (BKC)</option>
-            <option value="TRF-103">⚡ Shashikant Multisport 6v6 Arena (Juhu)</option>
-            <option value="TRF-104">🌙 Shashikant Stadium Night Ground (Goregaon)</option>
-            <option value="TRF-105">🏏 Shashikant Rooftop SkyTurf (Lower Parel)</option>
-            <option value="TRF-106">🏏 Shashikant Premier League Box Cage (Borivali)</option>
-            <option value="TRF-107">⚽ Shashikant 5v5 Futsal Fast Track (Powai)</option>
-            <option value="TRF-108">🏏 Shashikant Champions Cricket Enclosure (Thane)</option>
-            <option value="TRF-109">⚡ Shashikant All-Weather Indoor Dome (Malad)</option>
-            <option value="TRF-110">⚽ Shashikant Elite Night Thunder (Navi Mumbai)</option>
-          </select>
+        <!-- Input Fields Row (3 Equal Grid Columns) -->
+        <div class="quick-book-fields-row">
+          
+          <!-- 1. Select Arena -->
+          <div class="form-field-wrap">
+            <label for="quickTurfSelect">Select Sports Arena (10 Turfs)</label>
+            <select id="quickTurfSelect">
+              <option value="TRF-101">⚽ Shashikant Football Grand Arena (Andheri)</option>
+              <option value="TRF-102">🏏 Shashikant Pro Box Cricket Arena (BKC)</option>
+              <option value="TRF-103">⚡ Shashikant Multisport 6v6 Arena (Juhu)</option>
+              <option value="TRF-104">🌙 Shashikant Stadium Night Ground (Goregaon)</option>
+              <option value="TRF-105">🏏 Shashikant Rooftop SkyTurf (Lower Parel)</option>
+              <option value="TRF-106">🏏 Shashikant Premier League Box Cage (Borivali)</option>
+              <option value="TRF-107">⚽ Shashikant 5v5 Futsal Fast Track (Powai)</option>
+              <option value="TRF-108">🏏 Shashikant Champions Cricket Enclosure (Thane)</option>
+              <option value="TRF-109">⚡ Shashikant All-Weather Indoor Dome (Malad)</option>
+              <option value="TRF-110">⚽ Shashikant Elite Night Thunder (Navi Mumbai)</option>
+            </select>
+          </div>
+
+          <!-- 2. Match Date -->
+          <div class="form-field-wrap">
+            <label for="quickDateInput">Match Date</label>
+            <input type="date" id="quickDateInput" required>
+          </div>
+
+          <!-- 3. Preferred Time Window -->
+          <div class="form-field-wrap">
+            <label for="quickTimeWindow">Time Window</label>
+            <select id="quickTimeWindow">
+              <option value="07:00 PM - 08:00 PM">🌙 Prime Night (07:00 PM - 08:00 PM)</option>
+              <option value="08:00 PM - 09:00 PM">🌙 Prime Night (08:00 PM - 09:00 PM)</option>
+              <option value="09:00 PM - 10:00 PM">🌙 Late Night (09:00 PM - 10:00 PM)</option>
+              <option value="06:00 AM - 07:00 AM">☀️ Morning Glory (06:00 AM - 07:00 AM)</option>
+              <option value="07:00 AM - 08:00 AM">☀️ Morning Match (07:00 AM - 08:00 AM)</option>
+              <option value="05:00 PM - 06:00 PM">🌅 Sunset Slot (05:00 PM - 06:00 PM)</option>
+              <option value="06:00 PM - 07:00 PM">🌅 Evening Slot (06:00 PM - 07:00 PM)</option>
+              <option value="10:00 PM - 11:00 PM">⭐ Midnight Match (10:00 PM - 11:00 PM)</option>
+            </select>
+          </div>
+
         </div>
 
-        <!-- 2. Match Date -->
-        <div class="form-field-wrap">
-          <label for="quickDateInput">Match Date</label>
-          <input type="date" id="quickDateInput" required>
+        <!-- 4. Submit Button - Perfectly Centered Inside the Box -->
+        <div class="quick-book-center-btn">
+          <button type="submit" class="btn btn-primary btn-book-699">
+            Book at ₹699 ➔
+          </button>
         </div>
-
-        <!-- 3. Preferred Time Window -->
-        <div class="form-field-wrap">
-          <label for="quickTimeWindow">Time Window</label>
-          <select id="quickTimeWindow">
-            <option value="07:00 PM - 08:00 PM">🌙 Prime Night (07:00 PM - 08:00 PM)</option>
-            <option value="08:00 PM - 09:00 PM">🌙 Prime Night (08:00 PM - 09:00 PM)</option>
-            <option value="09:00 PM - 10:00 PM">🌙 Late Night (09:00 PM - 10:00 PM)</option>
-            <option value="06:00 AM - 07:00 AM">☀️ Morning Glory (06:00 AM - 07:00 AM)</option>
-            <option value="07:00 AM - 08:00 AM">☀️ Morning Match (07:00 AM - 08:00 AM)</option>
-            <option value="05:00 PM - 06:00 PM">🌅 Sunset Slot (05:00 PM - 06:00 PM)</option>
-            <option value="06:00 PM - 07:00 PM">🌅 Evening Slot (06:00 PM - 07:00 PM)</option>
-            <option value="10:00 PM - 11:00 PM">⭐ Midnight Match (10:00 PM - 11:00 PM)</option>
-          </select>
-        </div>
-
-        <!-- 4. Submit Button -->
-        <button type="submit" class="btn btn-primary" style="height:48px;">
-          Book at ₹699 ➔
-        </button>
       </form>
     </div>
   </div>

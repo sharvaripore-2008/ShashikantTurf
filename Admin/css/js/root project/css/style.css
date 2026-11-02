@@ -152,6 +152,18 @@ select option {
   font-size: 0.95rem;
 }
 
+/* Date picker calendar indicator - Pure White Icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(120%) !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+  margin-left: 8px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  filter: invert(1) brightness(150%) drop-shadow(0 0 3px #00f576) !important;
+}
+
 label {
   display: block;
   font-size: 0.82rem;
@@ -584,24 +596,40 @@ label {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
+/* Same Exact Size for Hero Action Buttons */
+.hero-cta-btn {
+  width: 180px !important;
+  height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  border-radius: var(--radius-sm) !important;
+  white-space: nowrap !important;
+}
+
 /* ==========================================================================
    QUICK BOOKING BAR (100% RESPONSIVE & HIGH CONTRAST)
    ========================================================================== */
 .quick-book-container {
-  max-width: 1100px;
-  margin: -40px auto 50px;
+  max-width: 1220px;
+  width: 100%;
+  margin: 38px auto 55px; /* Clean gap between turf image and quick box */
   position: relative;
   z-index: 30;
-  padding: 0 16px;
+  padding: 0 20px;
 }
 
 .quick-book-card {
   background: #111a2e;
   border: 1.5px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-lg);
-  padding: 26px 30px;
+  padding: 28px 32px;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
   position: relative;
+  width: 100%;
 }
 
 .quick-book-header {
@@ -610,21 +638,48 @@ label {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 20px;
-  padding-bottom: 14px;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .quick-book-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.quick-book-fields-row {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1.1fr auto;
-  gap: 16px;
+  grid-template-columns: 1.4fr 1fr 1.2fr;
+  gap: 20px;
+  width: 100%;
   align-items: flex-end;
+}
+
+.quick-book-center-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.btn-book-699 {
+  height: 48px;
+  padding: 0 38px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  min-width: 240px;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
 }
 
 .form-field-wrap {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 /* ==========================================================================
@@ -1179,7 +1234,7 @@ label {
 
 @media (max-width: 1024px) {
   .hero-title { font-size: 2.8rem; }
-  .quick-book-form {
+  .quick-book-fields-row {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -1209,11 +1264,16 @@ label {
     flex-direction: column;
     align-items: flex-start;
   }
-  .quick-book-form {
+  .quick-book-fields-row {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .btn-book-699 {
+    width: 100%;
   }
   .quick-book-container {
-    margin-top: -20px;
+    margin-top: 20px;
+    padding: 0 12px;
   }
   .turfs-grid {
     grid-template-columns: 1fr;
