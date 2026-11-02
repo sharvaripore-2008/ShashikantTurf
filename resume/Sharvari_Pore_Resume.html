@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sharvari Pore - Resume</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #202124;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .resume-page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 57pt 57pt 24pt 57pt;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      page-break-after: always;
+      break-after: page;
+      overflow: hidden;
+    }
+
+    @media print {
+      body {
+        background: transparent;
+      }
+      .resume-page {
+        margin: 0;
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+      }
+    }
+
+    /* Header */
+    .header-name {
+      font-size: 25pt;
+      font-weight: 700;
+      color: #202124;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      margin-bottom: 5pt;
+    }
+
+    .header-subtitle {
+      font-size: 10pt;
+      font-weight: 400;
+      color: #5f6368;
+      margin-bottom: 11pt;
+    }
+
+    .header-contacts {
+      display: flex;
+      gap: 32pt;
+      font-size: 8.6pt;
+      color: #202124;
+      padding-left: 14pt;
+      margin-bottom: 16pt;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 10.3pt;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: #202124;
+      margin-top: 14pt;
+      margin-bottom: 4pt;
+      padding-bottom: 3.5pt;
+      border-bottom: 0.65pt solid #dadce0;
+    }
+
+    .section-text {
+      font-size: 9pt;
+      color: #202124;
+      line-height: 1.4;
+      margin-top: 6pt;
+    }
+
+    /* Tables */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6pt;
+      padding-left: 14pt;
+    }
+
+    .info-table tr {
+      border-bottom: 0.45pt solid #dadce0;
+    }
+
+    .info-table td {
+      padding: 4.8pt 0;
+      vertical-align: middle;
+    }
+
+    .col-label {
+      width: 105pt;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #202124;
+    }
+
+    .col-val {
+      font-size: 9pt;
+      color: #202124;
+    }
+
+    /* Project Section */
+    .project-title {
+      font-size: 12pt;
+      font-weight: 700;
+      color: #202124;
+      margin-top: 7pt;
+    }
+
+    .project-tags {
+      font-size: 8.2pt;
+      color: #5f6368;
+      margin-top: 1.5pt;
+    }
+
+    .project-link {
+      font-size: 8.4pt;
+      color: #1a73e8;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+      display: inline-block;
+      margin-top: 1.5pt;
+      margin-bottom: 4pt;
+    }
+
+    .project-bullets {
+      list-style: none;
+      padding-left: 3pt;
+      margin-top: 2pt;
+    }
+
+    .project-bullets li {
+      position: relative;
+      padding-left: 12pt;
+      font-size: 8.8pt;
+      color: #202124;
+      line-height: 1.7;
+    }
+
+    .project-bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #202124;
+    }
+
+    /* Education */
+    .edu-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6pt;
+      padding-left: 14pt;
+    }
+
+    .edu-table tr {
+      border-bottom: 0.45pt solid #dadce0;
+    }
+
+    .edu-table td {
+      padding: 4.8pt 0;
+      font-size: 9pt;
+      color: #202124;
+    }
+
+    .edu-title {
+      font-weight: 700;
+    }
+
+    /* Footer */
+    .page-footer {
+      margin-top: auto;
+      padding-top: 8pt;
+      border-top: 0.6pt solid #dadce0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 7.5pt;
+      color: #5f6368;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1 ==================== -->
+  <div class="resume-page">
+    
+    <!-- Top Header -->
+    <header>
+      <h1 class="header-name">SHARVARI PORE</h1>
+      <div class="header-subtitle">Diploma Student — Information Technology | Frontend Development</div>
+      <div class="header-contacts">
+        <span>Mumbai, Maharashtra, India</span>
+        <span>9082798970</span>
+        <span>sharvaripore11@gmail.com</span>
+      </div>
+    </header>
+
+    <!-- Profile -->
+    <section>
+      <h2 class="section-title">PROFILE</h2>
+      <p class="section-text">
+        Information Technology diploma student with foundational knowledge of frontend development, programming, databases
+        and version control. Built a turf booking web project using HTML, CSS and JavaScript. Seeking an IT internship
+        to apply technical skills, learn from experienced developers and contribute to practical software projects.
+      </p>
+    </section>
+
+    <!-- Technical Skills -->
+    <section>
+      <h2 class="section-title">TECHNICAL SKILLS</h2>
+      <table class="info-table">
+        <tr>
+          <td class="col-label">Web</td>
+          <td class="col-val">HTML5, CSS3, JavaScript, responsive web design</td>
+        </tr>
+        <tr>
+          <td class="col-label">Programming</td>
+          <td class="col-val">C, C++, Java, Python; object-oriented programming</td>
+        </tr>
+        <tr>
+          <td class="col-label">Database</td>
+          <td class="col-val">SQL, DBMS</td>
+        </tr>
+        <tr>
+          <td class="col-label">Computer Science</td>
+          <td class="col-val">Data structures, computer networks</td>
+        </tr>
+        <tr>
+          <td class="col-label">Developer Tools</td>
+          <td class="col-val">Visual Studio Code, Git, GitHub</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Project: Shashikant Turf -->
+    <section>
+      <h2 class="section-title">PROJECT</h2>
+      <div class="project-title">Shashikant Turf — Turf Booking Website</div>
+      <div class="project-tags">HTML • CSS • JavaScript</div>
+      <a href="https://starlit-trifle-eb16db.netlify.app" class="project-link" target="_blank">https://starlit-trifle-eb16db.netlify.app</a>
+      <ul class="project-bullets">
+        <li>Created a web-based concept to simplify access to sports turf information and booking services.</li>
+        <li>Designed a user-friendly interface for players and administrators with responsive layouts.</li>
+        <li>Planned features for turf slot scheduling, day/night floodlight views, notices, and booking management.</li>
+        <li>Focused on making routine sports ground booking activities easier to access online.</li>
+      </ul>
+    </section>
+
+    <!-- Education -->
+    <section>
+      <h2 class="section-title">EDUCATION</h2>
+      <table class="edu-table">
+        <tr>
+          <td><span class="edu-title">Diploma in Information Technology</span> — Currently pursuing</td>
+        </tr>
+        <tr>
+          <td><span class="edu-title">SSC (10th)</span> — Maharashtra State Board, completed</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Page 1 Footer -->
+    <div class="page-footer">
+      <span>SHARVARI PORE</span>
+      <span>1</span>
+    </div>
+
+  </div>
+
+  <!-- ==================== PAGE 2 ==================== -->
+  <div class="resume-page">
+
+    <!-- Top Header -->
+    <header>
+      <h1 class="header-name" style="font-size: 18pt;">ADDITIONAL INFORMATION</h1>
+      <div class="header-subtitle">Relevant strengths and career direction</div>
+    </header>
+
+    <!-- Core Strengths -->
+    <section>
+      <h2 class="section-title">CORE STRENGTHS</h2>
+      <table class="info-table">
+        <tr>
+          <td class="col-label" style="width: 119pt;">Problem solving</td>
+          <td class="col-val">Logical approach to tasks and practical problem-solving.</td>
+        </tr>
+        <tr>
+          <td class="col-label" style="width: 119pt;">Learning mindset</td>
+          <td class="col-val">Willingness to learn tools, workflows and new technologies.</td>
+        </tr>
+        <tr>
+          <td class="col-label" style="width: 119pt;">Teamwork</td>
+          <td class="col-val">Ready to collaborate, communicate and contribute to shared work.</td>
+        </tr>
+        <tr>
+          <td class="col-label" style="width: 119pt;">Creativity</td>
+          <td class="col-val">Visual creativity through interface design and media editing.</td>
+        </tr>
+        <tr>
+          <td class="col-label" style="width: 119pt;">Time management</td>
+          <td class="col-val">Organising tasks and working toward deadlines.</td>
+        </tr>
+        <tr>
+          <td class="col-label" style="width: 119pt;">Attention to detail</td>
+          <td class="col-val">Focus on clear layouts, usability and accurate execution.</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Languages -->
+    <section>
+      <h2 class="section-title">LANGUAGES</h2>
+      <p class="section-text">
+        English • Hindi • Marathi
+      </p>
+    </section>
+
+    <!-- Career Interests -->
+    <section>
+      <h2 class="section-title">CAREER INTERESTS</h2>
+      <p class="section-text">
+        Frontend Development • Web Development • Software Development • Application Development • IT Internship
+      </p>
+    </section>
+
+    <!-- Internship Objective -->
+    <section>
+      <h2 class="section-title">INTERNSHIP OBJECTIVE</h2>
+      <p class="section-text">
+        Looking for an opportunity to strengthen practical development skills, contribute to real-world tasks, and learn
+        professional coding and collaboration practices. Open to feedback and committed to improving through hands-on
+        experience.
+      </p>
+    </section>
+
+    <!-- Project Link -->
+    <section>
+      <h2 class="section-title">PROJECT LINK</h2>
+      <div style="margin-top: 6pt;">
+        <div style="font-weight: 700; font-size: 8.5pt; color: #202124;">
+          Shashikant Turf — live project
+        </div>
+        <a href="https://starlit-trifle-eb16db.netlify.app" class="project-link" target="_blank">https://starlit-trifle-eb16db.netlify.app</a>
+      </div>
+    </section>
+
+    <!-- Page 2 Footer -->
+    <div class="page-footer">
+      <span>SHARVARI PORE</span>
+      <span>2</span>
+    </div>
+
+  </div>
+
+</body>
+</html>

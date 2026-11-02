@@ -1,12 +1,12 @@
 /**
  * ==========================================================================
  * SHASHIKANT TURF - CORE APPLICATION & DATABASE LAYER (V2)
- * Features 10 Full-Featured Arenas, HD Imagery, 21-Day Slot Engine,
+ * Features 30 Full-Featured Arenas, HD Imagery, 21-Day Slot Engine,
  * Instant Gmail Confirmation with QR Gate Pass, and Interactive Matchmaking.
  * ==========================================================================
  */
 
-// 10 OFFICIAL SHASHIKANT SPORTS ARENAS (MUMBAI)
+// 30 OFFICIAL SHASHIKANT SPORTS ARENAS (MUMBAI)
 const DEFAULT_TURFS = [
   {
     id: 'TRF-101',
@@ -187,6 +187,366 @@ const DEFAULT_TURFS = [
     amenities: ["1000 Lux Night Rig", "Match DJ Booth", "Spectator Stand (150)", "Certified Referees", "Physio First-Aid"],
     isFloodlit: true,
     isPopular: true
+  },
+  {
+    id: 'TRF-111',
+    name: "Shashikant Sea-Breeze Football Arena",
+    sport: "Football",
+    category: "football",
+    size: "7v7 Coastal Championship Turf",
+    location: "Marine Drive / Nariman Point, Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 220,
+    roofType: "Open-Air Coastal Stadium",
+    image: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Iconic South Mumbai oceanfront football venue with refreshing Arabian Sea breeze. High-density imported artificial grass and LED floodlights for evening leagues.",
+    amenities: ["Oceanfront View", "High Mast LED", "Changing Rooms", "Locker Storage", "Hydration Bar"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-112',
+    name: "Shashikant Super Kings Box Cricket Stadium",
+    sport: "Cricket",
+    category: "cricket",
+    size: "6v6 Pro Turf Pitch & Nets",
+    location: "Dadar West (Shivaji Park Vicinity), Mumbai",
+    pricePerHour: 699,
+    rating: 5.0,
+    reviewsCount: 380,
+    roofType: "Covered Monsoon-Shield Arena",
+    image: "https://images.unsplash.com/photo-1593341646782-e0b495cff86d?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Located in Mumbai's historic cricket heartland. Engineered with true-bounce composite synthetic pitch, 40ft perimeter safety netting, and digital scoreboard.",
+    amenities: ["True Bounce Pitch", "40ft Heavy Netting", "Digital Score Tracker", "Equipment Rental", "Player Dugouts"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-113',
+    name: "Shashikant Multisport Olympic Arena",
+    sport: "Multisport",
+    category: "multisport",
+    size: "Dual Football (6v6) & Box Cricket",
+    location: "Worli Seaface, Mumbai",
+    pricePerHour: 699,
+    rating: 4.8,
+    reviewsCount: 165,
+    roofType: "Semi-Covered All-Weather Ground",
+    image: "https://images.unsplash.com/photo-1569517282132-25d22f4573e6?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Ultra-modern multisport court with shock-absorbent multi-layer rubber underlay. Ideal for fast-paced 6v6 football friendlies and tennis-ball cricket cups.",
+    amenities: ["Shock Pad Underlay", "Quick Conversion Goals", "Surround Sound", "Parking Space", "First Aid"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-114',
+    name: "Shashikant Apex Night Football Pitch",
+    sport: "Football",
+    category: "football",
+    size: "8v8 Large Scale Match Pitch",
+    location: "Chembur (Near Eastern Freeway), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 230,
+    roofType: "Open-Air Floodlit Turf",
+    image: "https://images.unsplash.com/photo-1575361204480-aadea25e6e68?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Full-scale 8v8 football turf with seamless connectivity to South Mumbai via Freeway. Features tournament-grade goal nets and 8 high-output floodlight arrays.",
+    amenities: ["8v8 Full Size", "Tournament Goal Nets", "Shower Facilities", "Warm-Up Track", "Free Wi-Fi"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-115',
+    name: "Shashikant SkyDeck Box Cricket Turf",
+    sport: "Cricket",
+    category: "cricket",
+    size: "6v6 Rooftop Cricket Cage",
+    location: "Ghatkopar East (Near R-City), Mumbai",
+    pricePerHour: 699,
+    rating: 4.8,
+    reviewsCount: 190,
+    roofType: "Rooftop 360° Safety Enclosure",
+    image: "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Elevated rooftop cricket experience with neon boundary markers and high-tension safety nets. Excellent venue for evening corporate leagues and weekend matches.",
+    amenities: ["Neon Boundary Lines", "Rooftop Breeze", "Music Sound Rig", "Refreshment Counter", "Night Floodlights"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-116',
+    name: "Shashikant Pro Futsal Speed Cage",
+    sport: "Football",
+    category: "football",
+    size: "5v5 High Agility Cage",
+    location: "Kandivali West (Link Road), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 215,
+    roofType: "Weather Protected Enclosed Cage",
+    image: "https://images.unsplash.com/photo-1489944445391-11dd35574549?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Compact, fast-paced futsal cage designed for close-control dribbling, rapid one-twos, and high shot-count games. Rebound perimeter cushions ensure zero ball stoppage.",
+    amenities: ["Rebound Cushions", "FIFA Futsal Balls", "High Action LED", "Changing Rooms", "Beverage Station"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-117',
+    name: "Shashikant Master Blaster Cricket Arena",
+    sport: "Cricket",
+    category: "cricket",
+    size: "6v6 Box Pitch with Speed Radar",
+    location: "Mulund West (LBS Marg), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 205,
+    roofType: "Semi-Covered Weather Shield",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Equipped with automated speed radar tracking display for bowlers and an ultra-durable red turf pitch simulating subcontinent match conditions.",
+    amenities: ["Speed Radar Display", "Red Turf Pitch", "Dugout Seating", "Bat Rental", "Clean Washrooms"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-118',
+    name: "Shashikant Golden Goal Football Ground",
+    sport: "Football",
+    category: "football",
+    size: "7v7 FIFA Certified Synthetic Turf",
+    location: "Santacruz West (Near SV Road), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 275,
+    roofType: "Open-Air Natural Airflow Ground",
+    image: "https://images.unsplash.com/photo-1511886929837-354d827aae26?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Centrally located premium 7-a-side ground with imported Dutch turf grass, professional referee markings, team dugouts, and floodlights.",
+    amenities: ["Dutch Turf Grass", "Team Dugouts", "High Mast LED", "Valet Parking", "Chilled Water"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-119',
+    name: "Shashikant Rain-Proof Indoor Multisport Dome",
+    sport: "Multisport",
+    category: "multisport",
+    size: "Dual Sport Air-Cooled Geodesic Dome",
+    location: "Kurla West (Near Phoenix Marketcity), Mumbai",
+    pricePerHour: 699,
+    rating: 5.0,
+    reviewsCount: 360,
+    roofType: "100% Monsoon & Heat Proof Dome",
+    image: "https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Never worry about torrential Mumbai rains again. Climate-controlled geodesic dome suitable for round-the-year football and box cricket leagues.",
+    amenities: ["100% Monsoon Proof", "Climate Controlled", "Lounge & Wi-Fi", "Spectator Stand", "Sound System"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-120',
+    name: "Shashikant Night Strikers Football Arena",
+    sport: "Football",
+    category: "football",
+    size: "8v8 Tournament Scale Arena",
+    location: "Mira Road (Western Suburbs), Mumbai",
+    pricePerHour: 699,
+    rating: 4.8,
+    reviewsCount: 180,
+    roofType: "Open-Air Tournament Turf",
+    image: "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Expansive 8v8 arena with top-tier artificial grass, extra-wide runoff boundaries, and stadium-grade LED illumination for midnight cups.",
+    amenities: ["Wide Runoff Zones", "Midnight Slots", "Changing Showers", "Free Parking", "First Aid Kit"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-121',
+    name: "Shashikant Boundary Blitz Cricket Cage",
+    sport: "Cricket",
+    category: "cricket",
+    size: "6v6 Box Pitch with Airport Runway View",
+    location: "Vile Parle East (Near Airport), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 225,
+    roofType: "Covered Monsoon-Shield Arena",
+    image: "https://images.unsplash.com/photo-1589487391730-58f20eb2c308?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Unique high-energy cricket arena close to the domestic airport. Watch planes overhead while smashing sixes under bright LED floodlights.",
+    amenities: ["Runway View", "Anti-Glare LED", "Digital Scoreboard", "Bat Rental", "Café Snacks"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-122',
+    name: "Shashikant Coastal Waves Football Ground",
+    sport: "Football",
+    category: "football",
+    size: "7v7 Coastal Pitch",
+    location: "Versova Beach (Near Metro), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 250,
+    roofType: "Open-Air Beachside Turf",
+    image: "https://images.unsplash.com/photo-1487466365202-1afab8a58b5e?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Beachside athletic arena located in trendy Versova. Features 50mm green turf, sea breeze, evening music, and quick metro connectivity.",
+    amenities: ["Near Versova Metro", "Sea Breeze", "LED Floodlights", "Dugout Canopy", "Purified Water"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-123',
+    name: "Shashikant Royal Challengers Cricket Enclosure",
+    sport: "Cricket",
+    category: "cricket",
+    size: "Automated Bowling Machine & 2 Nets",
+    location: "Bhandup West (Near LBS Marg), Mumbai",
+    pricePerHour: 699,
+    rating: 4.8,
+    reviewsCount: 155,
+    roofType: "Semi-Covered Enclosure",
+    image: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Dedicated cricket practice facility equipped with programmable bowling machine, video analysis camera, and heavy-duty protective nets.",
+    amenities: ["Bowling Machine", "Video Camera", "Practice Nets", "Kit Bags Storage", "Coach Desk"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-124',
+    name: "Shashikant Champions Futsal Turf",
+    sport: "Football",
+    category: "football",
+    size: "5v5 Speed Track Futsal",
+    location: "Sion East (Central Hub), Mumbai",
+    pricePerHour: 699,
+    rating: 4.8,
+    reviewsCount: 170,
+    roofType: "Weather Protected Enclosure",
+    image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Centrally positioned between Central and Western lines. Low-abrasion turfgrass engineered for speedy footwork, quick turns, and fast-paced five-a-side goals.",
+    amenities: ["Central Connectivity", "Rebound Boards", "High Action LED", "Locker Room", "Electrolyte Station"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-125',
+    name: "Shashikant Multisport Thunder Dome",
+    sport: "Multisport",
+    category: "multisport",
+    size: "Dual Football & Cricket (6v6)",
+    location: "Dahisar East (Western Express Highway), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 195,
+    roofType: "Covered All-Weather Arena",
+    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Full weather canopy prevents rain or harsh sunlight from interrupting your match. Dual goalposts and pitch markings enable instant sport switching.",
+    amenities: ["Weather Canopy", "Dual Field Markings", "Spectator Stands", "Sound System", "Parking Space"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-126',
+    name: "Shashikant Infinity Skyline Cricket Turf",
+    sport: "Cricket",
+    category: "cricket",
+    size: "6v6 Rooftop Cricket Cage",
+    location: "Byculla (Central Mumbai Skyline), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 210,
+    roofType: "12th Floor Rooftop Net Cage",
+    image: "https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Heritage South-Central Mumbai views from a 12th-floor rooftop sports pitch. Fitted with heavy nylon overhead nets, LED floodlights, and a rooftop juice bar.",
+    amenities: ["Skyline Views", "Overhead Netting", "Night Floodlights", "Juice Bar", "Player Lounge"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-127',
+    name: "Shashikant Ultra Pro Football Stadium",
+    sport: "Football",
+    category: "football",
+    size: "8v8 Full Stadium Turf",
+    location: "Kharghar (Sector 20), Navi Mumbai",
+    pricePerHour: 699,
+    rating: 5.0,
+    reviewsCount: 310,
+    roofType: "Stadium-Scale Open Arena",
+    image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Navi Mumbai's crown jewel football stadium. High-density monofilament fibers, 8 high-mast floodlight towers, electronic match clock, and player showers.",
+    amenities: ["8v8 Stadium Pitch", "Electronic Match Clock", "High Mast LED", "Shower Rooms", "Free Parking"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-128',
+    name: "Shashikant Box Cricket Super Arena",
+    sport: "Cricket",
+    category: "cricket",
+    size: "6v6 Pro Box Cricket Pitch",
+    location: "Prabhadevi (Near Siddhivinayak Temple), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 260,
+    roofType: "Covered Monsoon-Shield Arena",
+    image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "High-voltage box cricket pitch near Dadar & Prabhadevi. Features high bounce turf, anti-glare overhead lights, and quality equipment available on demand.",
+    amenities: ["High Bounce Turf", "Anti-Glare Lighting", "Equipment Rental", "Monsoon Cover", "RO Drinking Water"],
+    isFloodlit: true,
+    isPopular: true
+  },
+  {
+    id: 'TRF-129',
+    name: "Shashikant Metro Multisport Arena",
+    sport: "Multisport",
+    category: "multisport",
+    size: "Dual Football & Cricket (6v6)",
+    location: "Andheri East (Near WEH Metro), Mumbai",
+    pricePerHour: 699,
+    rating: 4.8,
+    reviewsCount: 185,
+    roofType: "Covered All-Weather Arena",
+    image: "https://images.unsplash.com/photo-1569517282132-25d22f4573e6?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-day.jpg",
+    description: "Located just 2 minutes from Western Express Highway Metro station. Perfect corporate team-building venue with quick transitions between football and cricket.",
+    amenities: ["2 Min From Metro", "Covered Arena", "Dual Goal Stumps", "Changing Rooms", "Café Snacks"],
+    isFloodlit: true,
+    isPopular: false
+  },
+  {
+    id: 'TRF-130',
+    name: "Shashikant Midnight Champions Arena",
+    sport: "Football",
+    category: "football",
+    size: "7v7 24x7 Night Match Turf",
+    location: "Kanjurmarg West (Near JVLR), Mumbai",
+    pricePerHour: 699,
+    rating: 4.9,
+    reviewsCount: 240,
+    roofType: "Open-Air 24x7 Floodlit Arena",
+    image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1200&auto=format&fit=crop&q=80",
+    fallbackImage: "assets/images/shashikant-turf-night.jpg",
+    description: "Open 24 hours a day for midnight and dawn tournaments. Features ultra-bright 1000 lux illumination, spectator dugouts, and French drainage system.",
+    amenities: ["24x7 Availability", "1000 Lux Floodlights", "French Drainage", "Dugout Seating", "Security Scanner"],
+    isFloodlit: true,
+    isPopular: true
   }
 ];
 
@@ -240,8 +600,8 @@ const DB = {
     }
     try {
       const parsed = JSON.parse(stored);
-      // Ensure we always have at least 10 turfs
-      if (parsed.length < 10) {
+      // Auto-upgrade storage if less than 30 turfs are stored
+      if (parsed.length < 30) {
         localStorage.setItem('SHASHIKANT_TURFS', JSON.stringify(DEFAULT_TURFS));
         return DEFAULT_TURFS;
       }
@@ -405,7 +765,7 @@ function generateDateRibbon(containerId, onSelectCallback) {
 }
 
 // ==========================================================================
-// TURF CARDS RENDERER (RENDERS ALL 10 TURFS WITH FILTERS)
+// TURF CARDS RENDERER (RENDERS ALL TURFS WITH SPORT FILTERS)
 // ==========================================================================
 function renderTurfsGrid(targetElementId, categoryFilter = 'all', searchQuery = '') {
   const container = document.getElementById(targetElementId);
@@ -480,7 +840,7 @@ function renderTurfsGrid(targetElementId, categoryFilter = 'all', searchQuery = 
   `).join('');
 }
 
-// FILTER HANDLERS
+// FILTER HANDLERS (CLEAN LABELS, NO NUMBER COUNTS)
 function filterTurfs(sport, btnElement) {
   document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
   if (btnElement) btnElement.classList.add('active');
