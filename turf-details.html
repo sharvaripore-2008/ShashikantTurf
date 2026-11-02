@@ -107,11 +107,56 @@
       padding: 30px 32px;
       box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
     }
+
+    /* Duration Selector Pills (2 Hours, 3 Hours, 4 Hours) */
+    .duration-pills-wrap {
+      display: flex;
+      gap: 12px;
+      margin: 10px 0 16px;
+      flex-wrap: wrap;
+    }
+    .duration-pill {
+      flex: 1;
+      min-width: 170px;
+      background: #090e1a;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      transition: var(--transition);
+      text-align: left;
+    }
+    .duration-pill:hover {
+      border-color: var(--primary);
+      background: #141f36;
+      transform: translateY(-2px);
+    }
+    .duration-pill.active {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: var(--neon-green);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+    }
+    .duration-pill .dur-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .duration-pill .dur-price {
+      font-size: 0.82rem;
+      color: var(--neon-green);
+      font-weight: 700;
+    }
+
     .compact-slots-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 6px;
       margin-bottom: 22px;
     }
     @media (max-width: 900px) {
@@ -129,6 +174,12 @@
       }
       .info-card, .slot-card-compact {
         padding: 24px 20px;
+      }
+      .duration-pills-wrap {
+        flex-direction: column;
+      }
+      .duration-pill {
+        min-width: 100%;
       }
     }
 
@@ -207,7 +258,7 @@
         <div class="hero-badges-row">
           <span class="badge badge-success" id="detailSport">⚽ Football</span>
           <span class="badge badge-gold" id="detailRating">★ 4.9 Rating</span>
-          <div class="price-pill" style="margin: 0;">⚡ ₹699 / Hour Fixed Rate</div>
+          <div class="price-pill" id="detailPricePill" style="margin: 0;">⚡ Multi-Hour Matches: 2h (₹899) • 3h (₹1099) • 4h (₹1299)</div>
         </div>
         <h1 class="turf-hero-title" id="detailName">
           Loading Arena...
@@ -292,11 +343,11 @@
           </h2>
         </div>
         <p style="font-size:0.86rem; color:#94a3b8; margin:4px 0 0;">
-          Pick your match date and choose an available 1-hour time window below.
+          Pick your match date and choose your 2, 3, or 4-hour match window below.
         </p>
       </div>
 
-      <!-- 21-Day Date Ribbon -->
+      <!-- 1. Select Matchday Date (21-Day Window) -->
       <label style="font-size:0.8rem; color:#cbd5e1; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
         1. Select Matchday Date (21-Day Window)
       </label>
@@ -304,12 +355,30 @@
         <!-- Dates injected via JS -->
       </div>
 
-      <!-- Slots Picker -->
-      <label style="font-size:0.8rem; color:#cbd5e1; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px;">
-        2. Choose 1-Hour Time Slot
+      <!-- 2. Choose 2-3 Hour or 3-4 Hour Time Slot -->
+      <label style="font-size:0.82rem; color:#cbd5e1; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:4px;">
+        2. Choose 2-3 Hour or 3-4 Hour Time Slot
       </label>
+
+      <!-- Duration Pills Selector -->
+      <div class="duration-pills-wrap">
+        <button type="button" class="duration-pill active" onclick="switchDuration(2, this)">
+          <span class="dur-title">⏱️ 2 Hours Match</span>
+          <span class="dur-price">₹899 Flat Rate</span>
+        </button>
+        <button type="button" class="duration-pill" onclick="switchDuration(3, this)">
+          <span class="dur-title">⏱️ 3 Hours Match</span>
+          <span class="dur-price">₹1,099 Flat Rate</span>
+        </button>
+        <button type="button" class="duration-pill" onclick="switchDuration(4, this)">
+          <span class="dur-title">⏱️ 4 Hours Match</span>
+          <span class="dur-price">₹1,299 Flat Rate</span>
+        </button>
+      </div>
+
+      <!-- Slots Grid for the selected duration -->
       <div class="compact-slots-grid" id="slotsPickerGrid">
-        <!-- Slots injected via JS -->
+        <!-- Slots injected via JS based on selected duration -->
       </div>
 
       <!-- Medium & Compact Payment Summary Box -->
@@ -319,15 +388,15 @@
             Booking Summary
           </div>
           <div style="font-size:0.95rem; color:#fff; margin-bottom:4px;">
-            📅 <strong id="summarySelectedDate">Today</strong> &nbsp;•&nbsp; ⏰ <strong id="summarySelectedSlot" style="color:var(--neon-green);">07:00 PM - 08:00 PM</strong>
+            📅 <strong id="summarySelectedDate">Today</strong> &nbsp;•&nbsp; ⏰ <strong id="summarySelectedSlot" style="color:var(--neon-green);">07:00 PM - 09:00 PM</strong> (<span id="summaryDurationBadge" style="font-weight:700; color:#38bdf8;">2 Hours</span>)
           </div>
           <div style="font-size:0.85rem; color:#cbd5e1;">
-            Rate: <strong style="color:#fff; font-size:1.1rem;">₹699</strong> / hour &nbsp;•&nbsp; <span style="color:var(--neon-green); font-weight:700;">Zero Hidden Taxes</span>
+            Rate: <strong id="summaryRateDisplay" style="color:#fff; font-size:1.15rem;">₹899</strong> for <span id="summaryHoursText">2 Hours Slot</span> &nbsp;•&nbsp; <span style="color:var(--neon-green); font-weight:700;">Zero Hidden Taxes</span>
           </div>
         </div>
 
-        <button onclick="proceedToCheckout()" class="btn btn-primary pay-btn-medium">
-          Proceed to Payment (₹699) ➔
+        <button onclick="proceedToCheckout()" id="summaryPayBtn" class="btn btn-primary pay-btn-medium">
+          Proceed to Payment (₹899) ➔
         </button>
       </div>
 
@@ -349,18 +418,55 @@
   <script>
     let currentTurf = null;
     let selectedDate = new Date().toISOString().split('T')[0];
-    let selectedSlot = "07:00 PM - 08:00 PM";
+    let selectedDuration = 2; // 2, 3, or 4 hours
+    let selectedPrice = 899;   // 899, 1099, or 1299
+    let selectedSlot = "07:00 PM - 09:00 PM";
 
-    const ALL_SLOTS = [
-      { time: "06:00 AM - 07:00 AM", tag: "Morning Glory" },
-      { time: "07:00 AM - 08:00 AM", tag: "Morning Match" },
-      { time: "05:00 PM - 06:00 PM", tag: "Sunset Slot" },
-      { time: "06:00 PM - 07:00 PM", tag: "Dusk Slot" },
-      { time: "07:00 PM - 08:00 PM", tag: "Prime Floodlight" },
-      { time: "08:00 PM - 09:00 PM", tag: "Prime Floodlight" },
-      { time: "09:00 PM - 10:00 PM", tag: "Late Night" },
-      { time: "10:00 PM - 11:00 PM", tag: "Midnight Cup" }
-    ];
+    // 2-HOUR, 3-HOUR, AND 4-HOUR MATCH SLOTS
+    const DURATION_DATA = {
+      2: {
+        price: 899,
+        label: "2 Hours",
+        slots: [
+          { time: "06:00 AM - 08:00 AM", tag: "Morning Glory" },
+          { time: "08:00 AM - 10:00 AM", tag: "Morning Match" },
+          { time: "04:00 PM - 06:00 PM", tag: "Sunset Slot" },
+          { time: "06:00 PM - 08:00 PM", tag: "Dusk Floodlight" },
+          { time: "07:00 PM - 09:00 PM", tag: "Prime Floodlight" },
+          { time: "08:00 PM - 10:00 PM", tag: "Prime Floodlight" },
+          { time: "09:00 PM - 11:00 PM", tag: "Late Night" },
+          { time: "10:00 PM - 12:00 AM", tag: "Midnight Cup" }
+        ]
+      },
+      3: {
+        price: 1099,
+        label: "3 Hours",
+        slots: [
+          { time: "06:00 AM - 09:00 AM", tag: "Morning Tournament" },
+          { time: "07:00 AM - 10:00 AM", tag: "Morning Marathon" },
+          { time: "03:00 PM - 06:00 PM", tag: "Afternoon Cup" },
+          { time: "05:00 PM - 08:00 PM", tag: "Sunset Derby" },
+          { time: "06:00 PM - 09:00 PM", tag: "Prime Championship" },
+          { time: "07:00 PM - 10:00 PM", tag: "Prime Floodlight" },
+          { time: "08:00 PM - 11:00 PM", tag: "Floodlight League" },
+          { time: "09:00 PM - 12:00 AM", tag: "Midnight Pro Cup" }
+        ]
+      },
+      4: {
+        price: 1299,
+        label: "4 Hours",
+        slots: [
+          { time: "06:00 AM - 10:00 AM", tag: "Morning Mega Derby" },
+          { time: "07:00 AM - 11:00 AM", tag: "Corporate Cup" },
+          { time: "02:00 PM - 06:00 PM", tag: "Afternoon Trophy" },
+          { time: "04:00 PM - 08:00 PM", tag: "Sunset Grand Prix" },
+          { time: "05:00 PM - 09:00 PM", tag: "Prime Mega Match" },
+          { time: "06:00 PM - 10:00 PM", tag: "Championship Night" },
+          { time: "07:00 PM - 11:00 PM", tag: "Super League Night" },
+          { time: "08:00 PM - 12:00 AM", tag: "Midnight Mega Cup" }
+        ]
+      }
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -386,40 +492,76 @@
       // Generate 21-day ribbon
       generateDateRibbon('detailsDateRibbon', (dStr) => {
         selectedDate = dStr;
-        const sumDate = document.getElementById('summarySelectedDate');
-        if (sumDate) sumDate.innerText = dStr;
+        updateSummaryUI();
         renderSlots();
         showToast(`Selected date: ${dStr}`, "📅");
       });
 
       renderSlots();
+      updateSummaryUI();
     });
+
+    function switchDuration(hours, btn) {
+      selectedDuration = hours;
+      selectedPrice = DURATION_DATA[hours].price;
+
+      document.querySelectorAll('.duration-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      // Pick default matching slot for this duration
+      const slotsList = DURATION_DATA[hours].slots;
+      const prime = slotsList.find(s => s.time.startsWith('07:00 PM')) || slotsList[0];
+      selectedSlot = prime.time;
+
+      renderSlots();
+      updateSummaryUI();
+      showToast(`Selected ${hours}-Hour Slot (₹${selectedPrice})`, "⏱️");
+    }
 
     function renderSlots() {
       const container = document.getElementById('slotsPickerGrid');
-      container.innerHTML = ALL_SLOTS.map((s) => {
+      const data = DURATION_DATA[selectedDuration];
+      container.innerHTML = data.slots.map((s) => {
         const isSelected = (s.time === selectedSlot);
         return `
-          <div class="slot-btn ${isSelected ? 'selected' : ''}" onclick="selectSlot('${s.time}')" style="padding: 10px 12px;">
+          <div class="slot-btn ${isSelected ? 'selected' : ''}" onclick="selectSlot('${s.time}')" style="padding: 10px 12px; cursor:pointer;">
             <div class="slot-time" style="font-size:0.85rem; font-weight:700;">${s.time}</div>
-            <div class="slot-status" style="font-size:0.75rem;">✓ ${s.tag}</div>
+            <div class="slot-status" style="font-size:0.75rem; color:var(--neon-green);">✓ ${data.label} • ₹${data.price}</div>
           </div>
         `;
       }).join('');
-
-      const sumSlot = document.getElementById('summarySelectedSlot');
-      if (sumSlot) sumSlot.innerText = selectedSlot;
     }
 
     function selectSlot(timeStr) {
       selectedSlot = timeStr;
       renderSlots();
-      showToast(`Selected Slot: ${timeStr}`, "⏰");
+      updateSummaryUI();
+      showToast(`Selected Slot: ${timeStr} (₹${selectedPrice})`, "⏰");
+    }
+
+    function updateSummaryUI() {
+      const sumDate = document.getElementById('summarySelectedDate');
+      if (sumDate) sumDate.innerText = selectedDate;
+
+      const sumSlot = document.getElementById('summarySelectedSlot');
+      if (sumSlot) sumSlot.innerText = selectedSlot;
+
+      const sumDurationBadge = document.getElementById('summaryDurationBadge');
+      if (sumDurationBadge) sumDurationBadge.innerText = `${selectedDuration} Hours`;
+
+      const sumRate = document.getElementById('summaryRateDisplay');
+      if (sumRate) sumRate.innerText = `₹${selectedPrice}`;
+
+      const sumHoursText = document.getElementById('summaryHoursText');
+      if (sumHoursText) sumHoursText.innerText = `${selectedDuration} Hours Slot`;
+
+      const sumBtn = document.getElementById('summaryPayBtn');
+      if (sumBtn) sumBtn.innerText = `Proceed to Payment (₹${selectedPrice}) ➔`;
     }
 
     function proceedToCheckout() {
       if (!currentTurf) return;
-      window.location.href = `checkout.html?turfId=${currentTurf.id}&date=${selectedDate}&slot=${encodeURIComponent(selectedSlot)}`;
+      window.location.href = `checkout.html?turfId=${currentTurf.id}&date=${selectedDate}&slot=${encodeURIComponent(selectedSlot)}&hours=${selectedDuration}&amount=${selectedPrice}`;
     }
   </script>
 </body>

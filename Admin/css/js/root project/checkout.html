@@ -131,7 +131,7 @@
             <div class="payment-option" onclick="selectPaymentMethod('qr', this)">
               <input type="radio" name="payMethod" value="QR Scan" class="payment-radio">
               <div style="flex:1;">
-                <strong style="color:#fff; font-size:1rem; display:block;">Scan Dynamic UPI QR Code (₹699)</strong>
+                <strong style="color:#fff; font-size:1rem; display:block;" id="qrScanTitle">Scan Dynamic UPI QR Code (₹699)</strong>
                 <span style="font-size:0.8rem; color:#94a3b8;">Instant camera scan with Google Pay, Paytm, or PhonePe</span>
               </div>
               <span style="font-size:1.6rem;">📷</span>
@@ -184,8 +184,8 @@
 
           <div style="margin-bottom:20px;">
             <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#94a3b8; margin-bottom:6px;">
-              <span>1 Hour Pitch Fee</span>
-              <span style="color:#fff; font-weight:700;">₹699.00</span>
+              <span id="summaryPitchFeeLabel">1 Hour Pitch Fee</span>
+              <span style="color:#fff; font-weight:700;" id="summaryPitchFeeVal">₹699.00</span>
             </div>
             <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#94a3b8; margin-bottom:6px;">
               <span>GST &amp; Floodlight Charges</span>
@@ -193,11 +193,11 @@
             </div>
             <div style="border-top:1px dashed var(--border-color); padding-top:12px; display:flex; justify-content:space-between; font-size:1.35rem; font-weight:800; color:#fff;">
               <span>Total Amount</span>
-              <span style="color:var(--neon-green);">₹699.00</span>
+              <span style="color:var(--neon-green);" id="summaryTotalVal">₹699.00</span>
             </div>
           </div>
 
-          <button onclick="document.getElementById('mainSubmitBtn').click()" class="btn btn-primary" style="width:100%; height:52px; font-size:1.1rem;">
+          <button onclick="document.getElementById('mainSubmitBtn').click()" id="checkoutPayBtn" class="btn btn-primary" style="width:100%; height:52px; font-size:1.1rem;">
             Pay ₹699 &amp; Generate Gate Pass ➔
           </button>
 
@@ -223,6 +223,8 @@
     let currentTurf = null;
     let bookingDate = "";
     let bookingSlot = "";
+    let bookingHours = 1;
+    let bookingAmount = 699;
     let activePayment = "UPI";
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -230,13 +232,30 @@
       const turfId = urlParams.get('turfId') || 'TRF-101';
       bookingDate = urlParams.get('date') || new Date().toISOString().split('T')[0];
       bookingSlot = decodeURIComponent(urlParams.get('slot') || '07:00 PM - 08:00 PM');
+      bookingHours = parseInt(urlParams.get('hours')) || 1;
+      bookingAmount = parseInt(urlParams.get('amount')) || 699;
 
       currentTurf = DB.getTurfById(turfId);
 
       document.getElementById('summaryTurfName').innerText = currentTurf.name;
       document.getElementById('summaryTurfLoc').innerText = `📍 ${currentTurf.location}`;
       document.getElementById('summaryDate').innerText = bookingDate;
-      document.getElementById('summarySlot').innerText = bookingSlot;
+      document.getElementById('summarySlot').innerText = `${bookingSlot} (${bookingHours} Hour${bookingHours > 1 ? 's' : ''})`;
+
+      const feeLabel = document.getElementById('summaryPitchFeeLabel');
+      if (feeLabel) feeLabel.innerText = `${bookingHours} Hour${bookingHours > 1 ? 's' : ''} Pitch Fee`;
+
+      const feeVal = document.getElementById('summaryPitchFeeVal');
+      if (feeVal) feeVal.innerText = `₹${bookingAmount}.00`;
+
+      const totalVal = document.getElementById('summaryTotalVal');
+      if (totalVal) totalVal.innerText = `₹${bookingAmount}.00`;
+
+      const payBtn = document.getElementById('checkoutPayBtn');
+      if (payBtn) payBtn.innerText = `Pay ₹${bookingAmount} & Generate Gate Pass ➔`;
+
+      const qrTitle = document.getElementById('qrScanTitle');
+      if (qrTitle) qrTitle.innerText = `Scan Dynamic UPI QR Code (₹${bookingAmount})`;
 
       const img = document.getElementById('summaryImg');
       img.src = currentTurf.image;
@@ -277,8 +296,8 @@
         userPhone: phone,
         userEmail: email,
         date: bookingDate,
-        slot: bookingSlot,
-        amount: 699,
+        slot: `${bookingSlot} (${bookingHours}h)`,
+        amount: bookingAmount,
         paymentMethod: activePayment,
         status: "Confirmed",
         checkInStatus: "Pending",
