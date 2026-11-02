@@ -3,42 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Explore Cricket &amp; Football Turfs | Shashikant Turf Mumbai</title>
+  <title>Explore All 10 Sports Turfs | Shashikant Turf Mumbai</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .filter-bar {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      padding: 18px 24px;
-      margin: 30px 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
-    .sport-pill-btn {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .sport-pill-btn.active, .sport-pill-btn:hover {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-  </style>
 </head>
 <body>
 
@@ -47,264 +16,119 @@
     <div class="container nav-container">
       <a href="index.html" class="brand-logo">
         <div class="logo-icon">⚽</div>
-        Shashikant <span>Turf</span>
+        <div>
+          Shashikant <span>Turf</span>
+          <span class="turf-pill">MUMBAI</span>
+        </div>
       </a>
 
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="index.html" class="nav-link">Home</a>
-        <a href="turfs.html" class="nav-link active">Explore Turfs</a>
+        <a href="turfs.html" class="nav-link active">Explore 10 Turfs</a>
         <a href="my-bookings.html" class="nav-link">My Bookings</a>
-        <a href="index.html#communityLobby" class="nav-link">Community Lobby</a>
+        <a href="index.html#communityLobby" class="nav-link">Community Match Lobby</a>
       </div>
 
-      <div id="navAuthSlot" class="nav-actions">
-        <a href="login.html" class="btn btn-outline btn-sm">Login</a>
-        <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+      <div class="nav-actions">
+        <a href="my-bookings.html" class="btn btn-outline btn-sm">My Tickets 🎟️</a>
+        <button class="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Navigation">☰</button>
       </div>
     </div>
   </nav>
 
   <!-- Page Header -->
-  <div style="background: radial-gradient(circle at 50% 10%, rgba(16,185,129,0.15) 0%, transparent 70%); padding: 50px 0 30px; text-align: center; border-bottom: 1px solid var(--border-color);">
+  <header style="background: radial-gradient(circle at 50% 10%, rgba(16,185,129,0.18) 0%, transparent 75%); padding: 50px 0 30px; text-align: center; border-bottom: 1px solid var(--border-color);">
     <div class="container">
-      <span class="badge badge-success" style="margin-bottom: 12px;">⚡ ALL ARENAS FIXED AT ₹699 / HOUR</span>
-      <h1 style="font-size: 2.8rem; margin-bottom: 10px;">Explore Shashikant Sports Arenas</h1>
-      <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto;">
-        Choose between professional 7v7 football turfgrass or covered high-bounce box cricket pitch. Floodlit night slots available daily.
+      <div class="badge badge-success" style="margin-bottom: 14px;">
+        ⚡ FLAT RATE ₹699 / HOUR ACROSS ALL 10 VENUES
+      </div>
+      <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px;">
+        Explore All 10 Shashikant Sports Arenas
+      </h1>
+      <p style="color: #cbd5e1; max-width: 680px; margin: 0 auto 20px; font-size: 1.05rem;">
+        Find the perfect arena for Football, Box Cricket, or Multisport practice. Located across Andheri, BKC, Juhu, Goregaon, Lower Parel, Powai, Thane, and Navi Mumbai.
       </p>
     </div>
-  </div>
+  </header>
 
-  <main class="container">
+  <!-- Main Content Area -->
+  <main class="container" style="padding-top: 35px; padding-bottom: 80px;">
     
-    <!-- Filter & Search Bar -->
-    <div class="filter-bar">
-      <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
-        <button class="sport-pill-btn active" onclick="setFilterSport('all', this)">🏆 All Turfs (4)</button>
-        <button class="sport-pill-btn" onclick="setFilterSport('football', this)">⚽ Football</button>
-        <button class="sport-pill-btn" onclick="setFilterSport('cricket', this)">🏏 Box Cricket</button>
-        <button class="sport-pill-btn" onclick="setFilterSport('multisport', this)">⚡ Multisport</button>
+    <!-- Controls Bar: Filter Pills & Search Input -->
+    <div style="background: #111a2e; border: 1.5px solid rgba(255,255,255,0.12); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 35px; box-shadow: var(--shadow-sm); display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;">
+      
+      <!-- Filter Sport Buttons -->
+      <div class="filter-tabs-wrapper" style="margin-bottom: 0;">
+        <button class="filter-pill active" onclick="filterTurfs('all', this)">🏆 All Turfs (10)</button>
+        <button class="filter-pill" onclick="filterTurfs('football', this)">⚽ Football (4)</button>
+        <button class="filter-pill" onclick="filterTurfs('cricket', this)">🏏 Box Cricket (4)</button>
+        <button class="filter-pill" onclick="filterTurfs('multisport', this)">⚡ Multisport (2)</button>
       </div>
 
-      <div style="display:flex; align-items:center; gap:12px; flex:1; max-width:380px;">
-        <input type="text" id="turfSearchInput" 
-               placeholder="🔍 Search arena, pitch, or area..." 
-               class="search-field" 
-               style="width:100%; border:1px solid var(--border-color); background:var(--bg-surface); height:42px;">
+      <!-- Live Search Box (Guaranteed High Contrast) -->
+      <div style="flex: 1; min-width: 260px; max-width: 420px; position: relative;">
+        <input type="text" 
+               id="turfSearchInput" 
+               oninput="handleTurfSearch(this.value)"
+               placeholder="🔍 Search by arena name, area, or sport..." 
+               style="width: 100%; height: 44px; padding-left: 18px; font-size: 0.95rem;">
       </div>
+
     </div>
 
-    <!-- Turfs Dynamic Grid -->
-    <div class="turf-grid" id="turfsListGrid" style="margin-bottom: 60px;">
-      
-      <!-- Static fallback / instant render before API -->
-      <div class="turf-card">
-        <div class="turf-img-wrapper">
-          <img src="assets/images/shashikant-turf-day.jpg" alt="Shashikant Football Grand Arena">
-          <span class="turf-badge-sport">⚽ Football 7v7</span>
-          <span class="turf-rating">★ 4.9</span>
-        </div>
-        <div class="turf-body">
-          <div class="turf-location">📍 Andheri West, Mumbai • FIFA Pro Standard</div>
-          <h3 class="turf-title">Shashikant Football Grand Arena</h3>
-          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:14px;">
-            Full size 7v7 football turf with all-weather drainage, high-mast floodlights, and clean dugout benches.
-          </p>
-          <div class="turf-amenities">
-            <span class="amenity-chip">💡 High Mast Lights</span>
-            <span class="amenity-chip">🚿 Shower Rooms</span>
-            <span class="amenity-chip">🅿️ Free Parking</span>
-          </div>
-          <div class="turf-footer">
-            <div class="turf-price">
-              <strong>₹699</strong> <small style="color:var(--text-muted); font-size:0.85rem;">/ hour</small>
-            </div>
-            <a href="turf-details.html?id=TRF-101" class="btn btn-primary btn-sm">Book Slot ➔</a>
-          </div>
-        </div>
-      </div>
+    <!-- Active Results Count -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h3 style="font-size: 1.25rem; color: #ffffff;" id="resultsCountHeading">
+        Showing 10 Premier Sports Venues
+      </h3>
+      <span style="font-size: 0.82rem; color: var(--neon-green); font-weight: 700;">
+        ✓ Guaranteed ₹699/hr Flat Pricing
+      </span>
+    </div>
 
-      <div class="turf-card">
-        <div class="turf-img-wrapper">
-          <img src="assets/images/shashikant-turf-night.jpg" alt="Shashikant Box Cricket Stadium">
-          <span class="turf-badge-sport" style="color:#fbbf24;">🏏 Box Cricket</span>
-          <span class="turf-rating">★ 4.9</span>
-        </div>
-        <div class="turf-body">
-          <div class="turf-location">📍 Bandra West, Mumbai • Full Netting &amp; Pitch</div>
-          <h3 class="turf-title">Shashikant Box Cricket Stadium</h3>
-          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:14px;">
-            Enclosed box cricket turf with synthetic pitch, heavy perimeter nets, LED lighting, and tournament desk.
-          </p>
-          <div class="turf-amenities">
-            <span class="amenity-chip">🏏 Pitch Markings</span>
-            <span class="amenity-chip">🕸️ High Net Boundary</span>
-            <span class="amenity-chip">☂️ Covered Roof</span>
-          </div>
-          <div class="turf-footer">
-            <div class="turf-price">
-              <strong>₹699</strong> <small style="color:var(--text-muted); font-size:0.85rem;">/ hour</small>
-            </div>
-            <a href="turf-details.html?id=TRF-102" class="btn btn-primary btn-sm">Book Slot ➔</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="turf-card">
-        <div class="turf-img-wrapper">
-          <img src="assets/images/shashikant-turf-day.jpg" alt="Shashikant Multisport Arena">
-          <span class="turf-badge-sport" style="color:#60a5fa;">⚡ Multisport 6v6</span>
-          <span class="turf-rating">★ 4.8</span>
-        </div>
-        <div class="turf-body">
-          <div class="turf-location">📍 Powai, Mumbai • Dual Football &amp; Cricket</div>
-          <h3 class="turf-title">Shashikant Multisport Arena</h3>
-          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:14px;">
-            Versatile dual turf for weekend football shootouts, corporate sports meets, and box cricket leagues.
-          </p>
-          <div class="turf-amenities">
-            <span class="amenity-chip">⏱️ Electronic Board</span>
-            <span class="amenity-chip">☂️ Rain Protected</span>
-            <span class="amenity-chip">👥 Dugout Seating</span>
-          </div>
-          <div class="turf-footer">
-            <div class="turf-price">
-              <strong>₹699</strong> <small style="color:var(--text-muted); font-size:0.85rem;">/ hour</small>
-            </div>
-            <a href="turf-details.html?id=TRF-103" class="btn btn-primary btn-sm">Book Slot ➔</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="turf-card">
-        <div class="turf-img-wrapper">
-          <img src="assets/images/shashikant-turf-night.jpg" alt="Shashikant Night Floodlit Stadium">
-          <span class="turf-badge-sport">⚽ Football 8v8</span>
-          <span class="turf-rating">★ 5.0</span>
-        </div>
-        <div class="turf-body">
-          <div class="turf-location">📍 Kandivali East, Mumbai • Stadium Floodlights</div>
-          <h3 class="turf-title">Shashikant Night Floodlit Stadium</h3>
-          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:14px;">
-            Full-scale floodlit stadium with warm-up zones, spectator galleries, and FIFA standard shock-pad underlay.
-          </p>
-          <div class="turf-amenities">
-            <span class="amenity-chip">💡 High Mast Lights</span>
-            <span class="amenity-chip">🏃 Warmup Track</span>
-            <span class="amenity-chip">🚿 Shower Rooms</span>
-          </div>
-          <div class="turf-footer">
-            <div class="turf-price">
-              <strong>₹699</strong> <small style="color:var(--text-muted); font-size:0.85rem;">/ hour</small>
-            </div>
-            <a href="turf-details.html?id=TRF-104" class="btn btn-primary btn-sm">Book Slot ➔</a>
-          </div>
-        </div>
-      </div>
-
+    <!-- Dynamic 10 Turfs Grid -->
+    <div class="turfs-grid" id="turfsListPageGrid">
+      <!-- Injected via main.js -->
     </div>
 
   </main>
 
-  <!-- Footer -->
+  <!-- Master Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-bottom">
-        © 2026 Shashikant Turf Booking System. Flat ₹699/hr • Built with Passion for Mumbai Sports.
+      <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+        <div class="brand-logo" style="justify-content: center; margin-bottom: 12px;">
+          <div class="logo-icon">⚽</div>
+          <div>Shashikant <span>Turf</span></div>
+        </div>
+        <p style="font-size: 0.88rem; color: #94a3b8; margin-bottom: 18px;">
+          Official turf network across Mumbai. Bookings dispatched instantly with scannable QR gate passes.
+        </p>
+        <div style="font-size: 0.82rem; color: #64748b;">
+          © 2026 Shashikant Turf Arena. All rights reserved.
+        </div>
       </div>
     </div>
   </footer>
 
-    <!-- Firebase SDK & Cloud Integration -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="js/firebase-config.js"></script>
-  <script src="js/api.js"></script>
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
   <script>
-    let rawTurfs = [];
-    let currentSport = 'all';
-
-    function setFilterSport(sport, btn) {
-      currentSport = sport;
-      document.querySelectorAll('.sport-pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filterTurfs();
-    }
-
-    function renderTurfs(list) {
-      const grid = document.getElementById('turfsListGrid');
-      if (!list || list.length === 0) {
-        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--text-muted);">No arenas found matching your search.</div>`;
-        return;
-      }
-
-      grid.innerHTML = list.map(t => {
-        const sportTagColor = t.category === 'cricket' ? '#fbbf24' : (t.category === 'multisport' ? '#60a5fa' : 'var(--accent)');
-        const sportEmoji = t.category === 'cricket' ? '🏏' : '⚽';
-        return `
-          <div class="turf-card">
-            <div class="turf-img-wrapper">
-              <img src="${t.image || 'assets/images/shashikant-turf-day.jpg'}" alt="${t.name}">
-              <span class="turf-badge-sport" style="color:${sportTagColor};">${sportEmoji} ${t.sport}</span>
-              <span class="turf-rating">★ ${t.rating || 4.9}</span>
-            </div>
-            <div class="turf-body">
-              <div class="turf-location">📍 ${t.location} • ${t.size || 'Standard Size'}</div>
-              <h3 class="turf-title">${t.name}</h3>
-              <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:14px;">
-                ${t.description || 'Premium artificial sports turf with matchday lighting and changing facilities.'}
-              </p>
-              <div class="turf-amenities">
-                ${(t.amenities || ['Floodlights', 'Changing Rooms', 'Water']).slice(0, 3).map(a => `<span class="amenity-chip">✓ ${a}</span>`).join('')}
-              </div>
-              <div class="turf-footer">
-                <div class="turf-price">
-                  <strong>₹${t.pricePerHour || 699}</strong> <small style="color:var(--text-muted); font-size:0.85rem;">/ hour</small>
-                </div>
-                <a href="turf-details.html?id=${t.id}" class="btn btn-primary btn-sm">Book Slot ➔</a>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function filterTurfs() {
-      const q = document.getElementById('turfSearchInput').value.toLowerCase().trim();
-      const filtered = rawTurfs.filter(t => {
-        const matchesQ = (t.name || '').toLowerCase().includes(q) || (t.location || '').toLowerCase().includes(q) || (t.sport || '').toLowerCase().includes(q);
-        const matchesSport = currentSport === 'all' || (t.category || '').toLowerCase() === currentSport || (t.sport || '').toLowerCase().includes(currentSport);
-        return matchesQ && matchesSport;
-      });
-      renderTurfs(filtered);
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      // User auth check
-      const u = API.getCurrentUser();
-      if (u) {
-        const slot = document.getElementById('navAuthSlot');
-        if (slot) {
-          slot.innerHTML = `
-            <span style="font-size:0.85rem; color:var(--text-muted);">👤 ${u.name}</span>
-            ${u.role === 'admin' ? '<a href="Admin/dashboard.html" class="btn btn-primary btn-sm">⚙️ Admin</a>' : ''}
-            <button onclick="API.logout()" class="btn btn-outline btn-sm">Logout</button>
-          `;
-        }
-      }
-
-      try {
-        rawTurfs = await API.getTurfs();
-        if (rawTurfs && rawTurfs.length > 0) {
-          renderTurfs(rawTurfs);
-        }
-      } catch (e) {
-        console.warn('API error:', e);
-      }
-
-      document.getElementById('turfSearchInput').addEventListener('input', filterTurfs);
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTurfsGrid('turfsListPageGrid', 'all');
     });
+
+    function handleTurfSearch(val) {
+      const activePill = document.querySelector('.filter-pill.active');
+      let currentCategory = 'all';
+      if (activePill) {
+        const text = activePill.innerText.toLowerCase();
+        if (text.includes('football')) currentCategory = 'football';
+        else if (text.includes('cricket')) currentCategory = 'cricket';
+        else if (text.includes('multisport')) currentCategory = 'multisport';
+      }
+      renderTurfsGrid('turfsListPageGrid', currentCategory, val);
+    }
   </script>
 </body>
 </html>

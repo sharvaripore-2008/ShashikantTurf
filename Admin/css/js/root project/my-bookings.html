@@ -3,40 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Bookings &amp; Match Passes | Shashikant Turf</title>
+  <title>My Match Passes &amp; Bookings | Shashikant Turf</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-
   <style>
     .booking-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      padding: 24px;
-      margin-bottom: 22px;
+      background: #111a2e;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      transition: all 0.25s ease;
+      flex-wrap: wrap;
       gap: 20px;
+      transition: var(--transition);
     }
     .booking-card:hover {
-      border-color: rgba(16, 185, 129, 0.4);
+      border-color: var(--primary);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
       transform: translateY(-2px);
     }
-    .pass-container {
-      background: #0f172a;
-      border: 2px dashed rgba(255,255,255,0.18);
-      border-radius: 16px;
-      padding: 24px;
-      color: #f8fafc;
-      position: relative;
-    }
-    @media (max-width: 800px) {
-      .booking-card { flex-direction: column; align-items: flex-start; }
+    @media (max-width: 768px) {
+      .booking-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
@@ -47,282 +42,136 @@
     <div class="container nav-container">
       <a href="index.html" class="brand-logo">
         <div class="logo-icon">⚽</div>
-        Shashikant <span>Turf</span>
+        <div>
+          Shashikant <span>Turf</span>
+          <span class="turf-pill">MUMBAI</span>
+        </div>
       </a>
 
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="index.html" class="nav-link">Home</a>
-        <a href="turfs.html" class="nav-link">Explore Turfs</a>
+        <a href="turfs.html" class="nav-link">Explore 10 Turfs</a>
         <a href="my-bookings.html" class="nav-link active">My Bookings</a>
+        <a href="index.html#communityLobby" class="nav-link">Community Match Lobby</a>
       </div>
 
-      <div id="navAuthSlot" class="nav-actions">
-        <a href="turfs.html" class="btn btn-primary btn-sm">+ Book Turf (₹699)</a>
+      <div class="nav-actions">
+        <a href="turfs.html" class="btn btn-primary btn-sm">Book New Turf ➔</a>
+        <button class="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Navigation">☰</button>
       </div>
     </div>
   </nav>
 
   <!-- Page Header -->
-  <div style="background: radial-gradient(circle at 50% 10%, rgba(16,185,129,0.12) 0%, transparent 70%); padding: 40px 0 24px; border-bottom: 1px solid var(--border-color);">
+  <header style="background: radial-gradient(circle at 50% 10%, rgba(16,185,129,0.15) 0%, transparent 75%); padding: 45px 0 25px; text-align: center; border-bottom: 1px solid var(--border-color);">
     <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-        <div>
-          <h1 style="font-size:2.4rem; margin-bottom:6px;">My Match Passes &amp; Reservations</h1>
-          <p id="userStatusSub" style="color:var(--text-muted);">
-            Manage your booked slots, show your digital QR Gate Pass, or view dispatched Gmail receipts.
-          </p>
-        </div>
-        <div style="font-size:0.85rem; background:rgba(16,185,129,0.15); color:var(--accent); padding:6px 16px; border-radius:999px; border:1px solid rgba(16,185,129,0.3); font-weight:700;">
-          ⚡ MySQL Live Sync Active
-        </div>
-      </div>
+      <h1 style="font-size: 2.8rem; font-weight: 800; margin-bottom: 10px; color: #fff;">
+        My Match Tickets &amp; QR Gate Passes
+      </h1>
+      <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto; font-size: 1rem;">
+        Present your scannable digital QR Gate Pass at the facility security desk for 1-tap pitch admission.
+      </p>
     </div>
-  </div>
+  </header>
 
-  <main class="container" style="padding: 40px 20px 80px;">
-    <div id="bookingsList">
-      <div style="text-align:center; padding:50px; color:var(--text-muted);">
-        Loading reservations from database...
-      </div>
+  <!-- Bookings List -->
+  <main class="container" style="padding-top: 40px; padding-bottom: 80px; max-width: 950px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h3 style="font-size: 1.3rem; color: #fff;">Your Booked Matches</h3>
+      <button onclick="clearAllDemoBookings()" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+        Reset to Default Pass
+      </button>
     </div>
+
+    <div id="bookingsListContainer">
+      <!-- Injected via JavaScript -->
+    </div>
+
   </main>
 
-  <!-- MATCHDAY GATE PASS MODAL (WITH QR CODE) -->
-  <div class="modal-overlay" id="gatePassModal">
-    <div class="modal-box" style="max-width: 500px; padding: 26px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h3 style="font-size:1.3rem;">🎫 Official Gate Pass</h3>
-        <button onclick="closeGatePass()" class="btn btn-outline btn-sm" style="padding:4px 10px;">✕ Close</button>
-      </div>
-
-      <div class="pass-container" id="passContainerBody">
-        <!-- Rendered dynamically -->
-      </div>
-
-      <div style="margin-top:16px; text-align:center;">
-        <button onclick="window.print()" class="btn btn-outline btn-sm" style="margin-right:8px;">🖨️ Print Ticket</button>
-        <button onclick="closeGatePass()" class="btn btn-primary btn-sm">Done</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- GMAIL EMAIL RECEIPT PREVIEW MODAL -->
-  <div class="modal-overlay" id="gmailModal">
-    <div class="modal-box" style="max-width: 600px; padding: 24px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:12px; margin-bottom:16px;">
-        <div>
-          <strong style="font-size:1.05rem;">📧 Gmail Booking Confirmation Receipt</strong>
-          <div style="font-size:0.75rem; color:var(--text-muted);">Dispatched to registered player address</div>
-        </div>
-        <button onclick="closeGmailModal()" class="btn btn-outline btn-sm" style="padding:4px 10px;">✕ Close</button>
-      </div>
-
-      <div id="gmailModalBody">
-        <!-- Rendered dynamically -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
+  <!-- Master Footer -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer-bottom">
-        © 2026 Shashikant Turf Booking System. Flat ₹699/hr • Built with Passion for Mumbai Sports.
-      </div>
+    <div class="container" style="text-align: center; font-size: 0.85rem; color: #64748b;">
+      © 2026 Shashikant Turf Booking System • Mumbai
     </div>
   </footer>
 
-  <script src="js/api.js"></script>
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
   <script>
-    let loadedBookings = [];
+    document.addEventListener('DOMContentLoaded', () => {
+      renderBookings();
+    });
 
-    async function render() {
-      const user = API.getCurrentUser();
-      if (user) {
-        document.getElementById('userStatusSub').innerText = `Showing reservations for player: ${user.name} (${user.email})`;
-        const navAuthSlot = document.getElementById('navAuthSlot');
-        navAuthSlot.innerHTML = `
-          <span style="font-size:0.85rem; color:var(--text-muted);">👤 ${user.name}</span>
-          ${user.role === 'admin' ? '<a href="Admin/dashboard.html" class="btn btn-primary btn-sm">⚙️ Admin</a>' : ''}
-          <button onclick="API.logout()" class="btn btn-outline btn-sm">Logout</button>
-          <a href="turfs.html" class="btn btn-primary btn-sm">+ Book Turf</a>
+    function renderBookings() {
+      const container = document.getElementById('bookingsListContainer');
+      const list = DB.getBookings();
+
+      if (!list || list.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 60px 20px; background: #111a2e; border-radius: 20px; border: 1.5px dashed rgba(255,255,255,0.15);">
+            <div style="font-size: 3rem; margin-bottom: 12px;">🎟️</div>
+            <h3 style="font-size: 1.4rem; color: #fff; margin-bottom: 8px;">No active bookings found</h3>
+            <p style="color: #94a3b8; margin-bottom: 20px;">Book any of our 10 premier turfs across Mumbai at flat ₹699/hour.</p>
+            <a href="turfs.html" class="btn btn-primary">Browse All 10 Turfs ➔</a>
+          </div>
         `;
+        return;
       }
 
-      const container = document.getElementById('bookingsList');
-
-      try {
-        const bookings = await API.getBookings(user ? user.email : null);
-        loadedBookings = bookings || [];
-
-        if (!bookings || bookings.length === 0) {
-          container.innerHTML = `
-            <div style="text-align:center; padding:60px 20px; background:var(--bg-card); border-radius:var(--radius-xl); border:1px solid var(--border-color);">
-              <div style="font-size:3.5rem; margin-bottom:12px;">⚽</div>
-              <h3 style="font-size:1.6rem; margin-bottom:8px;">No Bookings Found</h3>
-              <p style="color:var(--text-muted); margin-bottom:24px;">You haven't reserved any sports turfs yet. Experience our ₹699/hr floodlit arenas.</p>
-              <a href="turfs.html" class="btn btn-primary">Browse &amp; Book a Turf Now (₹699) ➔</a>
+      container.innerHTML = list.map(b => `
+        <div class="booking-card">
+          <div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px; align-items: center;">
+              <span class="badge badge-success">✓ ${b.status}</span>
+              <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 700;">Ref: #${b.id}</span>
+              <span class="badge badge-gold">₹${b.amount || 699} PAID</span>
             </div>
-          `;
-          return;
-        }
-
-        container.innerHTML = bookings.map(b => {
-          const isCancelled = b.status === 'Cancelled';
-          const isCheckedIn = (b.checkInStatus === 'Checked-In');
-
-          return `
-            <div class="booking-card">
-              <div>
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;">
-                  <span class="badge ${isCancelled ? 'badge-danger' : 'badge-success'}">${b.status || 'Confirmed'}</span>
-                  ${isCheckedIn ? '<span class="badge" style="background:rgba(59,130,246,0.2); color:#60a5fa;">✓ Checked-In At Venue</span>' : ''}
-                  <span style="font-size:0.85rem; color:var(--text-muted);">Pass Ref: <strong>#${b.id}</strong></span>
-                  ${b.userEmail ? `<span style="font-size:0.8rem; color:var(--text-muted);">• ${b.userName || b.userEmail}</span>` : ''}
-                </div>
-                <h3 style="font-size:1.4rem; margin-bottom:6px;">${b.turfName}</h3>
-                <p style="color:var(--text-muted); font-size:0.95rem;">
-                  📅 <strong>${b.date}</strong> &nbsp;|&nbsp; ⏰ <strong>${b.slot}</strong>
-                </p>
-                <div style="color:var(--primary); font-weight:800; margin-top:8px; font-size:1.1rem;">
-                  Paid: ₹${b.amount || 699} <small style="color:var(--text-muted); font-weight:normal; font-size:0.85rem;">(${b.paymentMethod || 'UPI'})</small>
-                </div>
-              </div>
-
-              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                ${!isCancelled ? `
-                  <button onclick="showGatePass('${b.id}')" class="btn btn-primary btn-sm">
-                    🎫 Gate QR Pass
-                  </button>
-                  <button onclick="showGmailReceipt('${b.id}')" class="btn btn-outline btn-sm">
-                    📧 Gmail Receipt
-                  </button>
-                  <button onclick="handleCancelBooking('${b.id}')" class="btn btn-danger btn-sm">
-                    Cancel Slot
-                  </button>
-                ` : `
-                  <span style="color:#f87171; font-size:0.85rem; font-weight:600;">Refund Processed • Cancelled</span>
-                `}
-              </div>
+            <h3 style="font-size: 1.35rem; color: #fff; margin-bottom: 6px;">${b.turfName}</h3>
+            <div style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;">
+              📅 <strong>${b.date}</strong> &nbsp;•&nbsp; ⏰ <strong style="color: var(--neon-green);">${b.slot}</strong>
             </div>
-          `;
-        }).join('');
-      } catch (err) {
-        container.innerHTML = `<div style="color:#ef4444; text-align:center; padding:40px;">Failed to load bookings: ${err.message}</div>`;
-      }
-    }
-
-    function showGatePass(bookingId) {
-      const b = loadedBookings.find(x => x.id === bookingId);
-      if (!b) return;
-
-      const qrData = encodeURIComponent(`SHASHIKANT-TURF-VALID#${b.id}#${b.date}#${b.slot}#${b.userEmail}`);
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${qrData}`;
-
-      const html = `
-        <div style="text-align:center;">
-          <div style="font-size:1.8rem; margin-bottom:4px;">⚽ 🏏</div>
-          <h2 style="margin:0; font-size:1.5rem; letter-spacing:0.5px;">SHASHIKANT TURF PASS</h2>
-          <div style="font-size:0.8rem; color:var(--accent); font-weight:700; margin-top:2px;">OFFICIAL MATCHDAY ENTRY TICKET</div>
-
-          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; margin:16px 0; text-align:left; font-size:0.9rem;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-              <span style="color:#94a3b8;">Ticket ID:</span>
-              <strong style="color:var(--primary);">#${b.id}</strong>
-            </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-              <span style="color:#94a3b8;">Arena:</span>
-              <strong>${b.turfName}</strong>
-            </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-              <span style="color:#94a3b8;">Date &amp; Slot:</span>
-              <strong style="color:var(--primary);">${b.date} • ${b.slot}</strong>
-            </div>
-            <div style="display:flex; justify-content:space-between;">
-              <span style="color:#94a3b8;">Player:</span>
-              <strong>${b.userName || 'Player'}</strong>
+            <div style="font-size: 0.82rem; color: #94a3b8;">
+              Booked by: <strong>${b.userName}</strong> (${b.userEmail}) &nbsp;•&nbsp; Method: ${b.paymentMethod || 'UPI'}
             </div>
           </div>
 
-          <div style="background:#fff; border-radius:12px; padding:16px; display:inline-block; margin-bottom:12px;">
-            <img src="${qrUrl}" alt="Gate Pass QR" style="width:140px; height:140px; display:block;" />
-          </div>
-          <div style="font-size:0.75rem; color:#94a3b8;">
-            Flash this QR pass at the security entry scanner before match kickoff.
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button onclick='showStoredPass("${b.id}")' class="btn btn-primary btn-sm">
+              🎟️ View QR Gate Pass
+            </button>
+            <button onclick='cancelBookingItem("${b.id}")' class="btn btn-outline btn-sm" style="color: #f43f5e; border-color: rgba(244,63,94,0.3);">
+              Cancel
+            </button>
           </div>
         </div>
-      `;
-
-      document.getElementById('passContainerBody').innerHTML = html;
-      document.getElementById('gatePassModal').classList.add('active');
+      `).join('');
     }
 
-    function closeGatePass() {
-      document.getElementById('gatePassModal').classList.remove('active');
-    }
-
-    function showGmailReceipt(bookingId) {
-      const b = loadedBookings.find(x => x.id === bookingId);
-      if (!b) return;
-
-      const html = `
-        <div style="background:#0a0f1d; border-radius:12px; padding:20px; font-family:sans-serif; color:#f8fafc; border:1px solid rgba(255,255,255,0.1);">
-          <div style="background:linear-gradient(135deg, #10b981, #059669); padding:18px; border-radius:10px; text-align:center; color:#fff; margin-bottom:16px;">
-            <h3 style="margin:0; font-size:1.35rem;">SHASHIKANT TURF CONFIRMATION</h3>
-            <div style="font-size:0.8rem; opacity:0.9;">Delivered to: ${b.userEmail}</div>
-          </div>
-
-          <p style="font-size:0.9rem; line-height:1.5; color:#cbd5e1; margin-bottom:14px;">
-            Hi <strong>${b.userName}</strong>,<br>
-            Your booking for <strong>${b.turfName}</strong> on <strong>${b.date} (${b.slot})</strong> is officially confirmed!
-          </p>
-
-          <table style="width:100%; border-collapse:collapse; font-size:0.85rem; margin-bottom:16px;">
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-              <td style="padding:6px 0; color:#94a3b8;">Booking Reference:</td>
-              <td style="padding:6px 0; text-align:right; font-weight:700; color:var(--primary);">#${b.id}</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-              <td style="padding:6px 0; color:#94a3b8;">Rate Paid:</td>
-              <td style="padding:6px 0; text-align:right; font-weight:700; color:#10b981;">₹${b.amount || 699} (Flat 1 Hour)</td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-              <td style="padding:6px 0; color:#94a3b8;">Payment Mode:</td>
-              <td style="padding:6px 0; text-align:right;">${b.paymentMethod || 'UPI'}</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0; color:#94a3b8;">Check-In Status:</td>
-              <td style="padding:6px 0; text-align:right; color:var(--accent); font-weight:700;">${b.checkInStatus || 'Valid Pass Ready'}</td>
-            </tr>
-          </table>
-
-          <div style="font-size:0.75rem; color:#94a3b8; background:rgba(255,255,255,0.03); padding:10px; border-radius:6px;">
-            💡 <strong>Venue Note:</strong> Free parking &amp; clean shower rooms are available. Please arrive 10 minutes before your slot.
-          </div>
-        </div>
-      `;
-
-      document.getElementById('gmailModalBody').innerHTML = html;
-      document.getElementById('gmailModal').classList.add('active');
-    }
-
-    function closeGmailModal() {
-      document.getElementById('gmailModal').classList.remove('active');
-    }
-
-    async function handleCancelBooking(id) {
-      if (confirm(`Are you sure you want to cancel reservation #${id}? The cancellation will be recorded in the MySQL database and full refund of ₹699 will be issued.`)) {
-        try {
-          await API.cancelBooking(id, 'Player requested cancellation via website');
-          alert(`Booking #${id} has been cancelled!`);
-          render();
-        } catch (err) {
-          alert(`Failed to cancel booking: ${err.message}`);
-        }
+    function showStoredPass(bookingId) {
+      const list = DB.getBookings();
+      const b = list.find(x => x.id === bookingId);
+      if (b) {
+        showConfirmedTicketModal(b);
       }
     }
 
-    render();
+    function cancelBookingItem(bookingId) {
+      if (confirm("Are you sure you want to cancel this matchday booking? Full ₹699 will be refunded to your UPI account.")) {
+        let list = DB.getBookings();
+        list = list.filter(x => x.id !== bookingId);
+        localStorage.setItem('SHASHIKANT_BOOKINGS', JSON.stringify(list));
+        renderBookings();
+        showToast("Booking cancelled successfully! ₹699 refund initiated.", "✅");
+      }
+    }
+
+    function clearAllDemoBookings() {
+      localStorage.removeItem('SHASHIKANT_BOOKINGS');
+      renderBookings();
+      showToast("Reset to default sample match ticket.", "⚡");
+    }
   </script>
 </body>
 </html>
